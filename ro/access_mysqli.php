@@ -1,6 +1,6 @@
 <?php
 /*
-Copyright (C) 2018 Dragoș Manea
+Copyright (C) 2019 Dragoș Manea
 access_mysqli.php
 Program de accesare a bazelor de date.
 
@@ -17,7 +17,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-Ultima editare a fisierului: 2019-08-20
+Ultima editare a fisierului: 2019-08-21
 */
 error_reporting(0);
 ini_set('memory_limit', '4095M');

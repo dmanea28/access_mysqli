@@ -1,6 +1,6 @@
 <?php
 /*
-Copyright (C) 2018 Dragoș Manea
+Copyright (C) 2019 Dragoș Manea
 access_mysqli.php
 Database access program
 
