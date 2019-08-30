@@ -19,7 +19,7 @@ Just load the file to your server and that's it.
 - Advanced edit feature for entering MySql functions
 - Send own SQL query
 
-The application is available in two languages: [english](en/access_mysqli.php) and [romanian](ro/access_mysqli.php)
+The application is available in two languages: [english](en/access_mysqli.php) and [romanian](ro/access_mysqli.php).
 
 ## NOTE
 Don not change file name `access_mysqli.php`!
