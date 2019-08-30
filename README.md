@@ -1,9 +1,10 @@
 # access_mysqli
-Simple single-file MySql-type databases, written in PHP.
+Simple single-file MySql database access application, written in PHP.
+
 Just load the file to your server and that's it.
 
 ## Features
-- Create/detele databases and tables
+- Create/delete databases and tables
 - Rename and copy tables, even in different databases
 - Add columns/rows
 - Edit the name and datatypes of columns
@@ -14,9 +15,11 @@ Just load the file to your server and that's it.
 - Smart seamless jump from one cell to the other while editing content
 - Auto-sync with the server when you leave the edited cell.
 - Import/export database and tables in `.sql` format
-- Advanced search features, such as begin/end with, regex, match word, search on particular columns, show only rows containing results
+- Advanced search features, such as match word, begin/end with, regex, search on particular columns, show only rows containing results
 - Advanced edit feature for entering MySql functions
 - Send own SQL query
+
+The application is available in two languages: [english](en/access_mysqli.php) and [romanian](ro/access_mysqli.php)
 
 ## NOTE
 Don not change file name `access_mysqli.php`!
