@@ -4110,7 +4110,7 @@ function gen_del_prompt(row){
 		<div style="overflow:auto;height:130px">Do you really want to delete the selected row?</div>\
 		<div style="height:50px;"><button type="button" style="cursor:pointer;position:relative;top:-5px;left:40px;color:#FFFFFF;background-color:#CC8D00;width:75px;font-size:18px;" onclick="delRow2('+row+')">YES</button><button type="button" style="cursor:pointer;position:relative;top:-5px;left:103px;color:#FFFFFF;background-color:#CC8D00;width:75px;font-size:18px;" onclick="close_del_prompt('+row+')">NO</button></div>\
 		</div>';
-		if (document.getElementsByTagName('body')[0].getElementsByClassName('promptdiv').length==0){TERGERE_RAND
+		if (document.getElementsByTagName('body')[0].getElementsByClassName('promptdiv').length==0){
 			document.getElementsByTagName('body')[0].appendChild(conerdiv);
 		}
 }
