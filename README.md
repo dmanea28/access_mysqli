@@ -24,7 +24,7 @@ The application is available in two languages: [english](en/access_mysqli.php) a
 ## NOTE
 Don not change file name `access_mysqli.php`!
 
-I'm sure the application works with PHP 5.6+, but I expect it to do well with some lower versions.
+This application works with PHP version 7+.
 
 ## Screenshots
 Login screen:
