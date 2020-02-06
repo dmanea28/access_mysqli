@@ -30,7 +30,7 @@ $encodings=array('big5','dec8','cp850','hp8','koi8r','latin1','latin2','swe7','a
 $defaultCharset='utf8';
 //*CHARSET
 //LANGUAGE
-define("LANG","en");
+$LANG='en';
 //*LANGUAGE
 //DEFAULT SETTINGS
 $DEFAULTSET=array();
@@ -60,7 +60,11 @@ ACCESS_MYSQLI.PHP
 */
 
 //TRANSLATIONS
-
+$TR=array("User"=>array("EN"=>"User","RO"=>"Utilizator"),
+"Password"=>array("EN"=>"Password","RO"=>"Parola"),
+"Log_in"=>array("EN"=>"Log in","RO"=>"Intrare"),
+"Encoding_used"=>array("EN"=>"Log in","RO"=>"Intrare")
+);
 //*TRANSLATIONS
 function echo_jquery(){
 echo<<<'EOT'
@@ -488,7 +492,7 @@ if (!$connver) $connver=mysqli_connect('127.0.0.1',$_POST['usr'],$_POST['pwd']);
 		$res['stat']='success';
 		$_SESSION['userdb']=$_POST['usr'];
 		$_SESSION['pwddb']=$_POST['pwd'];
-		$_SESSION['CSRF']=bin2hex(random_bytes(100));
+		$_SESSION['CSRF']=bin2hex(random_bytes(40));
 		$res['all']=create_database_select($connver);
 		}
 		else $res['stat']='fail';
