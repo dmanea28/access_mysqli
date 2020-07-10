@@ -1,6 +1,6 @@
 <?php
 /*
-Copyright (C) 2019 Dragoș Manea
+Copyright (C) 2020 Dragoș Manea
 access_mysqli.php
 Database access program
 
@@ -17,11 +17,12 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-Last edited: 2019-08-21
+Last edited: 2020-07-09
 */
 error_reporting(0);
 ini_set('memory_limit', '4095M');
 set_time_limit(0);
+$languages=array('EN','RO');
 $encodings=array('big5','dec8','cp850','hp8','koi8r','latin1','latin2','swe7','ascii','ujis','sjis','hebrew','tis620','euckr','koi8u','gb2312','greek','cp1250','gbk','latin5','armscii8','utf8','ucs2','cp866','keybcs2','macce','macroman','cp852','latin7','utf8mb4','cp1251','utf16','cp1256','cp1257','utf32','binary','geostd8','cp932','eucjpms');
 //!!!START!!!
 //From here you can edit the settings!!!
@@ -30,7 +31,7 @@ $encodings=array('big5','dec8','cp850','hp8','koi8r','latin1','latin2','swe7','a
 $defaultCharset='utf8';
 //*CHARSET
 //LANGUAGE
-$LANG='en';
+$defaultLanguage='RO';
 //*LANGUAGE
 //DEFAULT SETTINGS
 $DEFAULTSET=array();
@@ -60,10 +61,181 @@ ACCESS_MYSQLI.PHP
 */
 
 //TRANSLATIONS
-$TR=array("User"=>array("EN"=>"User","RO"=>"Utilizator"),
+$TR=array(
+"Version"=>array("EN"=>"Version","RO"=>"Versiunea"),
+"User"=>array("EN"=>"User","RO"=>"Utilizator"),
 "Password"=>array("EN"=>"Password","RO"=>"Parola"),
-"Log_in"=>array("EN"=>"Log in","RO"=>"Intrare"),
-"Encoding_used"=>array("EN"=>"Log in","RO"=>"Intrare")
+"Log_in"=>array("EN"=>"Log in","RO"=>"Log in"),
+"Encoding_used"=>array("EN"=>"Encoding used to comunicate with MySql:","RO"=>"Codarea foloită în comunicarea cu MySql:"),
+"Change_encoding_language"=>array("EN"=>"Change interface language and encoding of characters","RO"=>"Schmbare limbă intrefață și codarea caracterelor"),
+"Choose_db"=>array("EN"=>"Choose database:","RO"=>"Alege baza de date:"),
+"Choose"=>array("EN"=>"Choose","RO"=>"Alege"),
+"Create_pquery"=>array("EN"=>"Create own query","RO"=>"Introducere query propriu"),
+"Create_db"=>array("EN"=>"Create database","RO"=>"Creare bază de date"),
+"Import_db"=>array("EN"=>"Import database","RO"=>"Import bază de date"),
+"Log_out"=>array("EN"=>"Log out","RO"=>"Log out"),
+"Insert_query"=>array("EN"=>"Insert query:","RO"=>"Introdu query-ul:"),
+"Close"=>array("EN"=>"Close","RO"=>"Închide"),
+"Send"=>array("EN"=>"Send","RO"=>"Trimite"),
+"Empty_field"=>array("EN"=>"Empty field","RO"=>"Golește câmpul"),
+"Query_void"=>array("EN"=>"Query with void result.","RO"=>"Query cu rezultat vid."),
+"Affected_rows"=>array("EN"=>"Affected rows:","RO"=>"Rânduri afectate:"),
+"Choose_tbl"=>array("EN"=>"Choose table:","RO"=>"Alege tabelul:"),
+"Database:"=>array("EN"=>"Database:","RO"=>"Baza de date:"),
+"Create_tbl"=>array("EN"=>"Create table","RO"=>"Creare tabel"),
+"Del_db"=>array("EN"=>"Delete database","RO"=>"Ștergere bază de date"),
+"Backup_db_tbl"=>array("EN"=>"Backup database/tables","RO"=>"Backup bază de date sau tabele"),
+"Import_db_tbl"=>array("EN"=>"Import database/tables","RO"=>"Import bază de date sau tabele"),
+"Change_db"=>array("EN"=>"Change database","RO"=>"Schimbare bază de date"),
+"conn_err"=>array("EN"=>"Connection error.","RO"=>"Eroare de conectare."),
+"dbmiss"=>array("EN"=>"Error loading database.","RO"=>"Eroare la încărcarea bazei de date."),
+"tblmiss"=>array("EN"=>"Error loading table.","RO"=>"Eroare la încărcarea tabelului."),
+"colmiss"=>array("EN"=>"The table was modified before processing query.","RO"=>"Tabelul a fost modificat înainte de procesarea solicitării."),
+"json_eror"=>array("EN"=>"JSON encoding error. Try changing the encoding from the top of the page","RO"=>"Eroare de codificare JSON. Încearcă schimbarea codificării din partea de sus a paginii."),
+"bad_link"=>array("EN"=>"Insert a link address!","RO"=>"Introduceți o adresă pentru link!"),
+"ERROR"=>array("EN"=>"ERROR!","RO"=>"EROARE!"),
+"MySQL_error"=>array("EN"=>"MySQL error","RO"=>"Eroare MySQL"),
+"Backup_error"=>array("EN"=>"Backup error","RO"=>"Eroare backup"),
+"DB_load_error"=>array("EN"=>"Error loading database","RO"=>"Eroare la încărcarea bazei de date"),
+"Import_error"=>array("EN"=>"Import error","RO"=>"Eroare import"),
+"Import_done"=>array("EN"=>"Import done","RO"=>"Import realizat"),
+"No_tableLarge"=>array("EN"=>"There is no table!","RO"=>"Nu există tabele!"),
+"OK_to_close"=>array("EN"=>"Click OK to close:","RO"=>"Apasă OK pentru a închide:"),
+"OK_to_save"=>array("EN"=>"Click OK to save:","RO"=>"Apasă OK pentru a salva:"),
+"OK"=>array("EN"=>"OK","RO"=>"OK"),
+"Insert_tbl_name"=>array("EN"=>"Insert table name:","RO"=>"Introdu numele tabelului:"),
+"Insert_first_col_name"=>array("EN"=>"Insert first column name:","RO"=>"Introdu numele primei coloane:"),
+"Choose_first_col_data_type"=>array("EN"=>"Choose first column data type:","RO"=>"Alege tipul de date al primei coloane:"),
+"Other"=>array("EN"=>"Other","RO"=>"Altul"),
+"Insert_data_type"=>array("EN"=>"Insert data type:","RO"=>"Introdu tipul de date:"),
+"Dhas_been_created"=>array("EN"=>"has been created","RO"=>"a fost creată"),
+"Thas_been_created"=>array("EN"=>"has been created","RO"=>"a fost creat"),
+"Database"=>array("EN"=>"Database","RO"=>"Baza de date"),
+"Table"=>array("EN"=>"Table","RO"=>"Tabelul"),
+"INFO"=>array("EN"=>"INFO","RO"=>"INFO"),
+"Really_delete_db"=>array("EN"=>"Do you really want to delete database","RO"=>"Sigur ștegi baza de date"),
+"YES"=>array("EN"=>"YES","RO"=>"DA"),
+"NO"=>array("EN"=>"NO","RO"=>"NU"),
+"CONFIRM"=>array("EN"=>"CONFIRM","RO"=>"CONFIRMARE"),
+"Dhas_been-deleted"=>array("EN"=>"has been deleted","RO"=>"a fost ștearsă"),
+"Tbl_is"=>array("EN"=>"Current table:","RO"=>"Tabelul curent:"),
+"Really_delete_tbl"=>array("EN"=>"Do you really want to delete table","RO"=>"Sigur ștergi tabelul"),
+"Thas_been_deleted"=>array("EN"=>"has ben deleted","RO"=>"a fost șters"),
+"Whole_db"=>array("EN"=>"The whole current database (including database creation)","RO"=>"Toată baza de date curentă (inclusiv crearea bazei de date)"),
+"Select_tables"=>array("EN"=>"Select tables:","RO"=>"Selectează tabele:"),
+"Only_tables"=>array("EN"=>"Only tables:","RO"=>"Doar tabele:"),
+"All_tables"=>array("EN"=>"All tables","RO"=>"Toate tabelele"),
+"No_table"=>array("EN"=>"No table","RO"=>"Niciun tabel"),
+"OK_to_backup"=>array("EN"=>"Click OK to generate backup:","RO"=>"Apasă OK pentru a genera backupul:"),
+"Import_sql"=>array("EN"=>"Import databases and tables (.sql file)","RO"=>"Import baze de date și tabele (fișier .sql)"),
+"OK_to_import"=>array("EN"=>"Click OK to import file:","RO"=>"Apasă OK pentru a importa fișierul:"),
+"Import_no_db_selected"=>array("EN"=>"There is no database selected. Because of that, the file must also specify the database in use.","RO"=>"Nu este selectată nicio bază de date. De aceea, fișierul trebuie să specifice și baza de date folosită."),
+"Import_default_db"=>array("EN"=>"The queries in the file will be executed by default on the current database:","RO"=>"Query-urile din fișier se vor executa în mod implicit pe baza de date actuală:"),
+"Tbl_created_content_not_copied"=>array("EN"=>"The new table has been created, but the content could not be copied.","RO"=>"Noul tabel a fost creat, dar conținutul nu a fost copiat."),
+"No_dbLarge"=>array("EN"=>"There is no database!","RO"=>"Nu există nicio bază de date!"),
+"Search_settings"=>array("EN"=>"Search settings","RO"=>"Setări de căutare"),
+"Match"=>array("EN"=>"Match:","RO"=>"Potrivire:"),
+"Exact_cell"=>array("EN"=>"Exact cell","RO"=>"Exact celula"),
+"Contains"=>array("EN"=>"Contains","RO"=>"Conține"),
+"Begins_with"=>array("EN"=>"Begins with","RO"=>"Începe cu"),
+"Ends_with"=>array("EN"=>"Ends with","RO"=>"Se termină cu"),
+"Word"=>array("EN"=>"Word","RO"=>"Cuvânt"),
+"RegEx_only"=>array("EN"=>"RegEx (only RegEx, without &quot;/&quot; or i,g etc.)","RO"=>"RegEx (doar RegEx, fără &quot;/&quot; sau i,g etc.)"),
+"Only_rows_containing"=>array("EN"=>"Show only rows containing results","RO"=>"Afișare doar rânduri ce conțin rezultate"),
+"Upper_lower"=>array("EN"=>"Match lower/UPPERcase","RO"=>"Distinge minuscule/MAJUSCULE"),
+"All_cols"=>array("EN"=>"All columns","RO"=>"Toate coloanele"),
+"No_col"=>array("EN"=>"No column","RO"=>"Nicio coloană"),
+"Search_cols"=>array("EN"=>"Search on columns:","RO"=>"Căutare pe coloane:"),
+"Note"=>array("EN"=>"Note","RO"=>"Notă"),
+"First3_settings"=>array("EN"=>"The first three settings are kept until page refresh and the column search options until table is edited.","RO"=>"Primele trei setări se păstrează până la reîncărcarea paginii, iar cele pentru căutarea pe coloane până când se fac modificări la tabel."),
+"Current_db"=>array("EN"=>"Current database","RO"=>"Baza de date curentă"),
+"Current_tbl"=>array("EN"=>"Current table","RO"=>"Tabelul curent"),
+"Tbl_actions"=>array("EN"=>"Table_actions","RO"=>"Acțiuni tabel"),
+"Delete_tbl"=>array("EN"=>"Delete table","RO"=>"Ștergere tabel"),
+"Rename_tbl"=>array("EN"=>"Rename table","RO"=>"Redenumire tabel"),
+"Copy_tbl"=>array("EN"=>"Copy table","RO"=>"Copiere tabel"),
+"Search_actions"=>array("EN"=>"Search actions:","RO"=>"Acțiuni de căutare"),
+"Back"=>array("EN"=>"Back","RO"=>"Înapoi"),
+"Order"=>array("EN"=>"Order","RO"=>"Ordonare"),
+"Bold"=>array("EN"=>"Bold","RO"=>"Bold"),
+"Italic"=>array("EN"=>"Italic","RO"=>"Italic"),
+"Underline"=>array("EN"=>"Underline","RO"=>"Subliniat"),
+"Add_link"=>array("EN"=>"Add link","RO"=>"Adăugare link"),
+"Link"=>array("EN"=>"Link","RO"=>"Link"),
+"Link_addr"=>array("EN"=>"Link address","RO"=>"Adresă link"),
+"Link_txt"=>array("EN"=>"Link text","RO"=>"Text link"),
+"Follow_link"=>array("EN"=>"Follow link","RO"=>"Deplasare la adresă"),
+"Text_color"=>array("EN"=>"Text color","RO"=>"Culoare text"),
+"Black"=>array("EN"=>"Black","RO"=>"Negru"),
+"Red"=>array("EN"=>"Red","RO"=>"Roșu"),
+"Blue"=>array("EN"=>"Blue","RO"=>"Albastru"),
+"Green"=>array("EN"=>"Green","RO"=>"Verde"),
+"Yellow"=>array("EN"=>"Yellow","RO"=>"Galben"),
+"Text_size"=>array("EN"=>"Text size","RO"=>"Dimenisune text"),
+"Small"=>array("EN"=>"Small","RO"=>"Mic"),
+"Normal"=>array("EN"=>"Normal","RO"=>"Normal"),
+"Big"=>array("EN"=>"Big","RO"=>"Mare"),
+"Huge"=>array("EN"=>"Huge","RO"=>"Imens"),
+"Add_list"=>array("EN"=>"Add list","RO"=>"Adăugre listă"),
+"List"=>array("EN"=>"List","RO"=>"Listă"),
+"Ord_list"=>array("EN"=>"Ordered list","RO"=>"Listă ordonată"),
+"Ordered"=>array("EN"=>"Ordered","RO"=>"Ordonată"),
+"Unord_list"=>array("EN"=>"Unordered list","RO"=>"Listă neordonată"),
+"Unordered"=>array("EN"=>"Unordered","RO"=>"Neordonată"),
+"Align"=>array("EN"=>"Align","RO"=>"Aliniere"),
+"Left"=>array("EN"=>"Left","RO"=>"Stânga"),
+"Centre"=>array("EN"=>"Centre","RO"=>"Centru"),
+"Right"=>array("EN"=>"Right","RO"=>"Dreapta"),
+"HTML_disabled"=>array("EN"=>"To use this function, activate HTML edit from Settings<br>NOTE: It works only on text columns.","RO"=>"Pentru a folosi această funcție, activați editarea HTML din Setări.<br>NOTĂ: Funcționează doar pe coloanele de tip text."),
+"Settings"=>array("EN"=>"Settings","RO"=>"Setări"),
+"New_row"=>array("EN"=>"New row","RO"=>"Adăugare rând"),
+"Inser_valid"=>array("EN"=>"Insert a valid link!","RO"=>"Introdu un link valid!"),
+"Duplicate_row"=>array("EN"=>"Duplicate row","RO"=>"Duplicare rând"),
+"Del_row"=>array("EN"=>"Delete row","RO"=>"Ștergere rând"),
+"New_col"=>array("EN"=>"New column","RO"=>"Adăugare coloană"),
+"ORDER"=>array("EN"=>"ORDER","RO"=>"ORDONARE"),
+"Add_key"=>array("EN"=>"Add key","RO"=>"Adăugare criteriu"),
+"Add_order_key"=>array("EN"=>"Add order key:","RO"=>"Adăugare criteriu de ordonare:"),
+"Delete_key"=>array("EN"=>"Delete key","RO"=>"Ștergere criteriu"),
+"Close_changes_lost"=>array("EN"=>"Do you really want to close?<br>Changes will be lost!","RO"=>"Sigur închizi?<br>Modificările se vor pierde!"),
+"No_order_key"=>array("EN"=>"No order key.","RO"=>"Niciun criteriu de ordonare."),
+"Rows_count"=>array("EN"=>"Rows count","RO"=>"Nr. rânduri"),
+"Edit_col"=>array("EN"=>"Edit column","RO"=>"Editare coloană"),
+"Del_col"=>array("EN"=>"Delete column","RO"=>"Ștergere coloană"),
+"SETTINGS"=>array("EN"=>"SETTINGS","RO"=>"SETĂRI"),
+"HTML_edit"=>array("EN"=>"HTML edit","RO"=>"Editare HTML"),
+"HTML_edit_expl"=>array("EN"=>"Enables text formating tool, only for &amp;quot;text&amp;quot; columns.","RO"=>"Permite utilizarea instrumentelor de formatare a textului, dar doar pe coloanele de tip &amp;quot;text&amp;quot;."),
+"Advanced_edit"=>array("EN"=>"Advanced edit","RO"=>"Editare avansată"),
+"Advanced_edit_expl"=>array("EN"=>"For advanced users: you can insert MySql functions; the edited text must be placed between simple quotes &amp;#40;&amp;#39;&amp;#41;.","RO"=>"Pentru avansați: permite folosirea funcțiilor MySql, conținutul editat trebuie pus între ghilimele simple &amp;#40;&amp;#39;&amp;#41;."),
+"Truncated_view"=>array("EN"=>"Show truncated cell content, except for the current edited cell","RO"=>"Afișare trunchiată pentru celulele unde nu se editează"),
+"Truncated_view_expl"=>array("EN"=>"The table cells are small when not selected (not clicked inside) for simpler navigation. Some of the text in cells may not be shown.","RO"=>"Pentru avansați: permite folosirea funcțiilor MySql, conținutul editat trebuie pus între ghilimele simple &amp;#40;&amp;#39;&amp;#41;."),
+"Quot_for_date"=>array("EN"=>"Use &quot;&#36;&quot symbol for current date","RO"=>"Simbolul &quot;&#36;&quot pentru data curentă"),
+"Quot_for_time"=>array("EN"=>"Use &quot;&#36;&quot symbol for current time","RO"=>"Simbolul &quot;&#36;&quot pentru timpul curent"),
+"Quot_for_date_time"=>array("EN"=>"Use &quot;&#36;&quot symbol for current date and time","RO"=>"Simbolul &quot;&#36;&quot pentru data și timpul curente"),
+"Quot_for_time_expl"=>array("EN"=>"On &amp;#40;TIME&amp;#41; columns, the &amp;quot;&amp;#36;&amp;quot; character inserted alone in the cell sets its value to current server time.","RO"=>"Pe coloanele de tip timp &amp;#40;TIME&amp;#41;, caracterul &amp;quot;&amp;#36;&amp;quot; introdus singur în celulă, setează timpul curent al serverului ca valoare a acelei celule."),
+"Quot_for_date_expl"=>array("EN"=>"On &amp;#40;DATE&amp;#41; columns, the &amp;quot;&amp;#36;&amp;quot; character inserted alone in the cell sets its value to current server date.","RO"=>"Pe coloanele de tip timp &amp;#40;DATE&amp;#41;, caracterul &amp;quot;&amp;#36;&amp;quot; introdus singur în celulă, setează data curentă al serverului ca valoare a acelei celule."),
+"Quot_for_date_time_expl"=>array("EN"=>"On &amp;#40;DATETIME&amp;#41; columns, the &amp;quot;&amp;#36;&amp;quot; character inserted alone in the cell sets its value to current server date and time.","RO"=>"Pe coloanele de tip timp &amp;#40;DATETIME&amp;#41;, caracterul &amp;quot;&amp;#36;&amp;quot; introdus singur în celulă, setează data și timpul curente ale serverului ca valoare a acelei celule."),
+"Create_col"=>array("EN"=>"Create column","RO"=>"Creare coloană"),
+"Insert_col_name"=>array("EN"=>"Insert column name:","RO"=>"Introdu numele coloanei:"),
+"Choose_col_data_type"=>array("EN"=>"Choose column data type:","RO"=>"Alege tipul de date al coloanei:"),
+"Chas_been_created"=>array("EN"=>"has been created","RO"=>"a fost creată"),
+"Column"=>array("EN"=>"Column","RO"=>"Coloana"),
+"Edit_done"=>array("EN"=>"Edit done.","RO"=>"Editare realizată."),
+"Really_del_col"=>array("EN"=>"Do you really want to delete column","RO"=>"Sigur ștergi coloana"),
+"Chas_been_removed"=>array("EN"=>"has been removed","RO"=>"a fost ștearsă"),
+"Really_del_row"=>array("EN"=>"Do you really want to delete the selected row?","RO"=>"Sigur ștergi rândul selectat?"),
+"Leave_page"=>array("EN"=>"Some changes are not saved. Do you really want to leave?","RO"=>"Unele modificări nu s-au salvat. Sigur părăsești pagina?"),
+"results_on"=>array("EN"=>"results on","RO"=>"rezultate pe"),
+"rows"=>array("EN"=>"rows","RO"=>"rânduri"),
+"Show_all_rows"=>array("EN"=>"Show all rows","RO"=>"Afișează toate rândurile"),
+"Insert_new_name"=>array("EN"=>"Insert new name:","RO"=>"Introdu noul nume:"),
+"Rename_done"=>array("EN"=>"Rename done!","RO"=>"Redenumire realizată!"),
+"In_this_db"=>array("EN"=>"In this database","RO"=>"În această bază de date"),
+"In_other_db"=>array("EN"=>"In other database","RO"=>"În altă bază de date"),
+"Copy_done"=>array("EN"=>"Copy done!","RO"=>"Copiere realizată!"),
+"File_too_big"=>array("EN"=>"The file could not be uploaded or is too big!","RO"=>"Fișierul nu poate fi încărcat sau e prea mare!"),
+"Style_CSS"=>array("EN"=>"Style with CSS","RO"=>"Formatează cu CSS"),
+"Link_new_tab"=>array("EN"=>"Link in new tab:","RO"=>"Link în filă nouă:")
 );
 //*TRANSLATIONS
 function echo_jquery(){
@@ -93,28 +265,101 @@ function encodeJsonSafe($data){
 	else return $data1;
 }
 session_start();
-//IniSetari
-if(isset($_COOKIE['mysettings'])){
-	$SETTINGS=json_decode($_COOKIE['mysettings'],TRUE);
+//GenInstance
+if (isset($_SESSION['userdb'])){
+	if (!isset($_GET['instance'])||!isset($_SESSION['instancedb'][$_GET['instance']])){
+		$instance=bin2hex(random_bytes(20));
+		while(isset($_SESSION['instancedb'][$instance])){
+			$instance=bin2hex(random_bytes(20));
+		}
+		$_SESSION['instancedb'][$instance]=array();
+		header("Location: ".$_SERVER['PHP_SELF'].'?instance='.$instance);
+		die();
+	}
+	$PHP_SELF_INSTANCE=$_SERVER['PHP_SELF'].'?instance='.$_GET['instance'];
+}
+//*GenInstance
+
+//IniSettings
+if(isset($_SESSION['instancedb'][$_GET['instance']]['mysettings'])){
+	$SETTINGS=json_decode($_SESSION['instancedb'][$_GET['instance']]['mysettings'],TRUE);
 }
 else $SETTINGS=$DEFAULTSET;
-if(isset($_COOKIE['myencoding'])){
-	$CHARSET=$_COOKIE['myencoding'];
+if(isset($_SESSION['instancedb'][$_GET['instance']]['myencoding'])){
+	$CHARSET=$_SESSION['instancedb'][$_GET['instance']]['myencoding'];
 }
 else $CHARSET=$defaultCharset;
-//*IniSetari
+if(isset($_COOKIE['mylanguage'])){
+	$LANG=$_COOKIE['mylanguage'];
+}
+else $LANG=$defaultLanguage;
+//*IniSettings
 //Logout
 if ($_GET['act']=='logout'){
 	logout();
 	echo 1;
 	die();
 }
-if ($_GET['act']=='logoutdb'&&$_POST['CSRF']==$_SESSION['CSRF']){
+if ($_GET['act']=='logoutdb'&&$_POST['CSRF']==$_SESSION['CSRFdb']){
 	logout_db();
 	echo 1;
 	die();
 }
 //*Logout
+//Encoding,settings,orderSet
+
+if ($_GET['act']=='enc_change'&&$_POST['CSRF']==$_SESSION['CSRFdb']){
+	$res=array();
+	if (!isset($_POST['newEnc'])){
+		$res['stat']='con_err';
+		$res['con_err']='login';
+	}
+	else {
+		if (set_instance_key('myencoding',$_POST['newEnc'])) $res['stat']='success';
+		else {
+			$res['stat']='con_err';
+		$res['con_err']='login';
+		}
+	}
+	echo encodeJsonSafe($res);
+	die();
+}
+
+if ($_GET['act']=='enc_switch'&&$_POST['CSRF']==$_SESSION['CSRFdb']){
+	$res=array();
+	if (!isset($_POST['newState'])){
+		$res['stat']='con_err';
+		$res['con_err']='login';
+	}
+	else {
+		if (set_instance_key('myencstate',$_POST['newState'])) $res['stat']='success';
+		else {
+			$res['stat']='con_err';
+		$res['con_err']='login';
+		}
+	}
+	echo encodeJsonSafe($res);
+	die();
+}
+
+if ($_GET['act']=='save_settings'&&$_POST['CSRF']==$_SESSION['CSRFdb']){
+	$res=array();
+	if (!isset($_POST['newSettings'])){
+		$res['stat']='con_err';
+		$res['con_err']='login';
+	}
+	else {
+		if (set_instance_key('mysettings',$_POST['newSettings'])) $res['stat']='success';
+		else {
+			$res['stat']='con_err';
+		$res['con_err']='login';
+		}
+	}
+	echo encodeJsonSafe($res);
+	die();
+}
+//*Encoding,settings,orderSet
+
 //BACKUP
 $backupDatabaseTexts=array('initial'=>"/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -138,12 +383,12 @@ $backupDatabaseTexts=array('initial'=>"/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 ");
-if ($_GET['act']=='backup'&&$_POST['CSRF']==$_SESSION['CSRF']){
+if ($_GET['act']=='backup'&&$_POST['CSRF']==$_SESSION['CSRFdb']){
 	register_shutdown_function(function(){
 	if ($err=error_get_last()){
 		if ($err['type']==E_ERROR) {
 		header("Content-Type: text/html;charset=utf-8");
-		echo create_error_page('Backup error');}
+		echo create_error_page($GLOBALS["TR"]["Backup_error"][$GLOBALS["LANG"]]);}
 	}
 	});
 	if ($_POST['backupWholeDb']=='no'){
@@ -156,67 +401,67 @@ if ($_GET['act']=='backup'&&$_POST['CSRF']==$_SESSION['CSRF']){
 	else $tables=NULL;
 	if ($conn=create_connection()){
 		if (select_database($conn)){
-	$k=($tables===NULL)?generateBackupDb($conn,$_SESSION['actdb']):generateBackupTables($conn,$tables);
+	$k=($tables===NULL)?generateBackupDb($conn,$_SESSION['instancedb'][$_GET['instance']]['actdb']):generateBackupTables($conn,$tables);
 	if ($k===FALSE) {
 		header("Content-Type: text/html;charset=utf-8");
-		echo create_error_page('Backup error');
+		echo create_error_page($GLOBALS["TR"]["Backup_error"][$GLOBALS["LANG"]]);
 	}
 	else {
 	header('Content-Type: application/force-download');
-	header('Content-Disposition: attachment; filename="'.(($tables!==NULL)?(urlencode($_SESSION['actdb']).'_tables'):urlencode($_SESSION['actdb'])).'.sql"');
+	header('Content-Disposition: attachment; filename="'.(($tables!==NULL)?(urlencode($_SESSION['instancedb'][$_GET['instance']]['actdb']).'_tables'):urlencode($_SESSION['instancedb'][$_GET['instance']]['actdb'])).'.sql"');
 	echo $k;
 	}
 		}
 		else {
 		header("Content-Type: text/html;charset=utf-8");
-		echo create_error_page('Error loading database');
+		echo create_error_page($GLOBALS["TR"]["DB_load_error"][$GLOBALS["LANG"]]);
 		}
 	}
 	else {
 		header("Content-Type: text/html;charset=utf-8");
-		echo create_error_page('Connection error');
+		echo create_error_page($GLOBALS["TR"]["conn_err"][$GLOBALS["LANG"]]);
 	}
 	die();
 }
 //*BACKUP
 header("Content-Type: text/html;charset=utf-8");
 //IMPORT
-if ($_GET['act']=='import'&&$_POST['CSRF']==$_SESSION['CSRF']){
+if ($_GET['act']=='import'&&$_POST['CSRF']==$_SESSION['CSRFdb']){
 register_shutdown_function(function(){
 	if ($err=error_get_last()){
 		if ($err['type']==E_ERROR) {
 		header("Content-Type: text/html;charset=utf-8");
-		echo create_error_page('Import error');}
+		echo create_error_page($GLOBALS["TR"]["Import_error"][$GLOBALS["LANG"]]);}
 	}
 	});
 	if (!isset($_POST['is_upload'])) echo create_error_page('Import error');
-	else if (isset($_POST['is_upload']) && !($_FILES['import_file']['size'] > 0)) echo create_error_page('The file could not be uploaded or is too big!');
+	else if (isset($_POST['is_upload']) && !($_FILES['import_file']['size'] > 0)) echo create_error_page($GLOBALS["TR"]["File_too_big"][$GLOBALS["LANG"]]);
 	else{
 		if ($conn=create_connection()){
-			if (isset($_SESSION['actdb'])) mysqli_select_db($conn,$_SESSION['actdb']);
+			if (isset($_SESSION['instancedb'][$_GET['instance']]['actdb'])) mysqli_select_db($conn,$_SESSION['instancedb'][$_GET['instance']]['actdb']);
 			$cont=file_get_contents($_FILES['import_file']['tmp_name']);
 			 $bom = pack('H*','EFBBBF');
 			$cont = preg_replace("/^$bom/", '', $cont);
 			mysqli_multi_query($conn,$cont);
 		do{
-			if (mysqli_errno($conn)) {echo create_error_page('<span style="color:red">Mysql error: </span>'.htmlspecialchars(mysqli_error($conn)));
+			if (mysqli_errno($conn)) {echo create_error_page('<span style="color:red">'.$GLOBALS["TR"]["Mysl"][$GLOBALS["LANG"]].': </span>'.htmlspecialchars(mysqli_error($conn)));
 			mysqli_close($conn);
 			die();
 			}
 		}while(mysqli_next_result($conn));
-		if (mysqli_errno($conn)) echo create_error_page('<span style="color:red">Mysql error: </span>'.htmlspecialchars(mysqli_error($conn)));
-		else echo create_info_page('Import done');
+		if (mysqli_errno($conn)) echo create_error_page('<span style="color:red">'.$GLOBALS["TR"]["Mysl"][$GLOBALS["LANG"]].': </span>'.htmlspecialchars(mysqli_error($conn)));
+		else echo create_info_page($GLOBALS["TR"]["Import_done"][$GLOBALS["LANG"]]);
 		mysqli_close($conn);
 		}
 		else{
-			echo create_error_page('Connection error');
+			echo create_error_page($GLOBALS["TR"]["conn_err"][$GLOBALS["LANG"]]);
 		}
 	}
 	die();
 }
 //*IMPORT
 //PQUERY
-if ($_GET['act']=='pquery'&&$_POST['CSRF']==$_SESSION['CSRF']){
+if ($_GET['act']=='pquery'&&$_POST['CSRF']==$_SESSION['CSRFdb']){
 	$conn=create_connection();
 	$ok=1;
 	if(!$conn){
@@ -224,7 +469,7 @@ if ($_GET['act']=='pquery'&&$_POST['CSRF']==$_SESSION['CSRF']){
 		$res['con_err']='login';
 		$ok=0;
 	}
-	else if (isset($_SESSION['actdb'])){
+	else if (isset($_SESSION['instancedb'][$_GET['instance']]['actdb'])){
 		if (!select_database($conn)){
 			$res['stat']='con_err';
 		$res['con_err']='dbmiss';
@@ -234,7 +479,7 @@ if ($_GET['act']=='pquery'&&$_POST['CSRF']==$_SESSION['CSRF']){
 	if ($ok){
 		$res['stat']='success';
 		if ($result=mysqli_query($conn,$_POST['query'])){
-			if (mysqli_num_fields($result)==0) $res['result']='Query with void result.<br>Affected rows: '.mysqli_affected_rows($conn);
+			if (mysqli_num_fields($result)==0) $res['result']=$GLOBALS["TR"]["Query_void"][$GLOBALS["LANG"]].'<br>'.$GLOBALS["TR"]["Affected_rows"][$GLOBALS["LANG"]].' '.mysqli_affected_rows($conn);
 			else {
 				$res['result']='<table border="3" style="margin-left:auto;margin-right:auto;"><tr>';
 				while($fieldinfo=mysqli_fetch_field($result)){
@@ -260,7 +505,7 @@ if ($_GET['act']=='pquery'&&$_POST['CSRF']==$_SESSION['CSRF']){
 //*PQUERY
 //Log in
 //Creare db
-if ($_GET['act']=='createdb'&&$_POST['CSRF']==$_SESSION['CSRF']){
+if ($_GET['act']=='createdb'&&$_POST['CSRF']==$_SESSION['CSRFdb']){
 	$conn=create_connection();
 	$res=array();
 	if ($conn===FALSE){
@@ -281,7 +526,7 @@ if ($_GET['act']=='createdb'&&$_POST['CSRF']==$_SESSION['CSRF']){
 }
 //*Creare db
 //Creare selectie db
-if ($_GET['act']=='dbselectcreate'&&$_POST['CSRF']==$_SESSION['CSRF']){
+if ($_GET['act']=='dbselectcreate'&&$_POST['CSRF']==$_SESSION['CSRFdb']){
 	$res=array();
 	if ($conn=create_connection()){
 		$res['stat']='success';
@@ -296,10 +541,10 @@ if ($_GET['act']=='dbselectcreate'&&$_POST['CSRF']==$_SESSION['CSRF']){
 }
 //*Creare selectie db
 //Selectie db
-if ($_GET['act']=='selectdb'&&$_POST['CSRF']==$_SESSION['CSRF']){
+if ($_GET['act']=='selectdb'&&$_POST['CSRF']==$_SESSION['CSRFdb']){
 	$res=array();
 	if ($conn=create_connection()){
-		$_SESSION['actdb']=$_POST['db'];
+		$_SESSION['instancedb'][$_GET['instance']]['actdb']=$_POST['db'];
 		if (select_database($conn)){
 			$res['stat']='success';
 			$res['all']=create_table_select($conn);
@@ -316,11 +561,11 @@ if ($_GET['act']=='selectdb'&&$_POST['CSRF']==$_SESSION['CSRF']){
 	echo encodeJsonSafe($res);
 	die();
 }
-if ($_GET['act']=='showactdb'&&$_POST['CSRF']==$_SESSION['CSRF']){
+if ($_GET['act']=='showactdb'&&$_POST['CSRF']==$_SESSION['CSRFdb']){
 	$res=array();
-	if (isset($_SESSION['actdb'])){
+	if (isset($_SESSION['instancedb'][$_GET['instance']]['actdb'])){
 		$res['stat']='success';
-		$res['db']=$_SESSION['actdb'];
+		$res['db']=$_SESSION['instancedb'][$_GET['instance']]['actdb'];
 	}
 	else {
 		$res['stat']='con_err';
@@ -331,14 +576,14 @@ if ($_GET['act']=='showactdb'&&$_POST['CSRF']==$_SESSION['CSRF']){
 }
 //*Selectie db
 //Stergere db
-if ($_GET['act']=='dropdb'&&$_POST['check']=="DA"&&$_POST['CSRF']==$_SESSION['CSRF']){
+if ($_GET['act']=='dropdb'&&$_POST['check']=="DA"&&$_POST['CSRF']==$_SESSION['CSRFdb']){
 	$res=array();
 	if ($conn=create_connection()){
 		if (select_database($conn)){
-			$SQL='DROP DATABASE '.pname($_SESSION['actdb'],FALSE);
+			$SQL='DROP DATABASE '.pname($_SESSION['instancedb'][$_GET['instance']]['actdb'],FALSE);
 			if (mysqli_query($conn,$SQL)){
 				$res['stat']='success';
-				$res['db']=htmlspecialchars($_SESSION['actdb']);
+				$res['db']=htmlspecialchars($_SESSION['instancedb'][$_GET['instance']]['actdb']);
 				logout_db();
 			}
 			else{
@@ -360,7 +605,7 @@ if ($_GET['act']=='dropdb'&&$_POST['check']=="DA"&&$_POST['CSRF']==$_SESSION['CS
 }
 //*Stergere db
 //Creare tabel
-if ($_GET['act']=='createtbl'&&$_POST['CSRF']==$_SESSION['CSRF']){
+if ($_GET['act']=='createtbl'&&$_POST['CSRF']==$_SESSION['CSRFdb']){
 		$res=array();
 	if ($conn=create_connection()){
 		if (select_database($conn)){
@@ -387,7 +632,7 @@ if ($_GET['act']=='createtbl'&&$_POST['CSRF']==$_SESSION['CSRF']){
 }
 //*Creare tabel
 //Creare selectie tabel
-if ($_GET['act']=='tblselectcreate'&&$_POST['CSRF']==$_SESSION['CSRF']){
+if ($_GET['act']=='tblselectcreate'&&$_POST['CSRF']==$_SESSION['CSRFdb']){
 	$res=array();
 	if ($conn=create_connection()){
 		if (select_database($conn)){
@@ -407,11 +652,11 @@ if ($_GET['act']=='tblselectcreate'&&$_POST['CSRF']==$_SESSION['CSRF']){
 }
 //*Creare selectie tabel
 //Selectare tabel
-if ($_GET['act']=='selecttbl'&&$_POST['CSRF']==$_SESSION['CSRF']){
+if ($_GET['act']=='selecttbl'&&$_POST['CSRF']==$_SESSION['CSRFdb']){
 	$res=array();
 	if ($conn=create_connection()){
 		if (select_database($conn)){
-			$_SESSION['acttab']=$_POST['tbl'];
+			$_SESSION['instancedb'][$_GET['instance']]['acttab']=$_POST['tbl'];
 			if (check_table_exist($conn)){
 				$res['stat']='success';
 			}
@@ -433,28 +678,28 @@ if ($_GET['act']=='selecttbl'&&$_POST['CSRF']==$_SESSION['CSRF']){
 }
 //*Selectare tabel
 //LISTA_TABELE
-if ($_GET['act']=='tables_list'&&$_POST['CSRF']==$_SESSION['CSRF']){
+if ($_GET['act']=='tables_list'&&$_POST['CSRF']==$_SESSION['CSRFdb']){
 	$res=array();
 	if ($conn=create_connection()){
 		if (select_database($conn)){
-		if(isset($GLOBALS['DEFAULTDBS'])&&isset($GLOBALS['DEFAULTDBS']['tables'][$_SESSION['actdb']])&&$GLOBALS['DEFAULTDBS']['tables'][$_SESSION['actdb']]!=NULL){
-		if (count($GLOBALS['DEFAULTDBS']['tables'][$_SESSION['actdb']])>0){
+		if(isset($GLOBALS['DEFAULTDBS'])&&isset($GLOBALS['DEFAULTDBS']['tables'][$_SESSION['instancedb'][$_GET['instance']]['actdb']])&&$GLOBALS['DEFAULTDBS']['tables'][$_SESSION['instancedb'][$_GET['instance']]['actdb']]!=NULL){
+		if (count($GLOBALS['DEFAULTDBS']['tables'][$_SESSION['instancedb'][$_GET['instance']]['actdb']])>0){
 			$res['stat']='success';
 			$res['cnt']=array();
-		foreach ($GLOBALS['DEFAULTDBS']['tables'][$_SESSION['actdb']] as $tbll){
+		foreach ($GLOBALS['DEFAULTDBS']['tables'][$_SESSION['instancedb'][$_GET['instance']]['actdb']] as $tbll){
 			array_push($res['cnt'],htmlspecialchars($tbll));
 		}
 		}
 		else {
 			$res['stat']='fail';
-			$res['error']='There is no table!';
+			$res['error']=$GLOBALS["TR"]["No_tableLarge"][$GLOBALS["LANG"]];
 		}
 	}
 	else{
 $sql='SHOW tables';
 if (($result=mysqli_query($conn,$sql))===FALSE||mysqli_num_rows($result)==0){
 	$res['stat']='fail';
-	$res['error']='There is no table!';
+	$res['error']=$GLOBALS["TR"]["No_tableLarge"][$GLOBALS["LANG"]];
 }
 else{
 	$res['stat']='success';
@@ -492,8 +737,13 @@ if (!$connver) $connver=mysqli_connect('127.0.0.1',$_POST['usr'],$_POST['pwd']);
 		$res['stat']='success';
 		$_SESSION['userdb']=$_POST['usr'];
 		$_SESSION['pwddb']=$_POST['pwd'];
-		$_SESSION['CSRF']=bin2hex(random_bytes(40));
-		$res['all']=create_database_select($connver);
+		$_SESSION['CSRFdb']=bin2hex(random_bytes(40));
+		$instance=bin2hex(random_bytes(20));
+		while(isset($_SESSION['instancedb'][$instance])){
+			$instance=bin2hex(random_bytes(20));
+		}
+		$_SESSION['instancedb'][$instance]=array();
+		$res['instance']=$instance;
 		}
 		else $res['stat']='fail';
 		mysqli_close($connver);
@@ -565,15 +815,15 @@ if (!$connver) $connver=mysqli_connect('127.0.0.1',$_POST['usr'],$_POST['pwd']);
 	margin-left:-120px;
 	top:20px;
 	padding:20px;vertical-align:middle;text-align:center;
-	font-family: "Brush Script MT",cursive;
+	font-family: sans-serif,cursive;
 	font-size:26px;
 	color:#0000EE;
 }
 .brush_mt{
-	font-family: "Brush Script MT",cursive;
+	font-family: sans-serif,cursive;
 }
 .closing{
-	font-family: Arial,"Helvetica Neue",Helvetica,sans-serif;
+	font-family: sans-serif;
 	text-decoration:none;
 	color:#777;
 	font-weight:bold;
@@ -615,23 +865,25 @@ if (!$connver) $connver=mysqli_connect('127.0.0.1',$_POST['usr'],$_POST['pwd']);
 	echo '<body>
 	<div id="banner">
 	Access MySqli <br>
-	Version '.$VERSION.'
+	'.$GLOBALS["TR"]["Version"][$GLOBALS["LANG"]].' '.$VERSION.'
 	</div>
 	<div id="logindiv">';
 	if (!$conn){
-	echo'<br>
-	<span style="font-weight:bold;font-size:20px;padding-left:30px;">Log in</span><br><br><br>
+	echo<<<EOT
+	<br>
+	<span style="font-weight:bold;font-size:20px;padding-left:30px;">{$GLOBALS["TR"]["Log_in"][$GLOBALS["LANG"]]}</span><br><br><br>
 	<div class="input_container">
-	<input type="text" class="input_element" id="User" value="User"></input>
+	<input type="text" class="input_element" id="User" value="{$GLOBALS["TR"]["User"][$GLOBALS["LANG"]]}" my_old_val="{$GLOBALS["TR"]["User"][$GLOBALS["LANG"]]}"></input>
 	</div><br><br>
 	<div class="input_container">
-	<input type="text" class="input_element" id="Password" value="Password"></input>
+	<input type="text" class="input_element" id="Password" value="{$GLOBALS["TR"]["Password"][$GLOBALS["LANG"]]}" my_old_val="{$GLOBALS["TR"]["Password"][$GLOBALS["LANG"]]}"></input>
 	</div><br>
 	<div style="padding-right:25px;"><br>
-	<button type="button" onclick="login_attempt()" class="but" style="float:right;">Log in</button></div>
+	<button type="button" onclick="login_attempt()" class="but" style="float:right;">{$GLOBALS["TR"]["Log_in"][$GLOBALS["LANG"]]}</button></div>
 	<div style="color:#FFFFFF;font-size:20px;font-weight:bold;padding-left:25px;" id="error"></div>
 	<script>
 	function login_attempt(){
+		$('#error').html('');
 		var usInp=document.getElementById("User");
 		var pInp=document.getElementById("Password");
 		var us,pas;
@@ -644,7 +896,7 @@ if (!$connver) $connver=mysqli_connect('127.0.0.1',$_POST['usr'],$_POST['pwd']);
 		}
 		else pas=$("#Password").val();
 		document.getElementById("logindiv").createPreloader();
-		$.post("access_mysqli.php?act=checkuser&ajax=true",{usr:us,pwd:pas},function(result){
+		$.post("{$_SERVER['PHP_SELF']}?act=checkuser&ajax=true",{usr:us,pwd:pas},function(result){
 			var res=JSON.parse(result);
 			if (res["stat"]=="fail"){
 				document.getElementById("logindiv").removePreloader();
@@ -652,7 +904,7 @@ if (!$connver) $connver=mysqli_connect('127.0.0.1',$_POST['usr'],$_POST['pwd']);
 			}
 			else {
 				document.getElementById("logindiv").removePreloader();
-				$("#logindiv").html(res["all"]);
+				window.location.href='{$_SERVER['PHP_SELF']}?instance='+res["instance"];
 			}
 		});
 	}
@@ -667,16 +919,17 @@ if (!$connver) $connver=mysqli_connect('127.0.0.1',$_POST['usr'],$_POST['pwd']);
 		$(".input_element").blur(function(){
 			if (this.value==""){
 				this.style.color="#679596";
-				this.value=this.getAttribute("id");
+				this.value=this.getAttribute("my_old_val");
 				this.type="text";
 			}
 		});
 		$(".input_element").keypress(function(e){
 				if (e.keyCode==13) login_attempt();
 		})
-	});
+	})
 	</script>
-	';}
+EOT;
+}
 	else if (!$sldb){
 		echo create_database_select($conn);
 	}
@@ -701,34 +954,55 @@ if (!$conn)	$conn=mysqli_connect('127.0.0.1',$_SESSION['userdb'],$_SESSION['pwdd
 
 }
 function enc_build(){
-if (isset($_COOKIE['myencstate'])&&$_COOKIE['myencstate']=="close")
-echo '<div id="up_encoding" style="position:fixed;z-index:12;left:50%;width:530px;height:60px;margin-left:-265px;top:-40px;" my_state="close">';
+if (isset($_SESSION['instancedb'][$_GET['instance']]['myencstate'])&&$_SESSION['instancedb'][$_GET['instance']]['myencstate']=="close")
+echo '<div id="up_encoding" style="position:fixed;z-index:12;left:50%;width:800px;height:60px;margin-left:-400px;top:-40px;" my_state="close">';
 else
-echo '<div id="up_encoding" style="position:fixed;z-index:12;left:50%;width:530px;height:60px;margin-left:-265px;top:-10px;" my_state="open">';
-echo '<div title="Schimbare codare caractere" style="background-color:#4F4FFF;width:40px;height:30px;margin-left:auto;margin-right:auto;border-radius:4px;position:absolute;top:25px;left:50%;margin-left:-20px;z-index:-1;cursor:pointer;" onclick="switchEncDiv()">
+echo '<div id="up_encoding" style="position:fixed;z-index:12;left:50%;width:800px;height:60px;margin-left:-400px;top:-10px;" my_state="open">';
+if (isset($_SESSION['instancedb'][$_GET['instance']]))  echo '<div title="'.$GLOBALS["TR"]["Change_encoding_language"][$GLOBALS["LANG"]].'" style="background-color:#4F4FFF;width:40px;height:30px;margin-left:auto;margin-right:auto;border-radius:4px;position:absolute;top:25px;left:50%;margin-left:-20px;z-index:-1;cursor:pointer;" onclick="switchEncDiv()">
 	<div style="height:15px">&nbsp;</div>
 	<svg viewBox="0 0 100 50" style="width:30px;height:15px;margin-left:5px">
 	<path d="M 10,10 L 50,40 L 90,10 L 80,10 L 50,30 L 20,10 Z" stroke="#FFFFFF" stroke-width="2" fill="#000000"/>
 	</svg>
-	</div>
-	<div style="background-color:#E88435;width:510px;height:40px;margin-left:auto;margin-right:auto;border-radius:5px;z-index:11;color:white;padding-left:10px;padding-right:10px;"><div style="height:15px;"></div>
-	&nbsp;&nbsp;&nbsp;&nbsp;Encoding used when comunicatind with MySql:&nbsp;<select id="enc_select" onchange="enc_change()" style="border:solid #999 1px;border-radius:5px;">';
+	</div>';
+echo '<div style="background-color:#E88435;width:780px;height:40px;margin-left:auto;margin-right:auto;border-radius:5px;z-index:11;color:white;padding-left:10px;padding-right:10px;"><div style="height:15px;"></div>
+	<div style="float:left">&nbsp;&nbsp;&nbsp;&nbsp;Language: &nbsp;<select id="lang_select" onchange="lang_change()" style="border:solid #999 1px;border-radius:5px;">';
+	for ($i=0;$i<count($GLOBALS['languages']);$i++){
+		echo '<option value="'.$GLOBALS['languages'][$i].'">'.$GLOBALS['languages'][$i].'</option>';
+	}
+	echo'</select></div>';
+if (isset($_SESSION['instancedb'][$_GET['instance']])){
+	echo '<div style="float:right">
+	'.$GLOBALS["TR"]["Encoding_used"][$GLOBALS["LANG"]].'&nbsp;<select id="enc_select" onchange="enc_change()" style="border:solid #999 1px;border-radius:5px;">';
 	for ($i=0;$i<count($GLOBALS['encodings']);$i++){
 		echo '<option value="'.$GLOBALS['encodings'][$i].'">'.$GLOBALS['encodings'][$i].'</option>';
 	}
-	echo'</select>
-	</div>
+	echo'</select>&nbsp;&nbsp;&nbsp;&nbsp;</div>
 	<script>
-	var currentEnc=getCookie("myencoding");
-	if (currentEnc!=null&&currentEnc!="") $("#enc_select").val(currentEnc);
+	var currentEnc=';
+	if (isset($_SESSION['instancedb'][$_GET['instance']]['myencoding'])) echo "'".$_SESSION['instancedb'][$_GET['instance']]['myencoding']."';";
+	else echo "'".$GLOBALS['defaultCharset']."';";
+	echo ' $("#enc_select").val(currentEnc);
+	</script>';
+}
+	echo '<script>
+	var currentLang=getCookie("mylanguage");
+	if (currentLang!=null&&currentLang!="") $("#lang_select").val(currentLang);
 	else {
-		$("#enc_select").val("';
-		echo $GLOBALS['defaultCharset'];
+		$("#lang_select").val("';
+		echo $GLOBALS['defaultLanguage'];
 	echo'");
 	}
-	</script>
-	</div>';
+	</script>';
+	echo '</div></div>';
 }
+function set_instance_key($key,$value){
+	if (!isset($_SESSION['instancedb'][$_GET['instance']])){
+		return 0;
+	}
+		$_SESSION['instancedb'][$_GET['instance']][$key]=$value;
+		return 1;
+}
+
 function meta_build(){
 	echo '
 <!DOCTYPE html>
@@ -740,7 +1014,7 @@ function meta_build(){
 <script>';
 echo_jquery();
 echo '</script>';
-echo <<<'EOT'
+echo <<<EOT
 <script>
 var active=0;
 function wait(arg){
@@ -857,6 +1131,9 @@ Element.prototype.removeShaddow=function(){
 		arr[i].parentNode.removeChild(arr[i]);
 	}
 }
+EOT;
+echo<<<'EOT'
+
 function escapeForRegex(str){
 	/*https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions*/
 	return str.replace(/[.*+?!^${}()|\[\]\\]/g,function(x){return '\\'+x;});
@@ -1018,33 +1295,35 @@ function htmlspecialchars_decode(string, quote_style) {
   return string;
 }
 //*PHPJS.ORG
+EOT;
+echo<<<EOT
 </script>
 <script>
 function gen_error(arg){
 	var text,cls;
 	switch(arg){
 		case 'login':
-		text='Connection error.';
+		text='{$GLOBALS["TR"]["conn_err"][$GLOBALS["LANG"]]}';
 		cls=0;
 		break;
 		case 'dbmiss':
-		text='Error loading database.';
+		text='{$GLOBALS["TR"]["dbmiss"][$GLOBALS["LANG"]]}';
 		cls=0;
 		break;
 		case 'tblmiss':
-		text='Error loading table.';
+		text='{$GLOBALS["TR"]["tblmiss"][$GLOBALS["LANG"]]}';
 		cls=0;
 		break;
 		case 'colmiss':
-		text='The table was modified before processing query.';
+		text='{$GLOBALS["TR"]["colmiss"][$GLOBALS["LANG"]]}';
 		cls=0;
 		break;
 		case 'json_error':
-		text='JSON encoding error. Try changing the encoding from the top of the page';
+		text='{$GLOBALS["TR"]["json_error"][$GLOBALS["LANG"]]}';
 		cls=1;
 		break;
 		case 'bad_link':
-		text='Insert a link address!';
+		text='{$GLOBALS["TR"]["bad_link"][$GLOBALS["LANG"]]}';
 		cls=1;
 		break;
 		default:
@@ -1052,7 +1331,7 @@ function gen_error(arg){
 		cls=1;
 		break;
 		}
-		if (text===false) text='<span style="font-weight:bold;color:red">Mysql error:</span><br>'+arg;
+		if (text===false) text='<span style="font-weight:bold;color:red">{$GLOBALS["TR"]["MySQL_error"][$GLOBALS["LANG"]]}:</span><br>'+arg;
 		conerdiv=document.createElement('div');
 		conerdiv.style.position="fixed";
 		conerdiv.style.top="0px";
@@ -1072,7 +1351,7 @@ function gen_error(arg){
 		</svg>&nbsp;&nbsp;&nbsp;<span style="color:red;font-weight:bold;position:relative;top:-10px">ERROR!</span>\
 		</div><br>\
 		<div style="overflow:auto;height:130px">'+text+'</div>\
-		<div style="height:50px;">Click OK to close:<button type="button" style="cursor:pointer;position:relative;top:-5px;float:right;margin-right:25px;color:#FFFFFF;background-color:#CC8D00;width:75px;font-size:18px;" onclick="close_error(\''+cls+'\')">OK</button></div>\
+		<div style="height:50px;">{$GLOBALS["TR"]["OK_to_close"][$GLOBALS["LANG"]]}<button type="button" style="cursor:pointer;position:relative;top:-5px;float:right;margin-right:25px;color:#FFFFFF;background-color:#CC8D00;width:75px;font-size:18px;" onclick="close_error(\''+cls+'\')">{$GLOBALS["TR"]["OK"][$GLOBALS["LANG"]]}</button></div>\
 		</div>';
 		if (document.getElementsByTagName('body')[0].getElementsByClassName('conerdiv').length==0){
 			document.getElementsByTagName('body')[0].appendChild(conerdiv);
@@ -1085,7 +1364,7 @@ function close_error(arg){
 			document.getElementsByTagName('body')[0].removeChild(arr[0]);
 	}}
 	else {
-		window.location.href="access_mysqli.php";
+		window.location.href="{$GLOBALS['PHP_SELF_INSTANCE']}";
 		}
 	}
 EOT;
@@ -1100,12 +1379,12 @@ function gen_pquery(){
 	pqr.setAttribute('style','text-align:center;background-color:#FFF2A0;width:98%;height:98%;position:fixed;top:1%;left:1%;z-index:9;border-radius:10px;overflow:hidden;');
 	pqr.setAttribute('class','pqr');
 	var inr='\
-	<a href="javascript:close_pquery()" class="closing" style="font-size:26px;position:absolute;right:20px;top:10px;" title="Close">x</a>\
-	<div><h3 style="text-align:center">Insert query:</h3></div>\
+	<a href="javascript:close_pquery()" class="closing" style="font-size:26px;position:absolute;right:20px;top:10px;" title="{$GLOBALS["TR"]["Close"][$GLOBALS["LANG"]]}">x</a>\
+	<div><h3 style="text-align:center">{$GLOBALS["TR"]["Insert_query"][$GLOBALS["LANG"]]}</h3></div>\
 	<div style="border:solid 1px #999;border-radius:5px;width:1000px;margin-left:auto;margin-right:auto;padding:20px;position:relative;" id="pqueries">\
 	<textarea  rows="3" cols="60" style="resize: none;border-radius:5px;" id="pqueryquery"></textarea>&nbsp;\
-	<a href="javascript:clear_pquery()" class="closing" style="font-size:26px;position:relative;top:-17px;" title="Empty field">x</a>\
-	<button type="button" style="float:right;background-color:#4F4F80;color:#FFFFFF;font-size:16px;border:none;border-radius:5px;height:25px;cursor:pointer;position:relative;left:-200px;top:12px;" onclick="send_pquery()">Send</button></div>\
+	<a href="javascript:clear_pquery()" class="closing" style="font-size:26px;position:relative;top:-17px;" title="{$GLOBALS["TR"]["Empty_field"][$GLOBALS["LANG"]]}">x</a>\
+	<button type="button" style="float:right;background-color:#4F4F80;color:#FFFFFF;font-size:16px;border:none;border-radius:5px;height:25px;cursor:pointer;position:relative;left:-200px;top:12px;" onclick="send_pquery()">{$GLOBALS["TR"]["Send"][$GLOBALS["LANG"]]}</button></div>\
 	<div style="position:relative;margin-top:20px;height:60%;border-radius:5px;overflow:auto;width:1000px;margin-left:auto;margin-right:auto;background-color:#FFFFFF;padding:20px;" id="pqresult">&nbsp;</div>\
 	';
 	pqr.innerHTML=inr;
@@ -1118,7 +1397,7 @@ function gen_pquery(){
 function close_pquery(){
 	var arr=document.getElementsByTagName('body')[0].getElementsByClassName('pqr');
 	if (arr.length>0){
-		window.location.href="access_mysqli.php";
+		window.location.href="{$GLOBALS['PHP_SELF_INSTANCE']}";
 	}
 
 }
@@ -1130,7 +1409,7 @@ function send_pquery(){
 	if (query!=''){
 		document.getElementById('pqresult').createPreloader();
 		document.getElementById('pqueries').createPreloader();
-		$.post('access_mysqli.php?act=pquery&ajax=true',{query:query,CSRF:(typeof MY_CSRF !='undefined')?MY_CSRF:''},function(result){
+		$.post('{$GLOBALS['PHP_SELF_INSTANCE']}&act=pquery&ajax=true',{query:query,CSRF:(typeof MY_CSRF !='undefined')?MY_CSRF:''},function(result){
 		document.getElementById('pqresult').removePreloader();
 			document.getElementById('pqueries').removePreloader();
 			var ree=JSON.parse(result);
@@ -1235,8 +1514,8 @@ function change_child_color(w,cl){
 	}
 }
 function logout(){
-	$.get('access_mysqli.php?act=logout',function(result){
-		window.location.href='access_mysqli.php';
+	$.get('{$GLOBALS['PHP_SELF_INSTANCE']}&act=logout',function(result){
+		window.location.href='{$_SERVER['PHP_SELF']}';
 	});
 }
 function ge_cr(arg){
@@ -1245,34 +1524,34 @@ function ge_cr(arg){
 	cr.setAttribute('class','create');
 	var inner='<div style="position:absolute;top:0px;left:0px;width:100%;height:100%;background-color:#000000;opacity:0.5;">&nbsp;</div>\
 	<div id="create" style="opacity:1;position:absolute;top:50%;left:50%;width:500px;height:400px;padding:20px;margin-left:-270px;margin-top:-220px;background-color:#FFF2A0;border-radius:5px;">\
-	<a href="javascript:close_cr(\''+arg+'\')" class="closing" style="font-size:24px;position:absolute;right:20px;top:10px;" title="Close">x</a>';
+	<a href="javascript:close_cr(\''+arg+'\')" class="closing" style="font-size:24px;position:absolute;right:20px;top:10px;" title="{$GLOBALS["TR"]["Close"][$GLOBALS["LANG"]]}">x</a>';
 	if (arg=='db'){
-	inner=inner+'<div><h3 style="text-align:center;">Create database</h3></div>\
+	inner=inner+'<div><h3 style="text-align:center;">{$GLOBALS["TR"]["Create_db"][$GLOBALS["LANG"]]}</h3></div>\
 	<br><br>\
 	<div style="padding-left:50px">Insert database name:<br><br>\
 	<div style="margin-left:10px;background-color:#FFFFFF;border-radius:5px;width:250px;padding-left:5px;height:25px;"><input type="text" id="newname" style="margin-top:2px;height:19px;border:none;width:245px;"></input></div></div>';
 }
 if (arg=='tbl1'||arg=='tbl2'){
-	inner=inner+'<div><h3 style="text-align:center;">Create table</h3></div>\
+	inner=inner+'<div><h3 style="text-align:center;">{$GLOBALS["TR"]["Create_tbl"][$GLOBALS["LANG"]]}</h3></div>\
 	<br id="crbr">\
-	<div style="padding-left:50px">Insert table name:<br><br>\
+	<div style="padding-left:50px">{$GLOBALS["TR"]["Insert_tbl_name"][$GLOBALS["LANG"]]}<br><br>\
 	<div style="margin-left:10px;background-color:#FFFFFF;border-radius:5px;width:250px;padding-left:5px;height:25px;"><input type="text" id="newname" style="margin-top:2px;height:19px;border:none;width:245px;"></input></div></div>\
-	<br><div style="padding-left:50px">Insert first column name:<br><br>\
+	<br><div style="padding-left:50px">{$GLOBALS["TR"]["Insert_first_col_name"][$GLOBALS["LANG"]]}<br><br>\
 	<div style="margin-left:10px;background-color:#FFFFFF;border-radius:5px;width:250px;padding-left:5px;height:25px;"><input type="text" id="newcolname" style="margin-top:2px;height:19px;border:none;width:245px;"></input></div></div>\
-	<br><div style="padding-left:50px">Choose first table data type:<br><br>\
+	<br><div style="padding-left:50px">{$GLOBALS["TR"]["Choose_first_col_data_type"][$GLOBALS["LANG"]]}<br><br>\
 	<select onchange="newdatashow(this)" style="border-radius:5px;color:#FFFFFF;background-color:#CC8D00;font-size:14px;" id="newdatatye"><option value="int unique key auto_increment">Autoincrement</option>\
 	<option value="int">int</option>\
 	<option value="float">float</option>\
 	<option value="text">text</option>\
 	<option value="date">date</option>\
-	<option value="0">Other</option>\
+	<option value="0">{$GLOBALS["TR"]["Other"][$GLOBALS["LANG"]]}</option>\
 	</select></div>\
-	<br><div style="padding-left:50px;display:none;" id="newdatadiv">Insert data type:<br><br>\
+	<br><div style="padding-left:50px;display:none;" id="newdatadiv">{$GLOBALS["TR"]["Insert_data_type"][$GLOBALS["LANG"]]}<br><br>\
 	<div style="margin-left:10px;background-color:#FFFFFF;border-radius:5px;width:250px;padding-left:5px;height:25px;"><input type="text" id="newdatatype2" style="margin-top:2px;height:19px;border:none;width:245px;"></input></div>\
 	</div>\
 ';
 }
-inner=inner+'<div style="height:50px;position:absolute;bottom:0px;right:10px;width:350px;">Click OK to save:<button type="button" style="cursor:pointer;position:relative;top:-5px;float:right;margin-right:25px;color:#FFFFFF;background-color:#CC8D00;width:75px;font-size:18px;" onclick="send_cr(\''+arg+'\')">OK</button></div>\
+inner=inner+'<div style="height:50px;position:absolute;bottom:0px;right:10px;width:350px;">{$GLOBALS["TR"]["OK_to_save"][$GLOBALS["LANG"]]}<button type="button" style="cursor:pointer;position:relative;top:-5px;float:right;margin-right:25px;color:#FFFFFF;background-color:#CC8D00;width:75px;font-size:18px;" onclick="send_cr(\''+arg+'\')">{$GLOBALS["TR"]["OK"][$GLOBALS["LANG"]]}</button></div>\
 </div>';
 cr.innerHTML=inner;
 if (document.getElementsByClassName('create').length==0)
@@ -1283,7 +1562,7 @@ function close_cr(arg){
 	if (arr.length>0) arr[0].parentNode.removeChild(arr[0]);
 	if (arg=='db'){
 		document.getElementById('logindiv').createPreloader();
-		$.post('access_mysqli.php?act=dbselectcreate&ajax=true',{CSRF:(typeof MY_CSRF!='undefined')?MY_CSRF:''},function(result){
+		$.post('{$GLOBALS['PHP_SELF_INSTANCE']}&act=dbselectcreate&ajax=true',{CSRF:(typeof MY_CSRF!='undefined')?MY_CSRF:''},function(result){
 			document.getElementById('logindiv').removePreloader();
 			var ree=JSON.parse(result);
 			if (ree['stat']=='con_err') gen_error(ree['con_err']);
@@ -1293,7 +1572,7 @@ function close_cr(arg){
 	}
 	if (arg=='tbl1'){
 		document.getElementById('logindiv').createPreloader();
-		$.post('access_mysqli.php?act=tblselectcreate&ajax=true',{CSRF:(typeof MY_CSRF !='undefined')?MY_CSRF:''},function(result){
+		$.post('{$GLOBALS['PHP_SELF_INSTANCE']}&act=tblselectcreate&ajax=true',{CSRF:(typeof MY_CSRF !='undefined')?MY_CSRF:''},function(result){
 			document.getElementById('logindiv').removePreloader();
 			var ree=JSON.parse(result);
 			if (ree['stat']=='con_err') gen_error(ree['con_err']);
@@ -1309,12 +1588,12 @@ function send_cr(arg){
 	if (arg=='db'){
 		document.getElementById('create').createPreloader();
 		var h=$('#newname').val();
-		$.post('access_mysqli.php?act=createdb&ajax=true',{newdb:h,CSRF:(typeof MY_CSRF !='undefined')?MY_CSRF:''},function(result){
+		$.post('{$GLOBALS['PHP_SELF_INSTANCE']}&act=createdb&ajax=true',{newdb:h,CSRF:(typeof MY_CSRF !='undefined')?MY_CSRF:''},function(result){
 			document.getElementById('create').removePreloader();
 			var ree=JSON.parse(result);
 			if (ree['stat']=='con_err') gen_error(ree['con_err']);
 			else if (ree['stat']=='fail') gen_error(ree['error']);
-			else if (ree['stat']=='success') gen_info('Database '+htmlspecialchars(h)+' has been created.');
+			else if (ree['stat']=='success') gen_info('{$GLOBALS["TR"]["Database"][$GLOBALS["LANG"]]} '+htmlspecialchars(h)+' {$GLOBALS["TR"]["Dhas_been_created"][$GLOBALS["LANG"]]}.');
 		});
 	}
 	if (arg=='tbl1'||arg=='tbl2'){
@@ -1323,12 +1602,12 @@ function send_cr(arg){
 		var coln=$('#newcolname').val();
 		var dt=$('#newdatatye').val();
 		if (dt==0||dt=='0'||dt=='') dt=$('#newdatatype2').val();
-		$.post('access_mysqli.php?act=createtbl&ajax=true',{newname:h,newcolname:coln,newdatatype:dt,CSRF:(typeof MY_CSRF !='undefined')?MY_CSRF:''},function(result){
+		$.post('{$GLOBALS['PHP_SELF_INSTANCE']}&act=createtbl&ajax=true',{newname:h,newcolname:coln,newdatatype:dt,CSRF:(typeof MY_CSRF !='undefined')?MY_CSRF:''},function(result){
 			document.getElementById('create').removePreloader();
 			var ree=JSON.parse(result);
 			if (ree['stat']=='con_err') gen_error(ree['con_err']);
 			else if (ree['stat']=='fail') gen_error(ree['error']);
-			else if (ree['stat']=='success') gen_info('Table '+htmlspecialchars(h)+' has been created.');
+			else if (ree['stat']=='success') gen_info('{$GLOBALS["TR"]["Table"][$GLOBALS["LANG"]]} '+htmlspecialchars(h)+' {$GLOBALS["TR"]["Thas_been_created"][$GLOBALS["LANG"]]}.');
 		});
 		$('#newcolname').val('');
 		$('#newdatatype').val('int unique key auto_increment');
@@ -1354,10 +1633,10 @@ function gen_info(text,closem){
 		<circle cx="55" cy="55" r="45" fill="#0000FF"/>\
 		<circle cx="55" cy="30" r="7" fill="#FFFFFF"/>\
 		<path d="M 50,47 L 60,47 L 60,90 L 50,90 Z" fill="#FFFFFF"/>\
-		</svg>&nbsp;&nbsp;&nbsp;<span style="color:blue;font-weight:bold;position:relative;top:-10px">INFO</span>\
+		</svg>&nbsp;&nbsp;&nbsp;<span style="color:blue;font-weight:bold;position:relative;top:-10px">{$GLOBALS["TR"]["INFO"][$GLOBALS["LANG"]]}</span>\
 		</div><br>\
 		<div style="overflow:auto;height:130px">'+text+'</div>\
-		<div style="height:50px;">Click OK to close.<button type="button" style="cursor:pointer;position:relative;top:-5px;float:right;margin-right:25px;color:#FFFFFF;background-color:#CC8D00;width:75px;font-size:18px;" onclick="close_info('+closem+')">OK</button></div>\
+		<div style="height:50px;">{$GLOBALS["TR"]["OK_to_close"][$GLOBALS["LANG"]]}<button type="button" style="cursor:pointer;position:relative;top:-5px;float:right;margin-right:25px;color:#FFFFFF;background-color:#CC8D00;width:75px;font-size:18px;" onclick="close_info('+closem+')">{$GLOBALS["TR"]["OK"][$GLOBALS["LANG"]]}</button></div>\
 		</div>';
 		if (document.getElementsByTagName('body')[0].getElementsByClassName('infodiv').length==0){
 			document.getElementsByTagName('body')[0].appendChild(conerdiv);
@@ -1369,12 +1648,12 @@ function close_info(closem){
 		if (arr.length!=0){
 			document.getElementsByTagName('body')[0].removeChild(arr[0]);
 }}
-else window.location.href='access_mysqli.php';
+else window.location.href='{$GLOBALS['PHP_SELF_INSTANCE']}';
 }
 function selectDb(){
 	var db=$('#select_db').val();
 	document.getElementById('logindiv').createPreloader();
-	$.post('access_mysqli.php?act=selectdb&ajax=true',{db:db,CSRF:(typeof MY_CSRF !='undefined')?MY_CSRF:''},function(result){
+	$.post('{$GLOBALS['PHP_SELF_INSTANCE']}&act=selectdb&ajax=true',{db:db,CSRF:(typeof MY_CSRF !='undefined')?MY_CSRF:''},function(result){
 		document.getElementById('logindiv').removePreloader();
 		var ree=JSON.parse(result);
 		if (ree['stat']=='con_err') gen_error(ree['con_err']);
@@ -1386,11 +1665,11 @@ function selectDb(){
 }
 function dropdb(){
 	var x;
-	$.post('access_mysqli.php?act=showactdb&ajax=true',{CSRF:(typeof MY_CSRF !='undefined')?MY_CSRF:''},function(result){
+	$.post('{$GLOBALS['PHP_SELF_INSTANCE']}&act=showactdb&ajax=true',{CSRF:(typeof MY_CSRF !='undefined')?MY_CSRF:''},function(result){
 		var ree=JSON.parse(result);
 		if (ree['stat']=='con_err') gen_error(ree['con_err']);
 		if (ree['stat']=='success'){x=ree['db'];
-		gen_prompt('dropdb2()','Do you really want to delete database '+htmlspecialchars(x)+' ?');
+		gen_prompt('dropdb2()','{$GLOBALS["TR"]["Really_delete_db"][$GLOBALS["LANG"]]} '+htmlspecialchars(x)+' ?');
 		}
 	});
 
@@ -1411,10 +1690,10 @@ function gen_prompt(fun,text){
 		<svg style="width:30px;height:30px;" viewBox="0 0 110 110">\
 		<circle cx="55" cy="55" r="45" fill="#FFB800"/>\
 		<text x="30" y="90" fill="#FFFFFF" style="font-size:100px;">?</text>\
-		</svg>&nbsp;&nbsp;&nbsp;<span style="color:#FFB800;font-weight:bold;position:relative;top:-10px">CONFIRM</span>\
+		</svg>&nbsp;&nbsp;&nbsp;<span style="color:#FFB800;font-weight:bold;position:relative;top:-10px">{$GLOBALS["TR"]["CONFIRM"][$GLOBALS["LANG"]]}</span>\
 		</div><br>\
 		<div style="overflow:auto;height:130px">'+text+'</div>\
-		<div style="height:50px;"><button type="button" style="cursor:pointer;position:relative;top:-5px;left:40px;color:#FFFFFF;background-color:#CC8D00;width:75px;font-size:18px;" onclick="'+fun+'">YES</button><button type="button" style="cursor:pointer;position:relative;top:-5px;left:103px;color:#FFFFFF;background-color:#CC8D00;width:75px;font-size:18px;" onclick="close_prompt()">NO</button></div>\
+		<div style="height:50px;"><button type="button" style="cursor:pointer;position:relative;top:-5px;left:40px;color:#FFFFFF;background-color:#CC8D00;width:75px;font-size:18px;" onclick="'+fun+'">{$GLOBALS["TR"]["YES"][$GLOBALS["LANG"]]}</button><button type="button" style="cursor:pointer;position:relative;top:-5px;left:103px;color:#FFFFFF;background-color:#CC8D00;width:75px;font-size:18px;" onclick="close_prompt()">{$GLOBALS["TR"]["NO"][$GLOBALS["LANG"]]}</button></div>\
 		</div>';
 		if (document.getElementsByTagName('body')[0].getElementsByClassName('promptdiv').length==0){
 			document.getElementsByTagName('body')[0].appendChild(conerdiv);
@@ -1430,13 +1709,13 @@ function dropdb2(){
 	if (typeof pr !='undefined'&&pr!=null){
 		pr.createPreloader();
 	}
-	$.post('access_mysqli.php?act=dropdb',{check:'DA',CSRF:(typeof MY_CSRF !='undefined')?MY_CSRF:''},function(result){
+	$.post('{$GLOBALS['PHP_SELF_INSTANCE']}&act=dropdb',{check:'DA',CSRF:(typeof MY_CSRF !='undefined')?MY_CSRF:''},function(result){
 	var ree=JSON.parse(result);
 	pr.removePreloader();
 	close_prompt();
 		if (ree['stat']=='con_err') gen_error(ree['con_err']);
 		if (ree['stat']=='fail') gen_error(ree['error']);
-		if (ree['stat']=='success') gen_info('Database '+ree['db']+' has been deleted',1);
+		if (ree['stat']=='success') gen_info('{$GLOBALS["TR"]["Database"][$GLOBALS["LANG"]]} '+ree['db']+' {$GLOBALS["TR"]["Dhas_been_deleted"][$GLOBALS["LANG"]]}.',1);
 	});
 }
 function newdatashow(x){
@@ -1452,14 +1731,14 @@ function newdatashow(x){
 	}
 }
 function logoutdb(){
-	$.post('access_mysqli.php?act=logoutdb',{CSRF:(typeof MY_CSRF !='undefined')?MY_CSRF:''},function(result){
-		window.location.href='access_mysqli.php';
+	$.post('{$GLOBALS['PHP_SELF_INSTANCE']}&act=logoutdb',{CSRF:(typeof MY_CSRF !='undefined')?MY_CSRF:''},function(result){
+		window.location.href='{$GLOBALS['PHP_SELF_INSTANCE']}';
 	})
 }
 function selectTbl(){
 	var t=$('#select_tbl').val();
 	document.getElementById('logindiv').createPreloader();
-	$.post('access_mysqli.php?act=selecttbl&ajax=true',{tbl:t,CSRF:(typeof MY_CSRF !='undefined')?MY_CSRF:''},function(result){
+	$.post('{$GLOBALS['PHP_SELF_INSTANCE']}&act=selecttbl&ajax=true',{tbl:t,CSRF:(typeof MY_CSRF !='undefined')?MY_CSRF:''},function(result){
 
 		var ree=JSON.parse(result);
 		if (ree['stat']=='con_err'){
@@ -1470,14 +1749,14 @@ function selectTbl(){
 		document.getElementById('logindiv').removePreloader();
 		}
 		if (ree['stat']=='success'){
-			window.location.href="access_mysqli.php";
+			window.location.href="{$GLOBALS['PHP_SELF_INSTANCE']}";
 		}
 	});
 }
 function refreshTableScrollbar(){
 	document.getElementById('db_and_table').createPreloader();
 	active++;
-	$.post('access_mysqli.php?act=refrtblscroll&ajax=true',{CSRF:(typeof MY_CSRF !='undefined')?MY_CSRF:''},function(result){
+	$.post('{$GLOBALS['PHP_SELF_INSTANCE']}&act=refrtblscroll&ajax=true',{CSRF:(typeof MY_CSRF !='undefined')?MY_CSRF:''},function(result){
 		active--;
 		document.getElementById('db_and_table').removePreloader();
 		var ree=JSON.parse(result);
@@ -1486,27 +1765,27 @@ function refreshTableScrollbar(){
 		}
 		if (ree['stat']=='fail')gen_error(ree['error']);
 		if (ree['stat']=='success'){
-			$('#table_sel').html('The table is: \
+			$('#table_sel').html('{$GLOBALS["TR"]["Tbl_is"][$GLOBALS["LANG"]]}\
 			'+ree['all']);
 		}
 	});
 }
 function droptbl(){
-	gen_prompt('droptbl2()','Do you really want to delete table '+htmlspecialchars($('#tabel_select').val())+' ?');
+	gen_prompt('droptbl2()','{$GLOBALS["TR"]["Really_delete_tbl"][$GLOBALS["LANG"]]} '+htmlspecialchars($('#tabel_select').val())+' ?');
 }
 function droptbl2(){
 	var pr=document.getElementsByClassName('promptdivcont')[0];
 	if (typeof pr !='undefined'&&pr!=null){
 		pr.createPreloader();
 	}
-	$.post('access_mysqli.php?act=droptbl&ajax=true',{confirm:'da',CSRF:(typeof MY_CSRF !='undefined')?MY_CSRF:''},function(result){
+	$.post('{$GLOBALS['PHP_SELF_INSTANCE']}&act=droptbl&ajax=true',{confirm:'da',CSRF:(typeof MY_CSRF !='undefined')?MY_CSRF:''},function(result){
 		pr.removePreloader();
 		close_prompt();
 		var ree=JSON.parse(result);
 		if (ree['stat']=='con_err') gen_error(ree['con_err']);
 		if (ree['stat']=='fail') gen_error(ree['error']);
 		if (ree['stat']=='success'){
-			gen_info('Table '+ree['tbl']+' has been deleted.',1);
+			gen_info('{$GLOBALS["TR"]["Table"][$GLOBALS["LANG"]]} '+ree['tbl']+' {$GLOBALS["TR"]["Thas_been_deleted"][$GLOBALS["LANG"]]}.',1);
 		}
 	});
 }
@@ -1529,8 +1808,30 @@ function getCookie(cname) {
 function enc_change(){
 	var newEnc=$('#enc_select').val();
 	wait(function(){
-	setCookie('myencoding',newEnc,30);
-	window.location.href="access_mysqli.php";});
+		document.getElementsByTagName('body')[0].createPreloader();
+		active++;
+	$.post('{$GLOBALS['PHP_SELF_INSTANCE']}&act=enc_change&ajax=true',{newEnc:newEnc,CSRF:(typeof MY_CSRF !='undefined')?MY_CSRF:''},function(result){
+		active--;
+		document.getElementsByTagName('body')[0].removePreloader();
+		var ree=JSON.parse(result);
+		if (ree['stat']=='con_err') gen_error(ree['con_err']);
+		if (ree['stat']=='fail') gen_error(ree['error']);
+		if (ree['stat']=='success'){
+		window.location.href="{$GLOBALS['PHP_SELF_INSTANCE']}";
+		}
+	});
+	});
+}
+function lang_change(){
+	var newLang=$('#lang_select').val();
+	wait(function(){
+	setCookie('mylanguage',newLang,30);
+	window.location.href="
+EOT;
+if (isset($GLOBALS['PHP_SELF_INSTANCE'])) echo $GLOBALS['PHP_SELF_INSTANCE'];
+else echo $_SERVER['PHP_SELF'];
+echo<<<EOT
+";});
 }
 function switchEncDiv(){
 	var encDiv=$('#up_encoding');
@@ -1539,14 +1840,22 @@ function switchEncDiv(){
 		encDiv.animate({
 		top:-40
 		},500);
-		setCookie('myencstate','close',30);
+	$.post('{$GLOBALS['PHP_SELF_INSTANCE']}&act=enc_switch&ajax=true',{newState:'close',CSRF:(typeof MY_CSRF !='undefined')?MY_CSRF:''},function(result){
+		var ree=JSON.parse(result);
+		if (ree['stat']=='con_err') gen_error(ree['con_err']);
+		if (ree['stat']=='fail') gen_error(ree['error']);
+	});
 	}
 	else if (encDiv.attr('my_state')=='close') {
 		encDiv.attr('my_state','open');
 		encDiv.animate({
 		top:-10
 		},500);
-		setCookie('myencstate','open',30);
+	$.post('{$GLOBALS['PHP_SELF_INSTANCE']}&act=enc_switch&ajax=true',{newState:'open',CSRF:(typeof MY_CSRF !='undefined')?MY_CSRF:''},function(result){
+		var ree=JSON.parse(result);
+		if (ree['stat']=='con_err') gen_error(ree['con_err']);
+		if (ree['stat']=='fail') gen_error(ree['error']);
+	});
 	}
 }
 //BACKUP
@@ -1556,19 +1865,19 @@ function create_backup(){
 	cr.setAttribute('class','backupDiv');
 	var inner='<div style="position:absolute;top:0px;left:0px;width:100%;height:100%;background-color:#000000;opacity:0.5;">&nbsp;</div>\
 	<div id="backupDivInter" style="opacity:1;position:absolute;top:50%;left:50%;width:500px;height:400px;padding:20px;margin-left:-270px;margin-top:-220px;background-color:#FFF2A0;border-radius:5px;">\
-	<form method="post" action="access_mysqli.php?act=backup">\
-	<a href="javascript:closeBackupDiv()" class="closing" style="font-size:24px;position:absolute;right:20px;top:10px;" title="Close">x</a>\
-	<div><h3 style="text-align:center;">Database/tables backup</h3></div>\
+	<form method="post" action="{$GLOBALS['PHP_SELF_INSTANCE']}&act=backup">\
+	<a href="javascript:closeBackupDiv()" class="closing" style="font-size:24px;position:absolute;right:20px;top:10px;" title="{$GLOBALS["TR"]["Close"][$GLOBALS["LANG"]]}">x</a>\
+	<div><h3 style="text-align:center;">{$GLOBALS["TR"]["Backup_db_tbl"][$GLOBALS["LANG"]]}</h3></div>\
 	<br id="crbr">\
-	<br><div style="padding-left:50px"><input type="radio" style="cursor:pointer;" name="backupWholeDb" value="yes" id="backupWholeDb1" checked="true" onchange="backupGetTables()">The whole current database (including database creation)</input><br><br>\
-	<input type="radio" style="cursor:pointer;" name="backupWholeDb" id="backupWholeDb0" value="no" onchange="backupGetTables()">Only tables:</input><br><br>\
-	<table style="display:none;" id="backupTableSelectTable"><tr><td style="vertical-align:text-top;padding-right:10px;text-align:center;"><span style="font-weight:bold">Selectare tabele:<br><br>\
-	<button type="button" class="butTables" onclick="allTables()" style="margin-bottom:10px;margin-top:4px;">All tables</button><br>\
-	<button type="button" class="butTables" onclick="noTable()">No table</button>\
+	<br><div style="padding-left:50px"><input type="radio" style="cursor:pointer;" name="backupWholeDb" value="yes" id="backupWholeDb1" checked="true" onchange="backupGetTables()">{$GLOBALS["TR"]["Whole_db"][$GLOBALS["LANG"]]}</input><br><br>\
+	<input type="radio" style="cursor:pointer;" name="backupWholeDb" id="backupWholeDb0" value="no" onchange="backupGetTables()">{$GLOBALS["TR"]["Only_tables"][$GLOBALS["LANG"]]}</input><br><br>\
+	<table style="display:none;" id="backupTableSelectTable"><tr><td style="vertical-align:text-top;padding-right:10px;text-align:center;"><span style="font-weight:bold">{$GLOBALS["TR"]["Select_tables"][$GLOBALS["LANG"]]}<br><br>\
+	<button type="button" class="butTables" onclick="allTables()" style="margin-bottom:10px;margin-top:4px;">{$GLOBALS["TR"]["All_tables"][$GLOBALS["LANG"]]}</button><br>\
+	<button type="button" class="butTables" onclick="noTable()">{$GLOBALS["TR"]["No_table"][$GLOBALS["LANG"]]}</button>\
 	</span></td><td><span id="selectTables"></span></td></tr></table>\
 	</div>\
-	<div style="height:50px;position:absolute;bottom:0px;right:10px;">Click OK to generate backup:&nbsp;&nbsp;&nbsp;<input type="submit" style="cursor:pointer;position:relative;top:-5px;float:right;margin-right:25px;color:#FFFFFF;background-color:#CC8D00;width:75px;font-size:18px;" value="OK"/></div>\
-	<input type="hidden" name="CSRF" value="{$_SESSION['CSRF']}"/>\
+	<div style="height:50px;position:absolute;bottom:0px;right:10px;">{$GLOBALS["TR"]["OK_to_backup"][$GLOBALS["LANG"]]}&nbsp;&nbsp;&nbsp;<input type="submit" style="cursor:pointer;position:relative;top:-5px;float:right;margin-right:25px;color:#FFFFFF;background-color:#CC8D00;width:75px;font-size:18px;" value="{$GLOBALS["TR"]["OK"][$GLOBALS["LANG"]]}"/></div>\
+	<input type="hidden" name="CSRF" value="{$_SESSION['CSRFdb']}"/>\
 	</form>\
 </div>';
 cr.innerHTML=inner;
@@ -1583,7 +1892,7 @@ function backupGetTables(){
 		if ($('#backupWholeDb0').get(0).checked){
 			$('#backupDivInter').get(0).createPreloader();
 			active++;
-			$.post('access_mysqli.php?act=tables_list',{CSRF:(typeof MY_CSRF !='undefined')?MY_CSRF:''},function(result){
+			$.post('{$GLOBALS['PHP_SELF_INSTANCE']}&act=tables_list',{CSRF:(typeof MY_CSRF !='undefined')?MY_CSRF:''},function(result){
 			active--;
 			$('#backupDivInter').get(0).removePreloader();
 			var ree=JSON.parse(result);
@@ -1627,17 +1936,17 @@ function create_upload(){
 	cr.setAttribute('class','uploadDiv');
 	var inner='<div style="position:absolute;top:0px;left:0px;width:100%;height:100%;background-color:#000000;opacity:0.5;">&nbsp;</div>\
 	<div id="uploadDivInter" style="opacity:1;position:absolute;top:50%;left:50%;width:500px;height:400px;padding:20px;margin-left:-270px;margin-top:-220px;background-color:#FFF2A0;border-radius:5px;">\
-	<form method="post" action="access_mysqli.php?act=import" enctype="multipart/form-data">\
-	<a href="javascript:closeUploadDiv()" class="closing" style="font-size:24px;position:absolute;right:20px;top:10px;" title="Close">x</a>\
-	<div><h3 style="text-align:center;">Import database and tables (.sql file)</h3></div>\
+	<form method="post" action="{$GLOBALS['PHP_SELF_INSTANCE']}&act=import" enctype="multipart/form-data">\
+	<a href="javascript:closeUploadDiv()" class="closing" style="font-size:24px;position:absolute;right:20px;top:10px;" title="{$GLOBALS["TR"]["Close"][$GLOBALS["LANG"]]}">x</a>\
+	<div><h3 style="text-align:center;">{$GLOBALS["TR"]["Import_sql"][$GLOBALS["LANG"]]}</h3></div>\
 	<br id="crbr">\
 	<br><div style="padding-left:50px" id="upload_dbName"></div><br><br>\
 	<div style="padding-left:50px">\
 	<input type="hidden" name="is_upload" value="yes"/>\
 	<input type="file" name="import_file" id="import_file" accept=".sql"/>\
 	</div>\
-	<div style="height:50px;position:absolute;bottom:0px;right:10px;">Click OK to import file:&nbsp;&nbsp;&nbsp;<input type="submit" style="cursor:pointer;position:relative;top:-5px;float:right;margin-right:25px;color:#FFFFFF;background-color:#CC8D00;width:75px;font-size:18px;" value="OK"/></div>\
-	<input type="hidden" name="CSRF" value="{$_SESSION['CSRF']}"/>\
+	<div style="height:50px;position:absolute;bottom:0px;right:10px;">{$GLOBALS["TR"]["OK_to_import"][$GLOBALS["LANG"]]}&nbsp;&nbsp;&nbsp;<input type="submit" style="cursor:pointer;position:relative;top:-5px;float:right;margin-right:25px;color:#FFFFFF;background-color:#CC8D00;width:75px;font-size:18px;" value="{$GLOBALS["TR"]["OK"][$GLOBALS["LANG"]]}"/></div>\
+	<input type="hidden" name="CSRF" value="{$_SESSION['CSRFdb']}"/>\
 	</form>\
 </div>';
 cr.innerHTML=inner;
@@ -1645,15 +1954,15 @@ if (document.getElementsByClassName('create').length==0)
 	document.getElementsByTagName('body')[0].appendChild(cr);
 $('#uploadDivInter').get(0).createPreloader();
 			active++;
-			$.post('access_mysqli.php?act=showactdb',{CSRF:(typeof MY_CSRF !='undefined')?MY_CSRF:''},function(result){
+			$.post('{$GLOBALS['PHP_SELF_INSTANCE']}&act=showactdb',{CSRF:(typeof MY_CSRF !='undefined')?MY_CSRF:''},function(result){
 			active--;
 			$('#uploadDivInter').get(0).removePreloader();
 			var ree=JSON.parse(result);
 			if (ree['stat']=='con_err') {
-			$('#upload_dbName').html('There is no database selected. Because of that, the file must also specify the database in use.');
+			$('#upload_dbName').html('{$GLOBALS["TR"]["Import_no_db_selected"][$GLOBALS["LANG"]]}');
 			}
 			if (ree['stat']=='success'){
-			$('#upload_dbName').html('The queries in the file will be implicitly executed on current database: <span style="font-weight:bold">'+ree['db']+'</span>');
+			$('#upload_dbName').html('{$GLOBALS["TR"]["Import_default_db"][$GLOBALS["LANG"]]} <span style="font-weight:bold">'+ree['db']+'</span>');
 			}
 			});
 }
@@ -1667,8 +1976,8 @@ EOT;
 }
 function create_database_select($conn){
 	$res='<br>';
-	if (isset($_SESSION['CSRF'])) $res.="<script> MY_CSRF='".$_SESSION['CSRF']."';</script>";
-	$res.= '<span style="font-weight:bold;font-size:20px;padding-left:30px;">Choose database: </span><br><br><br>';
+	if (isset($_SESSION['CSRFdb'])) $res.="<script> MY_CSRF='".$_SESSION['CSRFdb']."';</script>";
+	$res.= '<span style="font-weight:bold;font-size:20px;padding-left:30px;" title="'.$GLOBALS["TR"]["Choose_db"][$GLOBALS["LANG"]].'">'.$GLOBALS["TR"]["Choose_db"][$GLOBALS["LANG"]].' </span><br><br><br>';
 	if (isset($GLOBALS['DEFAULTDBS'])){
 		if (count($GLOBALS['DEFAULTDBS']['databases'])>0){
 		$res.= '<select class="sldb" id="select_db" style="margin-left:25px;">';
@@ -1676,9 +1985,9 @@ function create_database_select($conn){
 			$res.= '<option value="'.htmlspecialchars($dbss).'">'.htmlspecialchars($dbss).'</option>';
 			}
 			$res.= '</select>';
-	$res.='<button class="but" style="font-size:16px;width:50px;height:25px;position:relative;left:10px;" onclick="selectDb()">Choose</button>';
+	$res.='<button class="but" style="font-size:16px;width:50px;height:25px;position:relative;left:10px;" onclick="selectDb()">'.$GLOBALS["TR"]["Choose"][$GLOBALS["LANG"]].'</button>';
 		}
-		else $res.='No database';
+		else $res.=$GLOBALS["TR"]["No_dbLarge"][$GLOBALS["LANG"]];
 	}
 	else{
 	$sql="SHOW databases";
@@ -1689,30 +1998,30 @@ function create_database_select($conn){
 		$res.= '<option value="'.htmlspecialchars($row['Database']).'">'.htmlspecialchars($row['Database']).'</option>';
 	}
 	$res.= '</select>';
-	$res.='<button class="but" style="font-size:16px;width:50px;height:25px;position:relative;left:10px;" onclick="selectDb()">Choose</button>';
+	$res.='<button class="but" style="font-size:16px;width:50px;height:25px;position:relative;left:10px;" onclick="selectDb()">'.$GLOBALS["TR"]["Choose"][$GLOBALS["LANG"]].'</button>';
 	}
-	else $res.='No database';
+	else $res.=$GLOBALS["TR"]["No_dbLarge"][$GLOBALS["LANG"]];
 	}
 	else
 	$res.='<script>gen_error("login")</script>';}
 if (isset($GLOBALS['DEFAULTDBS'])) $res.='<div style="margin-top:30px;margin-left:20px;">';
 else
-$res.='<div style="margin-top:30px;margin-left:20px;"><span title="Create database">'.create_plus_button("ge_cr('db')",'width:40px;height:40px;').'</span>'.str_repeat('&nbsp;',3);
-$res.='<span title="Import database">'.create_upload_logo('create_upload()','width:40px;height:40px;cursor:pointer;').'</span>';
+$res.='<div style="margin-top:30px;margin-left:20px;"><span title="'.$GLOBALS["TR"]["Create_db"][$GLOBALS["LANG"]].'">'.create_plus_button("ge_cr('db')",'width:40px;height:40px;').'</span>'.str_repeat('&nbsp;',3);
+$res.='<span title="'.$GLOBALS["TR"]["Import_db"][$GLOBALS["LANG"]].'">'.create_upload_logo('create_upload()','width:40px;height:40px;cursor:pointer;').'</span>';
 	$res.='<div style="margin-top:10px;">'.create_pquery_button().str_repeat('&nbsp;',3).'<span title="Log out">'.create_logout_button(FALSE,'width:40px;height:40px;position:relative;top:10px;cursor:pointer;','logout()').'</span></div></div>';
 
 	return $res;
 }
 function select_database($conn){
-	if (!isset($_SESSION['actdb'])||$conn===FALSE) return FALSE;
-	if (mysqli_select_db($conn,$_SESSION['actdb'])) return TRUE;
+	if (!isset($_SESSION['instancedb'][$_GET['instance']]['actdb'])||$conn===FALSE) return FALSE;
+	if (mysqli_select_db($conn,$_SESSION['instancedb'][$_GET['instance']]['actdb'])) return TRUE;
 	else {
 		logout_db();
 		return FALSE;
 	}
 }
 function create_pquery_button($style='width:50px;height:25px;'){
-	$res='<button type="button" onclick="gen_pquery()" style="border-radius:5px;background-color:#FFFFFF;border:solid 1px #0F00CC;cursor:pointer;" title="Create own query">
+	$res='<button type="button" onclick="gen_pquery()" style="border-radius:5px;background-color:#FFFFFF;border:solid 1px #0F00CC;cursor:pointer;" title="'.$GLOBALS["TR"]["Create_pquery"][$GLOBALS["LANG"]].'">
 	<svg viewBox="0 0 1000 500" style="'.$style.'">
 	<text x="0" y="400" fill="black" style="font-size:400px;" class="brush_mt">Sql</text>
 	<path d="M 677.78,351.26 L 827.78,45.47 L 914.59,88.05 L 764.59,393.84 Z" fill="#FFD753"/>
@@ -1773,17 +2082,17 @@ function prepare($arg){
 		return addslashes($arg);
 }
 function logout(){
-	unset($_SESSION['userdb'],$_SESSION['pwddb'],$_SESSION['actdb'],$_SESSION['acttab'],$_SESSION['myorder'],$_SESSION['CSRF']);
+	unset($_SESSION['userdb'],$_SESSION['pwddb'],$SESSION['instancedb'][$_GET['instance']],$_SESSION['CSRFdb']);
 }
 function logout_db(){
-	unset($_SESSION['actdb'],$_SESSION['acttab'],$_SESSION['myorder']);
+	unset($_SESSION['instancedb'][$_GET['instance']]['actdb'],$_SESSION['instancedb'][$_GET['instance']]['acttab'],$_SESSION['instancedb'][$_GET['instance']]['myorder']);
 }
 function logout_tbl(){
-	unset($_SESSION['acttab'],$_SESSION['myorder']);
+	unset($_SESSION['instancedb'][$_GET['instance']]['acttab'],$_SESSION['instancedb'][$_GET['instance']]['myorder']);
 }
 function check_table_exist($conn){
 
-	if (!select_database($conn)||!$conn||!isset($_SESSION['acttab'])) return FALSE;
+	if (!select_database($conn)||!$conn||!isset($_SESSION['instancedb'][$_GET['instance']]['acttab'])) return FALSE;
 	$SQL='SHOW TABLES';
 	$result=mysqli_query($conn,$SQL);
 	if (!$result){ logout_tbl();
@@ -1791,25 +2100,25 @@ function check_table_exist($conn){
 	}
 	$ok=FALSE;
 	 while ($row=mysqli_fetch_row($result)){
-	 if ($row[0]==$_SESSION['acttab']) $ok=TRUE;}
+	 if ($row[0]==$_SESSION['instancedb'][$_GET['instance']]['acttab']) $ok=TRUE;}
 	if ($ok===FALSE) logout_tbl();
 		return $ok;
 }
 function create_table_select($conn){
 		$res='<br>';
-		if (isset($_SESSION['CSRF'])) $res.="<script> MY_CSRF='".$_SESSION['CSRF']."';</script>";
-	$res.= '<span style="font-weight:bold;font-size:20px;padding-left:30px;">Choose table:</span><br><br>
-	<span style="font-weight:bold;font-size:16px;padding-left:30px;" title="'.htmlspecialchars($_SESSION['actdb']).'">Current database: '.htmlspecialchars($_SESSION['actdb']).'</span><br><br>';
-	if(isset($GLOBALS['DEFAULTDBS'])&&isset($GLOBALS['DEFAULTDBS']['tables'][$_SESSION['actdb']])&&$GLOBALS['DEFAULTDBS']['tables'][$_SESSION['actdb']]!==NULL){
-		if (count($GLOBALS['DEFAULTDBS']['tables'][$_SESSION['actdb']])>0){
+		if (isset($_SESSION['CSRFdb'])) $res.="<script> MY_CSRF='".$_SESSION['CSRFdb']."';</script>";
+	$res.= '<span style="font-weight:bold;font-size:20px;padding-left:30px;">'.$GLOBALS["TR"]["Choose_tbl"][$GLOBALS["LANG"]].'</span><br><br>
+	<span style="font-weight:bold;font-size:16px;padding-left:30px;" title="'.htmlspecialchars($_SESSION['instancedb'][$_GET['instance']]['actdb']).'">'.$GLOBALS["TR"]["Database:"][$GLOBALS["LANG"]].' '.htmlspecialchars($_SESSION['instancedb'][$_GET['instance']]['actdb']).'</span><br><br>';
+	if(isset($GLOBALS['DEFAULTDBS'])&&isset($GLOBALS['DEFAULTDBS']['tables'][$_SESSION['instancedb'][$_GET['instance']]['actdb']])&&$GLOBALS['DEFAULTDBS']['tables'][$_SESSION['instancedb'][$_GET['instance']]['actdb']]!==NULL){
+		if (count($GLOBALS['DEFAULTDBS']['tables'][$_SESSION['instancedb'][$_GET['instance']]['actdb']])>0){
 			$res.= '<select class="sldb" id="select_tbl" style="margin-left:25px;">';
-		foreach ($GLOBALS['DEFAULTDBS']['tables'][$_SESSION['actdb']] as $tbll){
+		foreach ($GLOBALS['DEFAULTDBS']['tables'][$_SESSION['instancedb'][$_GET['instance']]['actdb']] as $tbll){
 			$res.= '<option value="'.htmlspecialchars($tbll).'">'.htmlspecialchars($tbll).'</option>';
 		}
 		$res.= '</select>';
-		$res.='<button class="but" style="font-size:16px;width:50px;height:25px;position:relative;left:10px;" onclick="selectTbl()">Choose</button>';
+		$res.='<button class="but" style="font-size:16px;width:50px;height:25px;position:relative;left:10px;" onclick="selectTbl()">'.$GLOBALS["TR"]["Choose"][$GLOBALS["LANG"]].'</button>';
 		}
-		else $res.='Niciun tabel';
+		else $res.=$GLOBALS["TR"]["No_tableLarge"][$GLOBALS["LANG"]];
 	}
 	else{
 	$sql="SHOW tables";
@@ -1820,17 +2129,17 @@ function create_table_select($conn){
 		$res.= '<option value="'.htmlspecialchars($row[0]).'">'.htmlspecialchars($row[0]).'</option>';
 	}
 	$res.= '</select>';
-	$res.='<button class="but" style="font-size:16px;width:50px;height:25px;position:relative;left:10px;" onclick="selectTbl()">Choose</button>';
+	$res.='<button class="but" style="font-size:16px;width:50px;height:25px;position:relative;left:10px;" onclick="selectTbl()">'.$GLOBALS["TR"]["Choose"][$GLOBALS["LANG"]].'</button>';
 	}
-	else $res.='Niciun tabel';
+	else $res.=$GLOBALS["TR"]["No_table"][$GLOBALS["LANG"]];
 	}
 	else
 $res.='<script>gen_error("login")</script>';}
-if (isset($GLOBALS['DEFAULTDBS'])&&isset($GLOBALS['DEFAULTDBS']['tables'][$_SESSION['actdb']])&&$GLOBALS['DEFAULTDBS']['tables'][$_SESSION['actdb']]!==NULL) $res.='<div style="margin-top:30px;margin-left:20px;">';
+if (isset($GLOBALS['DEFAULTDBS'])&&isset($GLOBALS['DEFAULTDBS']['tables'][$_SESSION['instancedb'][$_GET['instance']]['actdb']])&&$GLOBALS['DEFAULTDBS']['tables'][$_SESSION['instancedb'][$_GET['instance']]['actdb']]!==NULL) $res.='<div style="margin-top:30px;margin-left:20px;">';
 else
-$res.='<div style="margin-top:30px;margin-left:20px;"><span title="Create table">'.create_plus_button("ge_cr('tbl1')",'width:40px;height:40px;').'</span>'.str_repeat('&nbsp;',3).'<span title="Delete database">'.create_x_button('dropdb()','width:40px;height:40px;').'</span>'.str_repeat('&nbsp;',3);
-$res.='<span title="Backup database/tables">'.create_download_logo('create_backup()','width:40px;height:40px;cursor:pointer;').'</span>'.str_repeat('&nbsp;',3).'<span title="Import database/tables">'.create_upload_logo('create_upload()','width:40px;height:40px;cursor:pointer;').'</span>';
-	$res.='<div style="margin-top:10px;">'.create_pquery_button().str_repeat('&nbsp;',3).'<span title="Log out">'.create_logout_button(FALSE,'width:40px;height:40px;position:relative;top:10px;cursor:pointer;','logout()').'</span>'.str_repeat('&nbsp;',5).'<span title="Change database">'.create_logout_button(TRUE,'width:40px;height:40px;position:relative;top:10px;cursor:pointer;','logoutdb()').'</span></div></div>';
+$res.='<div style="margin-top:30px;margin-left:20px;"><span title="'.$GLOBALS["TR"]["Create_tbl"][$GLOBALS["LANG"]].'">'.create_plus_button("ge_cr('tbl1')",'width:40px;height:40px;').'</span>'.str_repeat('&nbsp;',3).'<span title="'.$GLOBALS["TR"]["Del_db"][$GLOBALS["LANG"]].'">'.create_x_button('dropdb()','width:40px;height:40px;').'</span>'.str_repeat('&nbsp;',3);
+$res.='<span title="'.$GLOBALS["TR"]["Backup_db_tbl"][$GLOBALS["LANG"]].'">'.create_download_logo('create_backup()','width:40px;height:40px;cursor:pointer;').'</span>'.str_repeat('&nbsp;',3).'<span title="'.$GLOBALS["TR"]["Import_db_tbl"][$GLOBALS["LANG"]].'">'.create_upload_logo('create_upload()','width:40px;height:40px;cursor:pointer;').'</span>';
+	$res.='<div style="margin-top:10px;">'.create_pquery_button().str_repeat('&nbsp;',3).'<span title="'.$GLOBALS["TR"]["Log_out"][$GLOBALS["LANG"]].'">'.create_logout_button(FALSE,'width:40px;height:40px;position:relative;top:10px;cursor:pointer;','logout()').'</span>'.str_repeat('&nbsp;',5).'<span title="'.$GLOBALS["TR"]["Change_db"][$GLOBALS["LANG"]].'">'.create_logout_button(TRUE,'width:40px;height:40px;position:relative;top:10px;cursor:pointer;','logoutdb()').'</span></div></div>';
 	return $res;
 }
 function create_x_button($function,$style){
@@ -1855,13 +2164,13 @@ function pname($str,$spc=TRUE){
 }
 function create_table_scrollbar($conn){
 	$re='<select id="tabel_select" onchange="tabelSelectChange()">';
-	if(isset($GLOBALS['DEFAULTDBS'])&&isset($GLOBALS['DEFAULTDBS']['tables'][$_SESSION['actdb']])&&$GLOBALS['DEFAULTDBS']['tables'][$_SESSION['actdb']]!=NULL){
-		if (count($GLOBALS['DEFAULTDBS']['tables'][$_SESSION['actdb']])>0){
-		foreach ($GLOBALS['DEFAULTDBS']['tables'][$_SESSION['actdb']] as $tbll){
+	if(isset($GLOBALS['DEFAULTDBS'])&&isset($GLOBALS['DEFAULTDBS']['tables'][$_SESSION['instancedb'][$_GET['instance']]['actdb']])&&$GLOBALS['DEFAULTDBS']['tables'][$_SESSION['instancedb'][$_GET['instance']]['actdb']]!=NULL){
+		if (count($GLOBALS['DEFAULTDBS']['tables'][$_SESSION['instancedb'][$_GET['instance']]['actdb']])>0){
+		foreach ($GLOBALS['DEFAULTDBS']['tables'][$_SESSION['instancedb'][$_GET['instance']]['actdb']] as $tbll){
 			$re.= '<option value="'.htmlspecialchars($tbll).'">'.htmlspecialchars($tbll).'</option>';
 		}
 		$re.= '</select>';
-		$re.='<script> $("#tabel_select").val(\''.escapenl(prepare($_SESSION['acttab'])).'\');</script>';
+		$re.='<script> $("#tabel_select").val(\''.escapenl(prepare($_SESSION['instancedb'][$_GET['instance']]['acttab'])).'\');</script>';
 		}
 		else {
 			$re.='<script>gen_error("tblmiss")</script>';
@@ -1877,7 +2186,7 @@ else{
 		$re.='<option value="'.htmlspecialchars($row[0]).'">'.htmlspecialchars($row[0]).'</option>';
 	}
 	$re.='</select>';
-	$re.='<script> $("#tabel_select").val(\''.escapenl(prepare($_SESSION['acttab'])).'\');</script>';
+	$re.='<script> $("#tabel_select").val(\''.escapenl(prepare($_SESSION['instancedb'][$_GET['instance']]['acttab'])).'\');</script>';
 }
 	}
 return $re;
@@ -1893,7 +2202,7 @@ function create_order_logo($function,$style,$button){
 	return $res;
 }
 function check_column_exist($conn,$columns){
-	$sql='SHOW COLUMNS FROM '.pname($_SESSION['acttab'],FALSE);
+	$sql='SHOW COLUMNS FROM '.pname($_SESSION['instancedb'][$_GET['instance']]['acttab'],FALSE);
 	$result=mysqli_query($conn,$sql);
 	if ($result===FALSE) return FALSE;
 	if (mysqli_num_rows($result)==0) return FALSE;
@@ -1928,7 +2237,7 @@ function create_info_logo($function,$style){
 }
 function new_position($conn,$primaryName=NULL,$primaryValue=NULL){
 	if ($primaryName===NULL) return FALSE;
-	if (isset($_SESSION['myorder'])) $orderar=$_SESSION['myorder'];
+	if (isset($_SESSION['instancedb'][$_GET['instance']]['myorder'])) $orderar=$_SESSION['instancedb'][$_GET['instance']]['myorder'];
 		if (!isset($orderar)||!is_array($orderar)) $orderar=array();
 		$ok1=FALSE;
 		$orderQ=' ';
@@ -1938,7 +2247,7 @@ function new_position($conn,$primaryName=NULL,$primaryValue=NULL){
 			$ok1=TRUE;
 		}
 		if ($ok1===TRUE) $orderQ=' ORDER BY'.$orderQ;
-		$sql="SELECT * FROM ".pname($_SESSION['acttab'],FALSE).$orderQ;
+		$sql="SELECT * FROM ".pname($_SESSION['instancedb'][$_GET['instance']]['acttab'],FALSE).$orderQ;
 		if (($result=mysqli_query($conn,$sql))===FALSE) return FALSE;
 		else{
 			if ($primaryValue===NULL){
@@ -2014,7 +2323,7 @@ function prepare_to_add($k){
 	return $k;
 }
 function get_primary($conn){
-	$sql="SHOW FIELDS FROM ".pname($_SESSION['acttab'],FALSE);
+	$sql="SHOW FIELDS FROM ".pname($_SESSION['instancedb'][$_GET['instance']]['acttab'],FALSE);
 	$result=mysqli_query($conn,$sql);
 	$key=FALSE;
 	if ($result===FALSE) return FALSE;
@@ -2042,7 +2351,7 @@ function create_home_logo($function,$style){
 	</svg>';
 }
 function is_auto_increment($conn,$col){
-	$sql='SHOW FIELDS FROM '.pname($_SESSION['acttab'],FALSE)." WHERE `Field`='".$col."'";
+	$sql='SHOW FIELDS FROM '.pname($_SESSION['instancedb'][$_GET['instance']]['acttab'],FALSE)." WHERE `Field`='".$col."'";
 	$res=mysqli_query($conn,$sql);
 	if ($res===FALSE) return FALSE;
 	if (mysqli_num_rows($res)!=1) return FALSE;
@@ -2203,7 +2512,7 @@ function create_error_page($error){
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
 EOT;
 $res.='<title>Access MySqli v'.$GLOBALS['VERSION'].'</title>';
-$res.=<<<'EOT'
+$res.=<<<EOT
 <style type="text/css">
 body{
 	background-color:#FDFDFD;
@@ -2218,7 +2527,7 @@ body{
 	<svg style="width:30px;height:30px;" viewBox="0 0 110 110">
 	<path d="M 90,50 L 78.28,78.28 L 50,90 L 21.72,78.28 L 10,50 L 21.72,21.72 L 50,10 L 78.28,21.72 Z" fill="red">
 	</path><path d="M 65.95,27.75 L 72.25,34.05 L 34.05,72.25 L 27.75,65.95 Z" fill="#FFFFFF"></path>
-	<path d="M 34.05,27.75 L 27.75,34.05 L 65.95,72.25 L 72.25,65.95 Z" fill="#FFFFFF"></path></svg>&nbsp;&nbsp;&nbsp;<span style="color:red;font-weight:bold;position:relative;top:-10px">ERROR!</span>
+	<path d="M 34.05,27.75 L 27.75,34.05 L 65.95,72.25 L 72.25,65.95 Z" fill="#FFFFFF"></path></svg>&nbsp;&nbsp;&nbsp;<span style="color:red;font-weight:bold;position:relative;top:-10px">{$GLOBALS["TR"]["ERROR"][$GLOBALS["LANG"]]}</span>
 	</div><br>
 	<div style="overflow:auto;height:130px">
 EOT;
@@ -2229,7 +2538,7 @@ $res.=<<<'EOT'
 	</div></div>
 	<script>
 	function close_error(arg){
-		window.location.href="access_mysqli.php";
+		window.location.href="{$GLOBALS['PHP_SELF_INSTANCE']}";
 	}
 	</script>
 </body>
@@ -2245,7 +2554,7 @@ function create_info_page($text){
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
 EOT;
 $res.='<title>Access MySqli v'.$GLOBALS['VERSION'].'</title>';
-$res.=<<<'EOT'
+$res.=<<<EOT
 <style type="text/css">
 body{
 	background-color:#FDFDFD;
@@ -2260,17 +2569,17 @@ body{
 	<svg style="width:30px;height:30px;" viewBox="0 0 110 110">
 	<circle cx="55" cy="55" r="45" fill="#0000FF"></circle>
 	<circle cx="55" cy="30" r="7" fill="#FFFFFF"></circle>
-	<path d="M 50,47 L 60,47 L 60,90 L 50,90 Z" fill="#FFFFFF"></path></svg>&nbsp;&nbsp;&nbsp;<span style="color:blue;font-weight:bold;position:relative;top:-10px">INFO</span></div><br>
+	<path d="M 50,47 L 60,47 L 60,90 L 50,90 Z" fill="#FFFFFF"></path></svg>&nbsp;&nbsp;&nbsp;<span style="color:blue;font-weight:bold;position:relative;top:-10px">{$GLOBALS["TR"]["INFO"][$GLOBALS["LANG"]]}</span></div><br>
 	<div style="overflow:auto;height:130px">
 EOT;
 $res.=$text;
-$res.=<<<'EOT'
+$res.=<<<EOT
 </div>
-	<div style="height:50px;">Click OK to close:<button type="button" style="cursor:pointer;position:relative;top:-5px;float:right;margin-right:25px;color:#FFFFFF;background-color:#CC8D00;width:75px;font-size:18px;" onclick="close_info(1)">OK</button></div>
+	<div style="height:50px;">{$GLOBALS["TR"]["OK_to_close"][$GLOBALS["LANG"]]}<button type="button" style="cursor:pointer;position:relative;top:-5px;float:right;margin-right:25px;color:#FFFFFF;background-color:#CC8D00;width:75px;font-size:18px;" onclick="close_info(1)">{$GLOBALS["TR"]["OK"][$GLOBALS["LANG"]]}</button></div>
 	</div></div>
 	<script>
 	function close_info(arg){
-		window.location.href="access_mysqli.php";
+		window.location.href="{$GLOBALS['PHP_SELF_INSTANCE']}";
 	}
 	</script>
 </body>
@@ -2280,11 +2589,11 @@ EOT;
 }
 //*Functions
 //Before output (AJAX)
-if($_POST['CSRF']==$_SESSION['CSRF']){
+if($_POST['CSRF']==$_SESSION['CSRFdb']){
 if ($_GET['act']=='get_contents'){
 	$res=array();
 	$ok=0;
-	if (isset($_SESSION['myorder'])) $orderar=$_SESSION['myorder'];
+	if (isset($_SESSION['instancedb'][$_GET['instance']]['myorder'])) $orderar=$_SESSION['instancedb'][$_GET['instance']]['myorder'];
 		if (!isset($orderar)||!is_array($orderar)) $orderar=array();
 		$ok1=FALSE;
 		$orderQ=' ';
@@ -2294,7 +2603,7 @@ if ($_GET['act']=='get_contents'){
 			$ok1=TRUE;
 		}
 		if ($ok1===TRUE) $orderQ=' ORDER BY'.$orderQ;
-		$sql="SELECT * FROM ".pname($_SESSION['acttab'],FALSE).$orderQ;
+		$sql="SELECT * FROM ".pname($_SESSION['instancedb'][$_GET['instance']]['acttab'],FALSE).$orderQ;
 	if (($result=mysqli_query($conn,$sql))===FALSE){
 		$res['stat']='fail';
 		$res['error']=htmlspecialchars(mysqli_error($conn));
@@ -2312,7 +2621,7 @@ while($row=mysqli_fetch_assoc($result)){
 	$res['all']['rows']=$tot;
 	}
 	if ($ok==1){
-		$sql='SHOW FIELDS FROM '.pname($_SESSION['acttab'],FALSE);
+		$sql='SHOW FIELDS FROM '.pname($_SESSION['instancedb'][$_GET['instance']]['acttab'],FALSE);
 		if (($result=mysqli_query($conn,$sql))===FALSE){
 		$res['stat']='fail';
 		unset($res['all']);
@@ -2337,7 +2646,7 @@ while($row=mysqli_fetch_assoc($result)){
 if ($_GET['act']=='set_acttab'){
 	$res=array();
 	logout_tbl();
-	$_SESSION['acttab']=$_POST['tbl'];
+	$_SESSION['instancedb'][$_GET['instance']]['acttab']=$_POST['tbl'];
 	if (check_table_exist($conn)) $res['stat']='success';
 	else {$res['stat']='con_err';
 	$res['con_err']='tblmiss';
@@ -2354,8 +2663,8 @@ die();
 }
 if ($_GET['act']=='droptbl'&&$_POST['confirm']=='da'){
 	$res=array();
-	$k=htmlspecialchars($_SESSION['acttab']);
-	$sql='DROP TABLE '.pname($_SESSION['acttab'],FALSE);
+	$k=htmlspecialchars($_SESSION['instancedb'][$_GET['instance']]['acttab']);
+	$sql='DROP TABLE '.pname($_SESSION['instancedb'][$_GET['instance']]['acttab'],FALSE);
 	if (mysqli_query($conn,$sql)){
 		if (check_table_exist($conn)!==FALSE){
 			$res['stat']='con_err';
@@ -2375,10 +2684,10 @@ if ($_GET['act']=='droptbl'&&$_POST['confirm']=='da'){
 if ($_GET['act']=='getorder'){
 	$res=array();
 	$res['stat']='success';
-	if (!isset($_SESSION['myorder'])||$_SESSION['myorder']==''||$_SESSION['myorder']==0||$_SESSION['myorder']==FALSE){
+	if (!isset($_SESSION['instancedb'][$_GET['instance']]['myorder'])||$_SESSION['instancedb'][$_GET['instance']]['myorder']==''||$_SESSION['instancedb'][$_GET['instance']]['myorder']==0||$_SESSION['instancedb'][$_GET['instance']]['myorder']==FALSE){
 		$res['all']='nimic';
 	}
-	else $res['all']=$_SESSION['myorder'];
+	else $res['all']=$_SESSION['instancedb'][$_GET['instance']]['myorder'];
 	echo encodeJsonSafe($res);
 	die();
 }
@@ -2395,12 +2704,12 @@ if($_GET['act']=='saveorder'){
 		$res['con_err']='colmiss';
 	}
 	else{
-		$_SESSION['myorder']=$ord;
+		$_SESSION['instancedb'][$_GET['instance']]['myorder']=$ord;
 		$res['stat']='success';
 	}
 	}
 	else {
-		unset($_SESSION['myorder']);
+		unset($_SESSION['instancedb'][$_GET['instance']]['myorder']);
 		$res['stat']='success';
 	}
 	echo encodeJsonSafe($res);
@@ -2408,7 +2717,7 @@ if($_GET['act']=='saveorder'){
 }
 if ($_GET['act']=='change_columns_order'){
 	$res=array();
-	$sql='ALTER TABLE '.pname($_SESSION['acttab'],FALSE).' MODIFY '.pname($_POST['cine'],FALSE).' '.$_POST['cumECine'].' ';
+	$sql='ALTER TABLE '.pname($_SESSION['instancedb'][$_GET['instance']]['acttab'],FALSE).' MODIFY '.pname($_POST['cine'],FALSE).' '.$_POST['cumECine'].' ';
 	if ($_POST['primul']=='DA') $sql.='FIRST';
 	else {
 		$sql.='AFTER '.pname($_POST['dupaCine'],FALSE);
@@ -2426,7 +2735,7 @@ if ($_GET['act']=='change_columns_order'){
 //ADD COLUMN
 if ($_GET['act']=='addCol'){
 	$res=array();
-	$sql='ALTER TABLE '.pname($_SESSION['acttab'],FALSE).' ADD '.pname($_POST['name'],FALSE).' '.$_POST['type'].' ;';
+	$sql='ALTER TABLE '.pname($_SESSION['instancedb'][$_GET['instance']]['acttab'],FALSE).' ADD '.pname($_POST['name'],FALSE).' '.$_POST['type'].' ;';
 	if(mysqli_query($conn,$sql)){
 		$res['stat']='success';
 	}
@@ -2442,12 +2751,12 @@ if ($_GET['act']=='addCol'){
 if ($_GET['act']=='drop_column'&&$_POST['check']=='DA'){
 	$res=array();
 	if (check_column_exist($conn,array($_POST['column']))){
-		$sql='ALTER TABLE '.pname($_SESSION['acttab'],FALSE).' DROP COLUMN '.pname($_POST['column'],FALSE).' ;';
+		$sql='ALTER TABLE '.pname($_SESSION['instancedb'][$_GET['instance']]['acttab'],FALSE).' DROP COLUMN '.pname($_POST['column'],FALSE).' ;';
 		if (mysqli_query($conn,$sql)){
-			if (isset($_SESSION['myorder'])&&is_array($_SESSION['myorder'])){
-			for ($i=0;$i<count($_SESSION['myorder']);$i+=2){
-				if ($_SESSION['myorder'][$i]==$_POST['column']){
-					array_splice($_SESSION['myorder'],$i,2);
+			if (isset($_SESSION['instancedb'][$_GET['instance']]['myorder'])&&is_array($_SESSION['instancedb'][$_GET['instance']]['myorder'])){
+			for ($i=0;$i<count($_SESSION['instancedb'][$_GET['instance']]['myorder']);$i+=2){
+				if ($_SESSION['instancedb'][$_GET['instance']]['myorder'][$i]==$_POST['column']){
+					array_splice($_SESSION['instancedb'][$_GET['instance']]['myorder'],$i,2);
 				}
 			}
 			}
@@ -2470,20 +2779,20 @@ if ($_GET['act']=='drop_column'&&$_POST['check']=='DA'){
 if ($_GET['act']=='editCol'){
 	$res=array();
 	if (check_column_exist($conn,array($_POST['oldName']))){
-	$sql='SHOW FIELDS FROM '.pname($_SESSION['acttab'],FALSE)." WHERE Field='".prepare($_POST['oldName'])."';";
+	$sql='SHOW FIELDS FROM '.pname($_SESSION['instancedb'][$_GET['instance']]['acttab'],FALSE)." WHERE Field='".prepare($_POST['oldName'])."';";
 	$result=mysqli_query($conn,$sql);
 			if ($result!==FALSE&&mysqli_num_rows($result)>0){
 				$row=mysqli_fetch_assoc($result);
-				$sql='ALTER TABLE '.pname($_SESSION['acttab'],FALSE).' MODIFY '.pname($_POST['oldName'],FALSE).''.$row['Type'];
+				$sql='ALTER TABLE '.pname($_SESSION['instancedb'][$_GET['instance']]['acttab'],FALSE).' MODIFY '.pname($_POST['oldName'],FALSE).''.$row['Type'];
 				mysqli_query($conn,$sql);
 			}
-	$sql='SHOW INDEX FROM '.pname($_SESSION['acttab'],FALSE)." WHERE Column_name='".prepare($_POST['oldName'])."';";
+	$sql='SHOW INDEX FROM '.pname($_SESSION['instancedb'][$_GET['instance']]['acttab'],FALSE)." WHERE Column_name='".prepare($_POST['oldName'])."';";
 			$result=mysqli_query($conn,$sql);
 			if ($result!==FALSE&&mysqli_num_rows($result)>0){
 				while($row=mysqli_fetch_assoc($result)){
-			$sql='ALTER TABLE '.pname($_SESSION['acttab'],FALSE).' DROP INDEX '.pname($row['Key_name']);
+			$sql='ALTER TABLE '.pname($_SESSION['instancedb'][$_GET['instance']]['acttab'],FALSE).' DROP INDEX '.pname($row['Key_name']);
 			mysqli_query($conn,$sql);}}
-	$sql='ALTER TABLE '.pname($_SESSION['acttab'],FALSE).' CHANGE COLUMN '.pname($_POST['oldName'],FALSE).' '.pname($_POST['newName'],FALSE).' '.$_POST['newDataType'].' ;';
+	$sql='ALTER TABLE '.pname($_SESSION['instancedb'][$_GET['instance']]['acttab'],FALSE).' CHANGE COLUMN '.pname($_POST['oldName'],FALSE).' '.pname($_POST['newName'],FALSE).' '.$_POST['newDataType'].' ;';
 	if (mysqli_query($conn,$sql)){
 		$res['stat']='success';
 	}
@@ -2510,7 +2819,7 @@ if ($_GET['act']=='delete_row'&&$_POST['check']=='DA'){
 		echo encodeJsonSafe($res);
 		die();
 	}
-	$sql='DELETE FROM '.pname($_SESSION['acttab'],FALSE).' WHERE 1=1 ';
+	$sql='DELETE FROM '.pname($_SESSION['instancedb'][$_GET['instance']]['acttab'],FALSE).' WHERE 1=1 ';
 	foreach ($pac['columns'] as $col){
 		if ($pac['rowContent'][$col]===NULL){
 			$sql.=' AND '.pname($col,FALSE).' IS NULL';
@@ -2549,7 +2858,7 @@ if ($_GET['act']=='new_row'){
 		echo encodeJsonSafe($res);
 		die();
 	}
-	$sql="INSERT INTO ".pname($_SESSION['acttab'],FALSE)." () VALUES();";
+	$sql="INSERT INTO ".pname($_SESSION['instancedb'][$_GET['instance']]['acttab'],FALSE)." () VALUES();";
 	if (mysqli_query($conn,$sql)===FALSE){
 		$res['stat']='fail';
 		$res['error']=htmlspecialchars(mysqli_error($conn));
@@ -2564,7 +2873,7 @@ if ($_GET['act']=='new_row'){
 		else {
 		$position=new_position($conn,$primary);
 		if ($position!==FALSE){
-		$sql="SELECT * FROM ".pname($_SESSION['acttab'],FALSE)." WHERE ".pname($primary,FALSE)."=LAST_INSERT_ID()";
+		$sql="SELECT * FROM ".pname($_SESSION['instancedb'][$_GET['instance']]['acttab'],FALSE)." WHERE ".pname($primary,FALSE)."=LAST_INSERT_ID()";
 		$result=mysqli_query($conn,$sql);
 		if ($result===FALSE){
 			$res['stat']='success';
@@ -2605,7 +2914,7 @@ if ($_GET['act']=='double_row'){
 	$res['error']='json_error';
 	die();
 	}
-	$sql="SHOW FIELDS FROM ".pname($_SESSION['acttab'],FALSE);
+	$sql="SHOW FIELDS FROM ".pname($_SESSION['instancedb'][$_GET['instance']]['acttab'],FALSE);
 	$result=mysqli_query($conn,$sql);
 	$cols=array();
 	while($row=mysqli_fetch_assoc($result)){
@@ -2630,7 +2939,7 @@ if ($_GET['act']=='double_row'){
 	}
 	$colCsv=rtrim($colCsv,',');
 	$valuesCsv=rtrim($valuesCsv,',');
-	$sql="INSERT INTO ".pname($_SESSION['acttab'],FALSE)." (".$colCsv.") VALUES(".$valuesCsv.");";
+	$sql="INSERT INTO ".pname($_SESSION['instancedb'][$_GET['instance']]['acttab'],FALSE)." (".$colCsv.") VALUES(".$valuesCsv.");";
 	if (mysqli_query($conn,$sql)===FALSE){
 		$res['stat']='fail';
 		$res['error']=htmlspecialchars(mysqli_error($conn));
@@ -2645,7 +2954,7 @@ if ($_GET['act']=='double_row'){
 		else {
 		$position=new_position($conn,$primary);
 		if ($position!==FALSE){
-		$sql="SELECT * FROM ".pname($_SESSION['acttab'],FALSE)." WHERE ".pname($primary,FALSE)."=LAST_INSERT_ID()";
+		$sql="SELECT * FROM ".pname($_SESSION['instancedb'][$_GET['instance']]['acttab'],FALSE)." WHERE ".pname($primary,FALSE)."=LAST_INSERT_ID()";
 		$result=mysqli_query($conn,$sql);
 		if ($result===FALSE){
 			$res['stat']='success';
@@ -2703,7 +3012,7 @@ if ($_GET['act']=='updateCell'&&isset($_POST['packet'])){
 				$newText="'".prepare(prepare_to_add($newText))."'";
 			}
 		}
-	$sql='UPDATE '.pname($_SESSION['acttab'],FALSE).' SET '.pname($pack['columns'][$pack['column']],FALSE)."=".$newText." WHERE 1=1";
+	$sql='UPDATE '.pname($_SESSION['instancedb'][$_GET['instance']]['acttab'],FALSE).' SET '.pname($pack['columns'][$pack['column']],FALSE)."=".$newText." WHERE 1=1";
 	foreach ($pack['columns'] as $col){
 		if ($pack['initRowContent'][$col]===null){
 			$sql.=' AND '.pname($col,FALSE).' IS NULL';
@@ -2714,7 +3023,7 @@ if ($_GET['act']=='updateCell'&&isset($_POST['packet'])){
 		$sql.=' LIMIT 1';
 	if (mysqli_query($conn,$sql)){
 				if ($pack['primary']!==NULL&&$pack['rowNumber']!==NULL){
-				$sql="SELECT * FROM ".pname($_SESSION['acttab'],FALSE)." WHERE CAST(".pname($pack['primary'],FALSE)." AS CHAR CHARACTER SET utf8 ) COLLATE utf8_bin =CAST('".prepare($pack['rowNumber'])."' AS CHAR CHARACTER SET utf8) COLLATE utf8_bin";
+				$sql="SELECT * FROM ".pname($_SESSION['instancedb'][$_GET['instance']]['acttab'],FALSE)." WHERE CAST(".pname($pack['primary'],FALSE)." AS CHAR CHARACTER SET utf8 ) COLLATE utf8_bin =CAST('".prepare($pack['rowNumber'])."' AS CHAR CHARACTER SET utf8) COLLATE utf8_bin";
 				$result=mysqli_query($conn,$sql);
 				if ($result===FALSE) {
 				$res['stat']='success';
@@ -2751,14 +3060,14 @@ if ($_GET['act']=='updateCell'&&isset($_POST['packet'])){
 //RENAME TABLE
 if ($_GET['act']=='rename_table'){
 	$res=array();
-	$sql="RENAME TABLE ".pname($_SESSION['acttab'],FALSE).' TO '.pname($_POST['newName'],FALSE);
+	$sql="RENAME TABLE ".pname($_SESSION['instancedb'][$_GET['instance']]['acttab'],FALSE).' TO '.pname($_POST['newName'],FALSE);
 	if (mysqli_query($conn,$sql)===FALSE)
 	{
 		$res['stat']='fail';
 		$res['error']=htmlspecialchars(mysqli_error($conn));
 	}
 	else{
-		$_SESSION['acttab']=$_POST['newName'];
+		$_SESSION['instancedb'][$_GET['instance']]['acttab']=$_POST['newName'];
 		$res['stat']='success';
 	}
 	echo encodeJsonSafe($res);
@@ -2800,18 +3109,18 @@ if ($_GET['act']=='copy_table'){
 	$res=array();
 	if ($_POST['thisDb']=='yes') $newName=pname($_POST['newName'],FALSE);
 	else $newName=pname($_POST['dbName']).'.'.pname($_POST['newName'],FALSE);
-	$sql="CREATE TABLE ".$newName." LIKE ".pname($_SESSION['acttab'],FALSE);
+	$sql="CREATE TABLE ".$newName." LIKE ".pname($_SESSION['instancedb'][$_GET['instance']]['acttab'],FALSE);
 	if (mysqli_query($conn,$sql)===FALSE)
 	{
 		$res['stat']='fail';
 		$res['error']=htmlspecialchars(mysqli_error($conn));
 	}
 	else{
-		$sql="INSERT INTO ".$newName." SELECT * FROM ".pname($_SESSION['acttab'],FALSE);
+		$sql="INSERT INTO ".$newName." SELECT * FROM ".pname($_SESSION['instancedb'][$_GET['instance']]['acttab'],FALSE);
 		if (mysqli_query($conn,$sql)===FALSE)
 	{
 		$res['stat']='fail';
-		$res['error']=htmlspecialchars(mysqli_error($conn)).'<br>'.'<span style="color:red">The new table has been created, but the content could not be copied.</span>';
+		$res['error']=htmlspecialchars(mysqli_error($conn)).'<br>'.'<span style="color:red">'.$GLOBALS["TR"]["Tbl_created_content_not_copied"][$GLOBALS["LANG"]].'</span>';
 	}
 	else{
 		$res['stat']='success';
@@ -2823,7 +3132,7 @@ if ($_GET['act']=='copy_table'){
 }
 //*COPY TABLE
 
-if (isset($_GET['ajax'])&&(!isset($_POST['CSRF'])||$_POST['CSRF']!=$_SESSION['CSRF'])){
+if (isset($_GET['ajax'])&&(!isset($_POST['CSRF'])||$_POST['CSRF']!=$_SESSION['CSRFdb'])){
 	$res=array();
 	$res['stat']='con_err';
 	$res['con_err']='login';
@@ -2861,22 +3170,22 @@ body{
 	zoom:1;
 }
 #banner{
-	width:15%;
+	width:12%;
 	padding-left:15px;
 	padding-right:15px;
 	vertical-align:middle;
 	text-align:center;
-	font-family: "Brush Script MT",cursive;
+	font-family: sans-serif,cursive;
 	font-size:20px;
 	color:#0000EE;
 }
 .brush_mt{
-	font-family: "Brush Script MT",cursive;
+	font-family: sans-serif,cursive;
 }
 #search{
 	background-color:#FFFFFF;
 	border-radius:5px;
-	width:400px;
+	width:500px;
 	height:30px;
 	text-align:left;
 	padding-left:5px;
@@ -2886,7 +3195,7 @@ body{
 #searchbar{
 	position:relative;
 	top:1px;
-	width:360px;
+	width:460px;
 	height:26px;
 	border:none;
 	font-size:18px;
@@ -2905,7 +3214,7 @@ body{
 
 }
 .closing{
-	font-family: Arial,"Helvetica Neue",Helvetica,sans-serif;
+	font-family: sans-serif;
 	text-decoration:none !important;
 	color:#777 !important;
 	font-weight:bold;
@@ -3095,7 +3404,7 @@ margin:0px;
 	cursor:pointer;
 }
 </style>
-<?php if (isset($_SESSION['CSRF'])) echo "<script> MY_CSRF='".$_SESSION['CSRF']."';</script>";?>
+<?php if (isset($_SESSION['CSRFdb'])) echo "<script> MY_CSRF='".$_SESSION['CSRFdb']."';</script>";?>
 </head>
 <body>
 <?php enc_build()?>
@@ -3104,9 +3413,9 @@ margin:0px;
 <tr style="width:100%">
 <td id="banner">
 Access MySqli <br>
-Version <?php echo $VERSION;?>
+<?php echo $GLOBALS["TR"]["Version"][$GLOBALS["LANG"]].' '.$VERSION;?>
 </td>
-<td style="width:25%;padding-left:10px;padding-right:10px;padding-top:10px;;vertical-align:text-top;" id="search_db_td">
+<td style="width:28%;padding-left:10px;padding-right:10px;padding-top:10px;;vertical-align:text-top;" id="search_db_td">
 <div id="search">
 <input type="text" id="searchbar"></input>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <svg viewBox="0 0 100 110" style="width:25px;position:absolute;top:3px;right:7px;cursor:pointer;" id="searchsvg" onclick="searchTable()">
@@ -3129,26 +3438,26 @@ $('document').ready(function(){
 </div>
 <div style="padding-left:10px;padding-right:10px;">
 <span id="rows_counter"></span>
-<span class="pseudo_link" onclick="advancedSearch(1)" id="advsrclink" style="float:right;">Search settings</span>
+<span class="pseudo_link" onclick="advancedSearch(1)" id="advsrclink" style="float:right;"><?php echo $GLOBALS["TR"]["Search_settings"][$GLOBALS["LANG"]]?></span>
 </div>
 <div id="advsrc" my_state="0">
 <div style="position:absolute;right:7px;top:2px;">
-<span onclick="advancedSearch(0)" class="pseudo_link closing" title="Close">x</span>
+<span onclick="advancedSearch(0)" class="pseudo_link closing" title="<?php echo $GLOBALS["TR"]["Close"][$GLOBALS["LANG"]]?>">x</span>
 </div>
-<span style="font-weight:bold">Match:</span><br>
-<input type="radio" class="radI" name="matchcr" id="radExact" value="ex">Exact cell</input><br>
-<input type="radio" class="radI" name="matchcr" id="radCnt" value="cnt" checked="true">Contains</input><br>
-<input type="radio" class="radI" name="matchcr" id="radBgn" value="bgn">Begins with</input><br>
-<input type="radio" class="radI" name="matchcr" id="radEnd" value="end">Ends with</input><br>
-<input type="radio" class="radI" name="matchcr" id="radWrd" value="wrd">Word</input><br>
-<input type="radio" class="radI" name="matchcr" id="radRg" value="rg">RegEx (only RegEx, without &quot;/&quot; or i,g etc.)</input><br><br>
-<span style="font-weight:bold">Show only rows containing results: </span><input type="checkbox" class="chkbox" name="onlyRows" id="onlyRows"><br><br>
-<span style="font-weight:bold">Match lower/UPPERcase </span><input type="checkbox" checked="true" class="chkbox" name="minMaj" id="minMaj"><br><br>
-<table><tr><td style="vertical-align:text-top;padding-right:10px;text-align:center;"><span style="font-weight:bold">Search on columns:<br>
-<button type="button" class="butCols" onclick="allCols()" style="margin-bottom:10px;margin-top:4px;">All columns</button><br>
-<button type="button" class="butCols" onclick="noCol()">No column</button>
+<span style="font-weight:bold"><?php echo $GLOBALS["TR"]["Match"][$GLOBALS["LANG"]]?></span><br>
+<input type="radio" class="radI" name="matchcr" id="radExact" value="ex"><?php echo $GLOBALS["TR"]["Exact_cell"][$GLOBALS["LANG"]]?></input><br>
+<input type="radio" class="radI" name="matchcr" id="radCnt" value="cnt" checked="true"><?php echo $GLOBALS["TR"]["Contains"][$GLOBALS["LANG"]]?></input><br>
+<input type="radio" class="radI" name="matchcr" id="radBgn" value="bgn"><?php echo $GLOBALS["TR"]["Begins_with"][$GLOBALS["LANG"]]?></input><br>
+<input type="radio" class="radI" name="matchcr" id="radEnd" value="end"><?php echo $GLOBALS["TR"]["Ends_with"][$GLOBALS["LANG"]]?></input><br>
+<input type="radio" class="radI" name="matchcr" id="radWrd" value="wrd"><?php echo $GLOBALS["TR"]["Word"][$GLOBALS["LANG"]]?></input><br>
+<input type="radio" class="radI" name="matchcr" id="radRg" value="rg"><?php echo $GLOBALS["TR"]["RegEx_only"][$GLOBALS["LANG"]]?></input><br><br>
+<span style="font-weight:bold"><?php echo $GLOBALS["TR"]["Only_rows_containing"][$GLOBALS["LANG"]]?>: </span><input type="checkbox" class="chkbox" name="onlyRows" id="onlyRows"><br><br>
+<span style="font-weight:bold"><?php echo $GLOBALS["TR"]["Upper_lower"][$GLOBALS["LANG"]]?>: </span><input type="checkbox" checked="true" class="chkbox" name="minMaj" id="minMaj"><br><br>
+<table><tr><td style="vertical-align:text-top;padding-right:10px;text-align:center;"><span style="font-weight:bold"><?php echo $GLOBALS["TR"]["Search_cols"][$GLOBALS["LANG"]]?><br>
+<button type="button" class="butCols" onclick="allCols()" style="margin-bottom:10px;margin-top:4px;"><?php echo $GLOBALS["TR"]["All_cols"][$GLOBALS["LANG"]]?></button><br>
+<button type="button" class="butCols" onclick="noCol()"><?php echo $GLOBALS["TR"]["No_col"][$GLOBALS["LANG"]]?></button>
 </span></td><td><span id="selectCols"></span></td></tr></table>
-<div style="font-size:14px;"><span style="font-weight:bold">Note:</span> The first three settings are kept until page refresh and the column search options until table edits.</div>
+<div style="font-size:14px;"><span style="font-weight:bold"><?php echo $GLOBALS["TR"]["Note"][$GLOBALS["LANG"]]?>:</span> <?php echo $GLOBALS["TR"]["First3_settings"][$GLOBALS["LANG"]]?></div>
 </div>
 <script>
 function advancedSearch(arg){
@@ -3226,71 +3535,73 @@ function buildSearchObject(){
 	}
 }
 </script>
-<div id="db_and_table" style="border:solid 1px #BDC2CC;border-radius:5px;height:60px;width:400px;"><table><tr><td>
-<div style="margin-top:5px;padding-left:20px;width:260px;white-space:nowrap;text-overflow:ellipsis;overflow-x:hidden;">Current database: <span title="<?php echo htmlspecialchars($_SESSION['actdb']);?>" style="font-weight:bold;"><?php echo htmlspecialchars($_SESSION['actdb']);?></span></div>
-<div style="padding-left:20px;margin-top:5px;" id="table_sel">Current table:
+<div id="db_and_table" style="border:solid 1px #BDC2CC;border-radius:5px;height:60px;width:500px;"><table><tr><td>
+<div style="margin-top:5px;padding-left:20px;width:350px;white-space:nowrap;text-overflow:ellipsis;overflow-x:hidden;"><?php echo $GLOBALS["TR"]["Current_db"][$GLOBALS["LANG"]]?>: <span title="<?php echo htmlspecialchars($_SESSION['instancedb'][$_GET['instance']]['actdb']);?>" style="font-weight:bold;"><?php echo htmlspecialchars($_SESSION['instancedb'][$_GET['instance']]['actdb']);?></span></div>
+<div style="padding-left:20px;margin-top:5px;" id="table_sel"><?php echo $GLOBALS["TR"]["Current_tbl"][$GLOBALS["LANG"]]?>:
 <?php
 echo create_table_scrollbar($conn);
 ?></div>
-</div></td><td style="padding-top:5px;padding-left:12px;"><span title="Change database">
+</div></td><td style="padding-top:5px;padding-left:12px;"><span title="<?php echo $GLOBALS["TR"]["Change_db"][$GLOBALS["LANG"]]; ?>">
 <?php echo create_logout_button(TRUE,'width:40px;height:40px;cursor:pointer;','logoutdb()');?></span>
 </td><td style="padding-left:12px;padding-top:5px;"><span title="Log out"><?php echo create_logout_button(FALSE,'width:40px;height:40px;cursor:pointer;','logout()');?></span>
 </td></tr></table>
 </td>
-<td style="width:60%;vertical-align:top;padding-top:3px;padding-left:5px;padding-right:5px;border-radius:10px;" id="table_html_td">
+<td style="width:55%;vertical-align:top;padding-top:3px;padding-left:5px;padding-right:5px;border-radius:10px;" id="table_html_td">
 <div style="text-align:center;border:solid 1px #BDC2CC;border-radius:5px;height:60px;">
 <div id="act_tabel_buttons">
-<div style="font-weight:bold;margin-bottom:2px;">Table actions:</div>
+<div style="font-weight:bold;margin-bottom:2px;"><?php echo $GLOBALS["TR"]["Tbl_actions"][$GLOBALS["LANG"]]?>:</div>
 <?php
-if(!(isset($GLOBALS['DEFAULTDBS'])&&isset($GLOBALS['DEFAULTDBS']['tables'][$_SESSION['actdb']])&&$GLOBALS['DEFAULTDBS']['tables'][$_SESSION['actdb']]!==NULL)){
- echo '<span title="Create table">'.create_plus_button("ge_cr('tbl2')",'width:35px;height:35px;').'</span>'.str_repeat('&nbsp;',5).'<span title="Delete table">'.create_x_button('droptbl()','width:35px;height:35px;').'</span>'.str_repeat('&nbsp;',5);
- echo '<span title="Rename table">'.create_rename_logo("create_rename_table()",'width:39px;height:35px;cursor:pointer').str_repeat('&nbsp;',5);
-echo '<span title="Copy table">'.create_double_table_logo("create_copy_table()",'width:35px;height:35px;cursor:pointer').str_repeat('&nbsp',5);
+if(!(isset($GLOBALS['DEFAULTDBS'])&&isset($GLOBALS['DEFAULTDBS']['tables'][$_SESSION['instancedb'][$_GET['instance']]['actdb']])&&$GLOBALS['DEFAULTDBS']['tables'][$_SESSION['instancedb'][$_GET['instance']]['actdb']]!==NULL)){
+ echo '<span title="'.$GLOBALS["TR"]["Create_tbl"][$GLOBALS["LANG"]].'">'.create_plus_button("ge_cr('tbl2')",'width:35px;height:35px;').'</span>'.str_repeat('&nbsp;',5).'<span title="'.$GLOBALS["TR"]["Delete_tbl"][$GLOBALS["LANG"]].'">'.create_x_button('droptbl()','width:35px;height:35px;').'</span>'.str_repeat('&nbsp;',5);
+ echo '<span title="'.$GLOBALS["TR"]["Rename_tbl"][$GLOBALS["LANG"]].'">'.create_rename_logo("create_rename_table()",'width:39px;height:35px;cursor:pointer').str_repeat('&nbsp;',5);
+echo '<span title="'.$GLOBALS["TR"]["Copy_tbl"][$GLOBALS["LANG"]].'">'.create_double_table_logo("create_copy_table()",'width:35px;height:35px;cursor:pointer').str_repeat('&nbsp',5);
 }
-echo '<span title="Order">'.create_order_logo("createOrder()",'width:35px;height:35px;cursor:pointer',TRUE).'</span>'.str_repeat('&nbsp;',5);
-echo '<span title="Backup database/tables">'.create_download_logo("create_backup()",'width:35px;height:35px;cursor:pointer').str_repeat('&nbsp;',5);
-echo '<span title="Import database/tables">'.create_upload_logo("create_upload()",'width:35px;height:35px;cursor:pointer').str_repeat('&nbsp;',5);
+echo '<span title="'.$GLOBALS["TR"]["Order"][$GLOBALS["LANG"]].'">'.create_order_logo("createOrder()",'width:35px;height:35px;cursor:pointer',TRUE).'</span>'.str_repeat('&nbsp;',5);
+echo '<span title="'.$GLOBALS["TR"]["Backup_db_tbl"][$GLOBALS["LANG"]].'">'.create_download_logo("create_backup()",'width:35px;height:35px;cursor:pointer').str_repeat('&nbsp;',5);
+echo '<span title="'.$GLOBALS["TR"]["Import_db_tbl"][$GLOBALS["LANG"]].'">'.create_upload_logo("create_upload()",'width:35px;height:35px;cursor:pointer').str_repeat('&nbsp;',5);
 ?>
 </div>
 <div id="act_search_buttons" style="display:none">
-<div style="font-weight:bold;margin-bottom:2px;">Search actions:</div>
+<div style="font-weight:bold;margin-bottom:2px;"><?php echo $GLOBALS["TR"]["Search_actions"][$GLOBALS["LANG"]]?>:</div>
 <?php
-echo '<span title="Back">'.create_home_logo("closeSearch()",'width:45px;height:31.5px;cursor:pointer').'</span>'.str_repeat('&nbsp;',2);
-echo '<span title="Show only rows containing results" id="eye_button_span">'.create_view_logo("showResults(1)",'width:45px;height:31.5px;cursor:pointer').'</span>'.str_repeat('&nbsp;',2);
-echo '<span title="Order">'.create_order_logo("createOrder()",'width:35px;height:35px;cursor:pointer',TRUE).'</span>';?>
+echo '<span title="'.$GLOBALS["TR"]["Back"][$GLOBALS["LANG"]].'">'.create_home_logo("closeSearch()",'width:45px;height:31.5px;cursor:pointer').'</span>'.str_repeat('&nbsp;',2);
+echo '<span title="'.$GLOBALS["TR"]["Only_rows_containing"][$GLOBALS["LANG"]].'" id="eye_button_span">'.create_view_logo("showResults(1)",'width:45px;height:31.5px;cursor:pointer').'</span>'.str_repeat('&nbsp;',2);
+echo '<span title="'.$GLOBALS["TR"]["Order"][$GLOBALS["LANG"]].'">'.create_order_logo("createOrder()",'width:35px;height:35px;cursor:pointer',TRUE).'</span>';?>
 </div>
 </div>
 </div><div style="height:5px;"></div><table style="width:100%"><tr><td style="width:90%">
 <!--HTML edit-->
 <div style="text-align:center;border:solid 1px #BDC2CC;border-radius:5px;height:53px;position:relative;" tabindex="2" id="editHtmlDiv" onmousedown="htmlEditor.focusedDiv(event)">
-<button class="htmlToggle" id="htmlBold" onclick="htmlEditor.bold(this)" style="font-weight:700;" title="Bold">B</button>
-<button class="htmlToggle" id="htmlItalic" onclick="htmlEditor.italic(this)" style="font-style:italic;font-weight:bold;" title="Italic">I</button>
-<button class="htmlToggle" id="htmlUnder" onclick="htmlEditor.under(this)" style="text-decoration:underline;font-weight:bold;" title="Underline">U</button>
-<div style="display:inline;position:relative;"><button class="htmlToggle" onclick="htmlEditor.link()" style="text-decoration:underline;font-weight:bold;" title="Add link">Link</button>
-<div id="linkPanel" class="htmlEditPanel" style="height:150px;padding-top:0px;left:-125px;width:300px;"><br>
-<div class="input_container"><input type="text" id="htmlLink" myval="Link address" value="Link address" class="input_element"></input></div>
-<a href="javascript:htmlEditor.followLink()" style="float:left;margin-left:50px;position:">Follow link</a><br>
-<div class="input_container" style="position:relative;top:5px;"><input type="text" id="htmlLinkText" myval="Link text" value="Link text" class="input_element"></input></div>
-<button class="htmlToggle" onclick="htmlEditor.linkSave()" style="font-weight:bold;position:relative;top:15px;" title="Add link">Add link</button>
+<span title="<?php echo $GLOBALS["TR"]["Style_CSS"][$GLOBALS["LANG"]]?>" style="position:relative;top:16px;margin:3px;font-weight:bold;">CSS<input type="checkbox" style="position:relative;top:1px;cursor:pointer;" id="htmlUseCss" onchange="htmlEditor.useCss(this)"/></span>
+<button class="htmlToggle" id="htmlBold" onclick="htmlEditor.bold(this)" style="font-weight:700;" title="<?php echo $GLOBALS["TR"]["Bold"][$GLOBALS["LANG"]]?>">B</button>
+<button class="htmlToggle" id="htmlItalic" onclick="htmlEditor.italic(this)" style="font-style:italic;font-weight:bold;" title="<?php echo $GLOBALS["TR"]["Italic"][$GLOBALS["LANG"]]?>">I</button>
+<button class="htmlToggle" id="htmlUnder" onclick="htmlEditor.under(this)" style="text-decoration:underline;font-weight:bold;" title="<?php echo $GLOBALS["TR"]["Underline"][$GLOBALS["LANG"]]?>">U</button>
+<div style="display:inline;position:relative;"><button class="htmlToggle" onclick="htmlEditor.link()" style="text-decoration:underline;font-weight:bold;" title="<?php echo $GLOBALS["TR"]["Add_link"][$GLOBALS["LANG"]]?>"><?php echo $GLOBALS["TR"]["Link"][$GLOBALS["LANG"]]?></button>
+<div id="linkPanel" class="htmlEditPanel" style="height:160px;padding-top:0px;left:-125px;width:300px;"><br>
+<div class="input_container"><input type="text" id="htmlLink" myval="<?php echo $GLOBALS["TR"]["Link_addr"][$GLOBALS["LANG"]]?>" value="<?php echo $GLOBALS["TR"]["Link_addr"][$GLOBALS["LANG"]]?>" class="input_element"></input></div>
+<a href="javascript:htmlEditor.followLink()" style="float:left;margin-left:50px;position:"><?php echo $GLOBALS["TR"]["Follow_link"][$GLOBALS["LANG"]]?></a><br>
+<div class="input_container" style="position:relative;top:5px;"><input type="text" id="htmlLinkText" myval="<?php echo $GLOBALS["TR"]["Link_txt"][$GLOBALS["LANG"]]?>" value="<?php echo $GLOBALS["TR"]["Link_txt"][$GLOBALS["LANG"]]?>" class="input_element"></input></div><br>
+<span style="position:relative;top:-6px;"><?php echo $GLOBALS["TR"]["Link_new_tab"][$GLOBALS["LANG"]];?><input style="position:relative;top:1px;cursor:pointer;" type="checkbox" id="htmlLinkBlank"/></span><br>
+<button class="htmlToggle" onclick="htmlEditor.linkSave()" style="font-weight:bold;position:relative;top:0px;" title="<?php echo $GLOBALS["TR"]["Add_link"][$GLOBALS["LANG"]]?>"><?php echo $GLOBALS["TR"]["Add_link"][$GLOBALS["LANG"]]?></button>
 </div></div>
-<select onchange="htmlEditor.color()" id="htmlColor" title="Text color" class="htmlSelect"><option value="rgb(0, 0, 0)">Black</option><option value="rgb(255, 0, 0)">Rosu</option><option value="rgb(0, 0, 255)">Blue</option><option value="rgb(0, 255, 0)">Green</option><option value="rgb(255, 255, 0)">Yellow</option><option value="rgb(0, 0, 238)">Link color</option></select>
-<select onchange="htmlEditor.dim()" id="htmlDim" title="Text size" class="htmlSelect" value="3"><option value="2">Small</option><option value="3">Normal</option><option value="5">Big</option><option value="7">Huge</option></select>
-<div style="display:inline;position:relative;"><button class="htmlToggle" onclick="htmlEditor.list()" style="font-weight:bold;" title="Add list">List</button>
-<div id="listPanel" class="htmlEditPanel" ><button class="htmlToggle" id="htmlOl" onclick="htmlEditor.ol()" style="font-weight:bold;" title="Ordered list">Ordered</button><br>
-<button class="htmlToggle" id="htmlUl" onclick="htmlEditor.ul()" style="font-weight:bold;" title="Unordered list">Unordered</button></div></div>
-<div style="display:inline;position:relative;"><button class="htmlToggle" onclick="htmlEditor.align()" style="font-weight:bold;" title="Align">Align</button>
-<div id="alignPanel" class="htmlEditPanel" style="height:100px;padding-top:0px;left:-15px;"><button class="htmlToggle" id="htmlLeft" onclick="htmlEditor.left()" style="font-weight:bold;" title="Left">Left</button><br>
-<button class="htmlToggle" id="htmlCenter" onclick="htmlEditor.center()" style="font-weight:bold;" title="Center">Center</button><br>
-<button class="htmlToggle" id="htmlRight" onclick="htmlEditor.right()" style="font-weight:bold;" title="Right">Right</button>
+<select onchange="htmlEditor.color()" id="htmlColor" title="<?php echo $GLOBALS["TR"]["Text_color"][$GLOBALS["LANG"]]?>" class="htmlSelect"><option value="rgb(0, 0, 0)"><?php echo $GLOBALS["TR"]["Black"][$GLOBALS["LANG"]]?></option><option value="rgb(255, 0, 0)"><?php echo $GLOBALS["TR"]["Red"][$GLOBALS["LANG"]]?></option><option value="rgb(0, 0, 255)"><?php echo $GLOBALS["TR"]["Blue"][$GLOBALS["LANG"]]?></option><option value="rgb(0, 255, 0)"><?php echo $GLOBALS["TR"]["Green"][$GLOBALS["LANG"]]?></option><option value="rgb(255, 255, 0)"><?php echo $GLOBALS["TR"]["Yellow"][$GLOBALS["LANG"]]?></option></select>
+<select onchange="htmlEditor.dim()" id="htmlDim" title="<?php echo $GLOBALS["TR"]["Text_size"][$GLOBALS["LANG"]]?>" class="htmlSelect" value="3"><option value="2"><?php echo $GLOBALS["TR"]["Small"][$GLOBALS["LANG"]]?></option><option value="3"><?php echo $GLOBALS["TR"]["Normal"][$GLOBALS["LANG"]]?></option><option value="5"><?php echo $GLOBALS["TR"]["Big"][$GLOBALS["LANG"]]?></option><option value="7"><?php echo $GLOBALS["TR"]["Huge"][$GLOBALS["LANG"]]?></option></select>
+<div style="display:inline;position:relative;"><button class="htmlToggle" onclick="htmlEditor.list()" style="font-weight:bold;" title="<?php echo $GLOBALS["TR"]["Add_list"][$GLOBALS["LANG"]]?>"><?php echo $GLOBALS["TR"]["List"][$GLOBALS["LANG"]]?></button>
+<div id="listPanel" class="htmlEditPanel" ><button class="htmlToggle" id="htmlOl" onclick="htmlEditor.ol()" style="font-weight:bold;" title="<?php echo $GLOBALS["TR"]["Ord_list"][$GLOBALS["LANG"]]?>"><?php echo $GLOBALS["TR"]["Ordered"][$GLOBALS["LANG"]]?></button><br>
+<button class="htmlToggle" id="htmlUl" onclick="htmlEditor.ul()" style="font-weight:bold;" title="<?php echo $GLOBALS["TR"]["Unord_list"][$GLOBALS["LANG"]]?>"><?php echo $GLOBALS["TR"]["Unordered"][$GLOBALS["LANG"]]?></button></div></div>
+<div style="display:inline;position:relative;"><button class="htmlToggle" onclick="htmlEditor.align()" style="font-weight:bold;" title="<?php echo $GLOBALS["TR"]["Align"][$GLOBALS["LANG"]]?>"><?php echo $GLOBALS["TR"]["Align"][$GLOBALS["LANG"]]?></button>
+<div id="alignPanel" class="htmlEditPanel" style="height:100px;padding-top:0px;left:-15px;"><button class="htmlToggle" id="htmlLeft" onclick="htmlEditor.left()" style="font-weight:bold;" title="<?php echo $GLOBALS["TR"]["Left"][$GLOBALS["LANG"]]?>"><?php echo $GLOBALS["TR"]["Left"][$GLOBALS["LANG"]]?></button><br>
+<button class="htmlToggle" id="htmlCenter" onclick="htmlEditor.center()" style="font-weight:bold;" title="<?php echo $GLOBALS["TR"]["Centre"][$GLOBALS["LANG"]]?>"><?php echo $GLOBALS["TR"]["Centre"][$GLOBALS["LANG"]]?></button><br>
+<button class="htmlToggle" id="htmlRight" onclick="htmlEditor.right()" style="font-weight:bold;" title="<?php echo $GLOBALS["TR"]["Right"][$GLOBALS["LANG"]]?>"><?php echo $GLOBALS["TR"]["Right"][$GLOBALS["LANG"]]?></button>
 </div></div>
-<div id="editHTMLMask" style="position:absolute;top:0px;left:0px;width:100%;height:100%;border-radius:inherit;background-color:#FFFFFF;opacity:0.5;" onclick="gen_info('To use this function, activate HTML edit from Settings<br>NOTE: It works only on text columns.')"></div>
+<div id="editHTMLMask" style="position:absolute;top:0px;left:0px;width:100%;height:100%;border-radius:inherit;background-color:#FFFFFF;opacity:0.5;" onclick="gen_info('<?php echo $GLOBALS["TR"]["HTML_disabled"][$GLOBALS["LANG"]]?>')"></div>
 </div>
 <!-- *HTML edit-->
 </td>
 <td style="text-align:right;"><?php echo create_pquery_button('height:35px;width:70px;');?></td></tr></table>
 </td>
-<td id="settings_td" style="border-radius:10px;"><div><span title="Settings"><?php echo create_settings_logo('gen_settings()','width:50px;height:50px;cursor:pointer;',TRUE)?></span></div>
-<div style="padding-top:10px;" title="New row">
+<td id="settings_td" style="border-radius:10px;"><div><span title="<?php echo $GLOBALS["TR"]["Settings"][$GLOBALS["LANG"]]?>"><?php echo create_settings_logo('gen_settings()','width:50px;height:50px;cursor:pointer;',TRUE)?></span></div>
+<div style="padding-top:10px;" title="<?php echo $GLOBALS["TR"]["New_row"][$GLOBALS["LANG"]]?>">
 <?php echo create_plus_row_button('newRow()') ?>
 </div>
 </td>
@@ -3311,6 +3622,12 @@ var pendingRowMove=0;
 $(document).ready(function(){
 	setInterval(function(){
 		if (isHtmlActive){
+		if (document.queryCommandState('styleWithCss')==true){
+			$('#htmlUseCss').prop('checked',true);
+		}
+		else{
+			$('#htmlUseCss').prop('checked',false);
+		}
 		if (document.queryCommandState('bold')==true){
 			$('#htmlBold').css('background-color','#F1F0FF');
 		}
@@ -3357,6 +3674,14 @@ $(document).ready(function(){
 });
 var htmlEditor={
 	selection:null,
+	useCss(bu){
+		if (bu.checked){
+			document.execCommand('styleWithCss',false,true);
+		}
+		else{
+			document.execCommand('styleWithCss',false,false);
+		}
+	},
 	bold:function(bu){
 		document.execCommand('bold',false,null);
 	},
@@ -3476,17 +3801,19 @@ var htmlEditor={
 	followLink:function(){
 		var lnk=htmlEditor.buildLink();
 		if (lnk.adr!=false) window.open(lnk.adr);
-		else alert('Insert a valid link!');
+		else alert('<?php echo $GLOBALS["TR"]["Insert_valid"][$GLOBALS["LANG"]]?>');
 	},
 	linkSave:function(){
 		var lnk=htmlEditor.buildLink();
 		if (lnk.adr!=false){
-		var linkHtml='<a href="'+lnk.adr+'">'+lnk.txt+'</a>';
+		var targetBlank='';
+		if ($('#htmlLinkBlank').prop('checked')) targetBlank='target="_blank"';
+		var linkHtml='<a href="'+lnk.adr+'" '+targetBlank+' >'+lnk.txt+'</a> ';
 		htmlEditor.restoreSelection();
 		document.execCommand('insertHTML',false,linkHtml);
 		htmlEditor.link();
 		}
-		else alert('Insert a valid link!');
+		else alert('<?php echo $GLOBALS["TR"]["Insert_valid"][$GLOBALS["LANG"]]?>');
 	},
 	focusedDiv:function(event){
 		isHtmlClicked=true;
@@ -3522,16 +3849,14 @@ var tot;
 var order;
 var settings;
 $('document').ready(function(){
-	var cooky=getCookie('mysettings');
-	if (!(typeof cooky =='undefined'||cooky==""||cooky==null)){
-	settings=JSON.parse(cooky);
-	}
-	else settings=JSON.parse('<?php echo escapenl(addslashes(json_encode($DEFAULTSET)));?>');
+	settings=JSON.parse('<?php
+	if (isset($_SESSION['instancedb'][$_GET['instance']]['mysettings'])) echo escapenl(addslashes(json_encode($SETTINGS)));
+	else echo escapenl(addslashes(json_encode($DEFAULTSET)));?>');
 	getContents();
 });
 function getContents(){
 document.getElementsByTagName('body')[0].createPreloader();
-	$.post('access_mysqli.php?act=get_contents&ajax=true',{CSRF:(typeof MY_CSRF !='undefined')?MY_CSRF:''},function(result){
+	$.post('<?php echo $GLOBALS['PHP_SELF_INSTANCE'];?>&act=get_contents&ajax=true',{CSRF:(typeof MY_CSRF !='undefined')?MY_CSRF:''},function(result){
 		document.getElementsByTagName('body')[0].removePreloader();
 		var ree=JSON.parse(result);
 		if (ree['stat']=='con_err') gen_error(ree['con_err']);
@@ -3553,15 +3878,15 @@ function putContents(){
 	var cnt='<table border="3" style="margin-left:auto;margin-right:auto;"><tr id="tableHead">';
 	var i,j;
 	for(i=0;i<tot['columns'].length;i++){
-		cnt+='<th id="col'+i+'" style="cursor:move;"><table border="0" style="margin-left:auto;margin-right:auto;"><td title="Delete column"><svg viewBox="0 0 100 100" style="width:15px;height:15px;cursor:pointer;position:relative;top:2px;" onclick="deleteColumn('+i+')">\
+		cnt+='<th id="col'+i+'" style="cursor:move;"><table border="0" style="margin-left:auto;margin-right:auto;"><td title="<?php echo $GLOBALS["TR"]["Del_col"][$GLOBALS["LANG"]]?>"><svg viewBox="0 0 100 100" style="width:15px;height:15px;cursor:pointer;position:relative;top:2px;" onclick="deleteColumn('+i+')">\
 	<path d="M 83.34,93.69 L 50,60.35 L 16.66,93.69 L 6.31,83.34 L 39.65,50 L 6.31,16.66 L 16.66,6.31 L 50,39.65 L 83.34,6.31 L 93.69, 16.66 L 60.35,50 L 93.69,83.34 Z" fill="#FF0000" stroke="#FFFFFF" stroke-width="2" onmouseover="this.setAttribute(\'fill\',\'#FF2423\')" onmouseout="this.setAttribute(\'fill\',\'#FF0000\')" />\
-	</svg></td><td>'+htmlspecialchars(tot['columns'][i])+'</td><td title="Edit column"><svg viewBox="0 0 300 500" onclick="createAddChangeColumn(1,'+i+')" style="width:15px;height:25px;cursor:pointer;">\
+	</svg></td><td>'+htmlspecialchars(tot['columns'][i])+'</td><td title="<?php echo $GLOBALS["TR"]["Edit_col"][$GLOBALS["LANG"]]?>"><svg viewBox="0 0 300 500" onclick="createAddChangeColumn(1,'+i+')" style="width:15px;height:25px;cursor:pointer;">\
 	<path d="M 27.78,351.26 L 177.78,45.47 L 264.59,88.05 L 114.59,393.84 Z" fill="#FFD753"/>\
 	<path d="M 27.78,351.26 L 114.59,393.84 L 59.09,440.48 L 24.86,423.68 Z" fill="#FFEDB8"/>\
 	<path d="M 59.09,440.48 L 24.86,423.68 L 22.96,470.84 Z" fill="#000000"/>\
 	</svg></td></table></th>';
 	}
-	cnt+='<td id="addColumnTd" style="vertical-align:middle;"><span title="New column" style="width:30px;height:30px;position:relative;top:1px;"><?php echo escapenl(addslashes(create_plus_button('createAddChangeColumn(0,0)','width:30px;height:30px;'))); ?></span></td>';
+	cnt+='<td id="addColumnTd" style="vertical-align:middle;"><span title="<?php echo $GLOBALS["TR"]["New_col"][$GLOBALS["LANG"]]?>" style="width:30px;height:30px;position:relative;top:1px;"><?php echo escapenl(addslashes(create_plus_button('createAddChangeColumn(0,0)','width:30px;height:30px;'))); ?></span></td>';
 	cnt+='</tr>';
 	for (i=0;i<tot['rows'].length;i++){
 		cnt+='<tr id="row'+i+'" class="row">';
@@ -3574,20 +3899,20 @@ function putContents(){
 			}
 			if (typeof tot['rows'][i][0][tot['columns'][j]] =='undefined'|| tot['rows'][i][0][tot['columns'][j]]==null){
 				if (typeof settings['editHTML']!='undefined'&&settings['editHTML']=="1"&&(tot['data-types'][j].toUpperCase()=='TEXT'||tot['data-types'][j].toUpperCase()=='TINYTEXT'||tot['data-types'][j].toUpperCase()=='MEDIUMTEXT'||tot['data-types'][j].toUpperCase()=='LONGTEXT')){
-			cnt+='<td class="tableCell '+tabCellType+'"><div class="cell" my_html="yes" onpaste="pastePaste(this)" '+additionalStyle+contentEditable+' id="cell'+i+';'+j+'"></div></td>';}
+			cnt+='<td class="tableCell '+tabCellType+'"><div class="cell" my_html="yes" onpaste="pastePaste(this,event)" '+additionalStyle+contentEditable+' id="cell'+i+';'+j+'"></div></td>';}
 			else
-				cnt+='<td class="tableCell '+tabCellType+'"><div class="cell" onpaste="pastePaste(this)" '+additionalStyle+contentEditable+' id="cell'+i+';'+j+'"></div></td>';
+				cnt+='<td class="tableCell '+tabCellType+'"><div class="cell" onpaste="pastePaste(this,event)" '+additionalStyle+contentEditable+' id="cell'+i+';'+j+'"></div></td>';
 			}
 			else{ if (settings['editHTML']=="1"&&(tot['data-types'][j].toUpperCase()=='TEXT'||tot['data-types'][j].toUpperCase()=='TINYTEXT'||tot['data-types'][j].toUpperCase()=='MEDIUMTEXT'||tot['data-types'][j].toUpperCase()=='LONGTEXT')){
-			cnt+='<td class="tableCell '+tabCellType+'"><div class="cell" onpaste="pastePaste(this)" my_html="yes" '+additionalStyle+contentEditable+' id="cell'+i+';'+j+'">'+tot['rows'][i][0][tot['columns'][j]]+'</div></td>';}
+			cnt+='<td class="tableCell '+tabCellType+'"><div class="cell" onpaste="pastePaste(this,event)" my_html="yes" '+additionalStyle+contentEditable+' id="cell'+i+';'+j+'">'+tot['rows'][i][0][tot['columns'][j]]+'</div></td>';}
 			else
-			cnt+='<td class="tableCell '+tabCellType+'"><div class="cell" onpaste="pastePaste(this)" '+additionalStyle+contentEditable+' id="cell'+i+';'+j+'">'+prepareToShow(tot['rows'][i][0][tot['columns'][j]])+'</div></td>';}
+			cnt+='<td class="tableCell '+tabCellType+'"><div class="cell" onpaste="pastePaste(this,event)" '+additionalStyle+contentEditable+' id="cell'+i+';'+j+'">'+prepareToShow(tot['rows'][i][0][tot['columns'][j]])+'</div></td>';}
 		}
-		cnt+='<td style="vertical-align:middle">&nbsp;<span title="Delete row" style="height:20px;width:20px;position:relative;top:1px;cursor:pointer;" onclick="delRow('+i+')"><?php echo escapenl(addslashes(create_x_button(FALSE,'width:20px;height:20px;'))); ?></span>&nbsp;&nbsp;<span title="Duplicate row" style="height:20px;width:20px;position:relative;top:1px;cursor:pointer;" onclick="doubleRow('+i+')"><?php echo escapenl(addslashes(create_double_row_logo('width:40px;height:20px;'))); ?></span></td></tr>';
+		cnt+='<td style="vertical-align:middle">&nbsp;<span title="<?php echo $GLOBALS["TR"]["Del_row"][$GLOBALS["LANG"]]?>" style="height:20px;width:20px;position:relative;top:1px;cursor:pointer;" onclick="delRow('+i+')"><?php echo escapenl(addslashes(create_x_button(FALSE,'width:20px;height:20px;'))); ?></span>&nbsp;&nbsp;<span title="<?php echo $GLOBALS["TR"]["Duplicate_row"][$GLOBALS["LANG"]]?>" style="height:20px;width:20px;position:relative;top:1px;cursor:pointer;" onclick="doubleRow('+i+')"><?php echo escapenl(addslashes(create_double_row_logo('width:40px;height:20px;'))); ?></span></td></tr>';
 	}
 	cnt+='</table>';
 	$('#main_table').html(cnt);
-	$('#rows_counter').html('<span title="Rows count: '+tot['rows'].length+'">Rows count: <span class="row_cnt">'+tot['rows'].length+'</span></span>');
+	$('#rows_counter').html('<span title="<?php echo $GLOBALS["TR"]["Rows_count"][$GLOBALS["LANG"]]?>: '+tot['rows'].length+'"><?php echo $GLOBALS["TR"]["Rows_count"][$GLOBALS["LANG"]]?>: <span class="row_cnt">'+tot['rows'].length+'</span></span>');
 	$('.cell[contenteditable=true]').keydown(function(event){
 		if (event.keyCode=='9'){
 			event.preventDefault();
@@ -3599,6 +3924,10 @@ function putContents(){
 		htmlEditor.blurredDiv();
 		}
 		return true;
+	}
+	if (event.keyCode==13){
+		event.preventDefault();
+		document.execCommand('insertText',false,'\n');
 	}
 });
 	if (typeof tot!='undefined'&& typeof tot['columns']!='undefined'){
@@ -3623,7 +3952,7 @@ function putContents(){
 	wait(function(){
 		active++;
 		document.getElementsByTagName('body')[0].createPreloader();
-		$.post('access_mysqli.php?act=change_columns_order',{cine:tot['columns'][mutat],
+		$.post('<?php echo $GLOBALS['PHP_SELF_INSTANCE'];?>&act=change_columns_order',{cine:tot['columns'][mutat],
 		cumECine:tot['data-types'][mutat],primul:primul,dupaCine:tot['columns'][dupaCine],CSRF:(typeof MY_CSRF !='undefined')?MY_CSRF:''},
 		function(result){
 			var ree=JSON.parse(result);
@@ -3704,7 +4033,7 @@ function tabelSelectChange(){
 	$('#act_tabel_buttons').css('display','');
 	$('#act_search_buttons').css('display','none');
 	pendingSearch=null;
-	$.post('access_mysqli.php?act=set_acttab&ajax=true',{tbl:tb,CSRF:(typeof MY_CSRF !='undefined')?MY_CSRF:''},function(result){
+	$.post('<?php echo $GLOBALS['PHP_SELF_INSTANCE'];?>&act=set_acttab&ajax=true',{tbl:tb,CSRF:(typeof MY_CSRF !='undefined')?MY_CSRF:''},function(result){
 		ree=JSON.parse(result);
 		if (ree['stat']=='con_err'){
 			gen_error(ree['con_err']);
@@ -3729,17 +4058,17 @@ function createOrder(){
 		var inne='\
 		<div style="position:absolute;top:0px;left:0px;width:100%;height:100%;background-color:#000000;opacity:0.5;">&nbsp;</div>\
 		<div style="opacity:1;position:absolute;top:50%;left:50%;width:600px;height:600px;padding:20px;margin-left:-320px;margin-top:-350px;background-color:#FFF2A0;border-radius:5px;">\
-		<a href="javascript:closeOrder()" class="closing" style="font-size:26px;position:absolute;right:20px;top:10px;" title="Close">x</a>\
+		<a href="javascript:closeOrder()" class="closing" style="font-size:26px;position:absolute;right:20px;top:10px;" title="<?php echo $GLOBALS["TR"]["Close"][$GLOBALS["LANG"]]?>">x</a>\
 		<div style="height:30px;">\
 		<?php echo escapenl(addslashes(create_order_logo(FALSE,'height:50px;width:50px;margin-left:20px;',FALSE)))?>\
-		&nbsp;&nbsp;&nbsp;<span style="font-weight:bold;position:relative;top:-13px;font-size:22px;">ORDER</span>\
+		&nbsp;&nbsp;&nbsp;<span style="font-weight:bold;position:relative;top:-13px;font-size:22px;"><?php echo $GLOBALS["TR"]["ORDER"][$GLOBALS["LANG"]]?></span>\
 		</div><br>\
-		<div style="padding-left:20px;padding-top:20px;" id="addordercon"><span style="font-size:18px;position:relative;top:-10px;">Add order key: </span><select id="addorder" style="position:relative;top:-10px;border-radius:5px;border:solid #999 1px;max-width:200px;background-color:#FFFFFF;">';
-		inne+='</select>&nbsp; <span title="Add key">\
+		<div style="padding-left:20px;padding-top:20px;" id="addordercon"><span style="font-size:18px;position:relative;top:-10px;"><?php echo $GLOBALS["TR"]["Add_order_key"][$GLOBALS["LANG"]]?> </span><select id="addorder" style="position:relative;top:-10px;border-radius:5px;border:solid #999 1px;max-width:200px;background-color:#FFFFFF;">';
+		inne+='</select>&nbsp; <span title="<?php echo $GLOBALS["TR"]["Add_key"][$GLOBALS["LANG"]]?>">\
 		<?php echo escapenl(addslashes(create_plus_button('addOrderCr()','width:35px;height:35px;'))); ?>\
 		</span></div>\
 		<ul style="list-style-type:none;overflow:auto;height:420px;margin-bottom:5px;padding:20px;margin-top:0px;" id="orderMain"></ul>\
-		<div style="height:50px;padding-left:150px">Click OK to save:<button type="button" style="cursor:pointer;position:relative;top:-5px;float:right;margin-right:25px;color:#FFFFFF;background-color:#CC8D00;width:75px;font-size:18px;" onclick="saveOrder()">OK</button></div>\
+		<div style="height:50px;padding-left:150px"><?php echo $GLOBALS["TR"]["OK_to_save"][$GLOBALS["LANG"]]?><button type="button" style="cursor:pointer;position:relative;top:-5px;float:right;margin-right:25px;color:#FFFFFF;background-color:#CC8D00;width:75px;font-size:18px;" onclick="saveOrder()"><?php echo $GLOBALS["TR"]["OK"][$GLOBALS["LANG"]]?></button></div>\
 		</div>';
 		conerdiv.innerHTML=inne;
 		if (document.getElementsByTagName('body')[0].getElementsByClassName('orderdiv').length==0){
@@ -3747,7 +4076,7 @@ function createOrder(){
 		}
 		var ordm=document.getElementById('orderMain');
 		ordm.createPreloader();
-		$.post('access_mysqli.php?act=getorder&ajax=true',{CSRF:(typeof MY_CSRF !='undefined')?MY_CSRF:''},function(result){
+		$.post('<?php echo $GLOBALS['PHP_SELF_INSTANCE'];?>&act=getorder&ajax=true',{CSRF:(typeof MY_CSRF !='undefined')?MY_CSRF:''},function(result){
 			ordm.removePreloader();
 			var ree=JSON.parse(result);
 			if (ree['stat']=='con_err') gen_error(ree['con_err']);
@@ -3783,7 +4112,7 @@ function createOrder2(ordm){
 				for (var i=0;i<order.length;i+=2){
 					intm+='<li style="background-color:#EB0CD3;padding:20px;cursor:move;border-radius:5px;margin-bottom:30px;" class="orderfull" mycolumn="'+htmlspecialchars(order[i])+'">\
 					<table><tr><td style="font-size:20px;width:400px;overflow:hidden;text-overflow:ellipsis;">'+htmlspecialchars(order[i])+'</td><td style="padding-right:5px;">\
-					<select style="cursor:auto;" id="selectorder'+i+'" class="orderselect" onchange="orderChgVal(this)"><option value="ASC">ASC</option><option value="DESC">DESC</option></select>&nbsp;&nbsp;</td><td>'+'<span style="cursor:pointer;" title="Delete key" onclick="rmOrderCr('+i+')" id="orderspan'+i+'"><?php echo escapenl(prepare(create_x_button(FALSE,'width:30px;height:30px;')));?></span>'+'</td></tr>\
+					<select style="cursor:auto;" id="selectorder'+i+'" class="orderselect" onchange="orderChgVal(this)"><option value="ASC">ASC</option><option value="DESC">DESC</option></select>&nbsp;&nbsp;</td><td>'+'<span style="cursor:pointer;" title="<?php echo $GLOBALS["TR"]["Delete_key"][$GLOBALS["LANG"]]?>" onclick="rmOrderCr('+i+')" id="orderspan'+i+'"><?php echo escapenl(prepare(create_x_button(FALSE,'width:30px;height:30px;')));?></span>'+'</td></tr>\
 					</table></li>';
 				}
 				intm+='<br>';
@@ -3792,7 +4121,7 @@ function createOrder2(ordm){
 					$('#selectorder'+i).val(order[i+1]);
 				}
 				}
-				else{ intm+='No order key.';
+				else{ intm+='<?php echo $GLOBALS["TR"]["No_order_key"][$GLOBALS["LANG"]]?>';
 				ordm.innerHTML=intm;}
 				$('#orderMain').sortable({axis:'y',containment:"parent",stop:function(event,ui){
 					scanOrder();
@@ -3809,7 +4138,7 @@ function scanOrder(){
 	}
 }
 function closeOrder(){
-	gen_prompt('closeOrder2(1)','Do you really want to close?<br>Changes will be lost!');
+	gen_prompt('closeOrder2(1)','<?php echo $GLOBALS["TR"]["Close_changes_lost"][$GLOBALS["LANG"]]?>');
 }
 function closeOrder2(arg){
 	if (arg) close_prompt();
@@ -3836,7 +4165,7 @@ function orderChgVal(t){
 function saveOrder(){
 	document.getElementsByClassName('orderdiv')[0].createPreloader();
 	active++;
-	$.post('access_mysqli.php?act=saveorder&ajax=true',{order:order,CSRF:(typeof MY_CSRF !='undefined')?MY_CSRF:''},function(result){
+	$.post('<?php echo $GLOBALS['PHP_SELF_INSTANCE'];?>&act=saveorder&ajax=true',{order:order,CSRF:(typeof MY_CSRF !='undefined')?MY_CSRF:''},function(result){
 		active--;
 		document.getElementsByClassName('orderdiv')[0].removePreloader();
 		var ree=JSON.parse(result);
@@ -3864,21 +4193,21 @@ function gen_settings(){
 		var inne='\
 		<div style="position:absolute;top:0px;left:0px;width:100%;height:100%;background-color:#000000;opacity:0.5;">&nbsp;</div>\
 		<div style="opacity:1;position:absolute;top:50%;left:50%;width:550px;height:600px;padding:20px;margin-left:-295px;margin-top:-305px;background-color:#FFF2A0;border-radius:5px;">\
-		<a href="javascript:closeSettings()" class="closing" style="font-size:26px;position:absolute;right:20px;top:10px;" title="Close">x</a>\
+		<a href="javascript:closeSettings()" class="closing" style="font-size:26px;position:absolute;right:20px;top:10px;" title="<?php echo $GLOBALS["TR"]["Close"][$GLOBALS["LANG"]]?>">x</a>\
 		<div style="height:30px;">\
 		<?php echo escapenl(addslashes(create_settings_logo(FALSE,'height:50px;width:50px;margin-left:20px;',FALSE)))?>\
-		&nbsp;&nbsp;&nbsp;<span style="font-weight:bold;position:relative;top:-13px;font-size:22px;">SETTINGS</span>\
+		&nbsp;&nbsp;&nbsp;<span style="font-weight:bold;position:relative;top:-13px;font-size:22px;"><?php echo $GLOBALS["TR"]["SETTINGS"][$GLOBALS["LANG"]]?></span>\
 		</div><br>\
 		<div style="height:470px;padding:20px;padding-left:50px;">\
 		<table style="width:100%">\
-		<tr><td style="width:75%"><h3>HTML edit</h3></td><td style="width:60px;"><div style="cursor:pointer;background-color:#847AFF;position:relative;width:50px;height:25px;border-radius:5px;border:solid #4D4694 2px;" id="settingsEditHTML" onclick="slideSwitch(this)" value="0"><div id="settingsEditHTMLIn" style="position:absolute;top:0px;left:0px;width:25px;height:25px;border-radius:3px;background-color:#FFFFFF;text-align:center;"><span style="font-size:12px;position:relative;top:2px;left:-1px;color:#4D4694;">OFF</span></div></div></td><td style="text-align:left;"><?php create_info_logo("gen_info(\\'Enables text formating tool, only for &amp;quot;text&amp;quot; columns.\\')",'width:30px;height:30px;cursor:pointer;');?></td></tr>\
-		<tr><td style="width:75%"><h3>Advanced edit</h3></td><td style="width:60px;"><div style="cursor:pointer;background-color:#847AFF;position:relative;width:50px;height:25px;border-radius:5px;border:solid #4D4694 2px;" id="settingsEditADV" onclick="slideSwitch(this)" value="0"><div id="settingsEditADVIn" style="position:absolute;top:0px;left:0px;width:25px;height:25px;border-radius:3px;background-color:#FFFFFF;text-align:center;"><span style="font-size:12px;position:relative;top:2px;left:-1px;color:#4D4694;">OFF</span></div></div></td><td style="text-align:left;"><?php create_info_logo("gen_info(\\'For advanced users: you can insert MySql functions; the edited text must be placed between simple quotes &amp;#40;&amp;#39;&amp;#41;.\\')",'width:30px;height:30px;cursor:pointer;');?></td></tr>\
-		<tr><td style="width:75%"><h3>Show truncated cell content, except for the current edited cell</h3></td><td style="width:60px;"><div style="cursor:pointer;background-color:#847AFF;position:relative;width:50px;height:25px;border-radius:5px;border:solid #4D4694 2px;" id="settingsEditDimension" onclick="slideSwitch(this)" value="0"><div id="settingsEditDimensionIn" style="position:absolute;top:0px;left:0px;width:25px;height:25px;border-radius:3px;background-color:#FFFFFF;text-align:center;"><span style="font-size:12px;position:relative;top:2px;left:-1px;color:#4D4694;">OFF</span></div></div></td><td style="text-align:left;"><?php create_info_logo("gen_info(\\'The table cells are small when not selected (not clicked inside) for simpler navigation. Some of the text in cells may not be shown.\\')",'width:30px;height:30px;cursor:pointer;');?></td></tr>\
-		<tr><td style="width:75%"><h3>Use &quot;&#36;&quot symbol for current date</h3></td><td style="width:60px;"><div style="cursor:pointer;background-color:#847AFF;position:relative;width:50px;height:25px;border-radius:5px;border:solid #4D4694 2px;" id="settingsEditDate" onclick="slideSwitch(this)" value="0"><div id="settingsEditDateIn" style="position:absolute;top:0px;left:0px;width:25px;height:25px;border-radius:3px;background-color:#FFFFFF;text-align:center;"><span style="font-size:12px;position:relative;top:2px;left:-1px;color:#4D4694;">OFF</span></div></div></td><td style="text-align:left;"><?php create_info_logo("gen_info(\\'On &amp;#40;DATE&amp;#41; columns, the &amp;quot;&amp;#36;&amp;quot; character inserted alone in the cell sets its value to current server date.\\')",'width:30px;height:30px;cursor:pointer;');?></td></tr>\
-		<tr><td style="width:75%"><h3>Use &quot;&#36;&quot symbol for current time</h3></td><td style="width:60px;"><div style="cursor:pointer;background-color:#847AFF;position:relative;width:50px;height:25px;border-radius:5px;border:solid #4D4694 2px;" id="settingsEditTime" onclick="slideSwitch(this)" value="0"><div id="settingsEditTimeIn" style="position:absolute;top:0px;left:0px;width:25px;height:25px;border-radius:3px;background-color:#FFFFFF;text-align:center;"><span style="font-size:12px;position:relative;top:2px;left:-1px;color:#4D4694;">OFF</span></div></div></td><td style="text-align:left;"><?php create_info_logo("gen_info(\\'On &amp;#40;TIME&amp;#41; columns, the &amp;quot;&amp;#36;&amp;quot; character inserted alone in the cell sets its value to current server time.\\')",'width:30px;height:30px;cursor:pointer;');?></td></tr>\
-		<tr><td style="width:75%"><h3>Use &quot;&#36;&quot symbol for current date and time</h3></td><td style="width:60px;"><div style="cursor:pointer;background-color:#847AFF;position:relative;width:50px;height:25px;border-radius:5px;border:solid #4D4694 2px;" id="settingsEditDateTime" onclick="slideSwitch(this)" value="0"><div id="settingsEditDateTimeIn" style="position:absolute;top:0px;left:0px;width:25px;height:25px;border-radius:3px;background-color:#FFFFFF;text-align:center;"><span style="font-size:12px;position:relative;top:2px;left:-1px;color:#4D4694;">OFF</span></div></div></td><td style="text-align:left;"><?php create_info_logo("gen_info(\\'On &amp;#40;DATETIME&amp;#41; columns, the &amp;quot;&amp;#36;&amp;quot; character inserted alone in the cell sets its value to current server date and time.\\')",'width:30px;height:30px;cursor:pointer;');?></td></tr>\
+		<tr><td style="width:75%"><h3><?php echo $GLOBALS["TR"]["HTML_edit"][$GLOBALS["LANG"]]?></h3></td><td style="width:60px;"><div style="cursor:pointer;background-color:#847AFF;position:relative;width:50px;height:25px;border-radius:5px;border:solid #4D4694 2px;" id="settingsEditHTML" onclick="slideSwitch(this)" value="0"><div id="settingsEditHTMLIn" style="position:absolute;top:0px;left:0px;width:25px;height:25px;border-radius:3px;background-color:#FFFFFF;text-align:center;"><span style="font-size:12px;position:relative;top:2px;left:-1px;color:#4D4694;">OFF</span></div></div></td><td style="text-align:left;"><?php create_info_logo("gen_info(\\'{$GLOBALS["TR"]["HTML_edit_expl"][$GLOBALS["LANG"]]}\\')",'width:30px;height:30px;cursor:pointer;');?></td></tr>\
+		<tr><td style="width:75%"><h3><?php echo $GLOBALS["TR"]["Advanced_edit"][$GLOBALS["LANG"]]?></h3></td><td style="width:60px;"><div style="cursor:pointer;background-color:#847AFF;position:relative;width:50px;height:25px;border-radius:5px;border:solid #4D4694 2px;" id="settingsEditADV" onclick="slideSwitch(this)" value="0"><div id="settingsEditADVIn" style="position:absolute;top:0px;left:0px;width:25px;height:25px;border-radius:3px;background-color:#FFFFFF;text-align:center;"><span style="font-size:12px;position:relative;top:2px;left:-1px;color:#4D4694;">OFF</span></div></div></td><td style="text-align:left;"><?php create_info_logo("gen_info(\\'{$GLOBALS["TR"]["Advanced_edit_expl"][$GLOBALS["LANG"]]}\\')",'width:30px;height:30px;cursor:pointer;');?></td></tr>\
+		<tr><td style="width:75%"><h3><?php echo $GLOBALS["TR"]["Truncated_view"][$GLOBALS["LANG"]]?></h3></td><td style="width:60px;"><div style="cursor:pointer;background-color:#847AFF;position:relative;width:50px;height:25px;border-radius:5px;border:solid #4D4694 2px;" id="settingsEditDimension" onclick="slideSwitch(this)" value="0"><div id="settingsEditDimensionIn" style="position:absolute;top:0px;left:0px;width:25px;height:25px;border-radius:3px;background-color:#FFFFFF;text-align:center;"><span style="font-size:12px;position:relative;top:2px;left:-1px;color:#4D4694;">OFF</span></div></div></td><td style="text-align:left;"><?php create_info_logo("gen_info(\\'{$GLOBALS["TR"]["Truncated_view_expl"][$GLOBALS["LANG"]]}\\')",'width:30px;height:30px;cursor:pointer;');?></td></tr>\
+		<tr><td style="width:75%"><h3><?php echo $GLOBALS["TR"]["Quot_for_date"][$GLOBALS["LANG"]]?></h3></td><td style="width:60px;"><div style="cursor:pointer;background-color:#847AFF;position:relative;width:50px;height:25px;border-radius:5px;border:solid #4D4694 2px;" id="settingsEditDate" onclick="slideSwitch(this)" value="0"><div id="settingsEditDateIn" style="position:absolute;top:0px;left:0px;width:25px;height:25px;border-radius:3px;background-color:#FFFFFF;text-align:center;"><span style="font-size:12px;position:relative;top:2px;left:-1px;color:#4D4694;">OFF</span></div></div></td><td style="text-align:left;"><?php create_info_logo("gen_info(\\'{$GLOBALS["TR"]["Quot_for_date_expl"][$GLOBALS["LANG"]]}\\')",'width:30px;height:30px;cursor:pointer;');?></td></tr>\
+		<tr><td style="width:75%"><h3><?php echo $GLOBALS["TR"]["Quot_for_time"][$GLOBALS["LANG"]]?></h3></td><td style="width:60px;"><div style="cursor:pointer;background-color:#847AFF;position:relative;width:50px;height:25px;border-radius:5px;border:solid #4D4694 2px;" id="settingsEditTime" onclick="slideSwitch(this)" value="0"><div id="settingsEditTimeIn" style="position:absolute;top:0px;left:0px;width:25px;height:25px;border-radius:3px;background-color:#FFFFFF;text-align:center;"><span style="font-size:12px;position:relative;top:2px;left:-1px;color:#4D4694;">OFF</span></div></div></td><td style="text-align:left;"><?php create_info_logo("gen_info(\\'{$GLOBALS["TR"]["Quot_for_time_expl"][$GLOBALS["LANG"]]}\\')",'width:30px;height:30px;cursor:pointer;');?></td></tr>\
+		<tr><td style="width:75%"><h3><?php echo $GLOBALS["TR"]["Quot_for_date_time"][$GLOBALS["LANG"]]?></h3></td><td style="width:60px;"><div style="cursor:pointer;background-color:#847AFF;position:relative;width:50px;height:25px;border-radius:5px;border:solid #4D4694 2px;" id="settingsEditDateTime" onclick="slideSwitch(this)" value="0"><div id="settingsEditDateTimeIn" style="position:absolute;top:0px;left:0px;width:25px;height:25px;border-radius:3px;background-color:#FFFFFF;text-align:center;"><span style="font-size:12px;position:relative;top:2px;left:-1px;color:#4D4694;">OFF</span></div></div></td><td style="text-align:left;"><?php create_info_logo("gen_info(\\'{$GLOBALS["TR"]["Quot_for_date_time_expl"][$GLOBALS["LANG"]]}\\')",'width:30px;height:30px;cursor:pointer;');?></td></tr>\
 		</table></div>\
-		<div style="height:50px;padding-left:150px;font-weight:bold;font-size:18px;">Click OK to save:<button type="button" style="cursor:pointer;position:relative;top:-5px;float:right;margin-right:25px;color:#FFFFFF;background-color:#CC8D00;width:75px;font-size:18px;" onclick="saveSettings()">OK</button></div>\
+		<div style="height:50px;padding-left:150px;font-weight:bold;font-size:18px;"><?php echo $GLOBALS["TR"]["OK_to_save"][$GLOBALS["LANG"]]?><button type="button" style="cursor:pointer;position:relative;top:-5px;float:right;margin-right:25px;color:#FFFFFF;background-color:#CC8D00;width:75px;font-size:18px;" onclick="saveSettings()"><?php echo $GLOBALS["TR"]["OK"][$GLOBALS["LANG"]]?></button></div>\
 		</div>';
 		conerdiv.innerHTML=inne;
 		if (document.getElementsByTagName('body')[0].getElementsByClassName('settingsdiv').length==0){
@@ -3894,7 +4223,7 @@ function gen_settings(){
 	}
 }
 function closeSettings(){
-	gen_prompt('closeSettings2(1)','Do you really want to close?<br>Changes will be lost!');
+	gen_prompt('closeSettings2(1)','<?php echo $GLOBALS["TR"]["Close_changes_lost"][$GLOBALS["LANG"]]?>');
 }
 function closeSettings2(arg){
 	if (arg){ close_prompt();
@@ -3904,7 +4233,7 @@ arr=document.getElementsByTagName('body')[0].getElementsByClassName('settingsdiv
 	}}
 	else{
 	wait(function(){
-	window.location.href="access_mysqli.php";});
+	window.location.href="<?php echo $GLOBALS['PHP_SELF_INSTANCE'];?>";});
 	}
 }
 function slideSwitch(x){
@@ -3951,9 +4280,24 @@ function saveSettings(){
 	setarr['editTime']=document.getElementById('settingsEditTime').getAttribute('value');
 	setarr['editDateTime']=document.getElementById('settingsEditDateTime').getAttribute('value');
 	var setarrTxt=JSON.stringify(setarr);
-	setCookie('mysettings',setarrTxt,30);
-	settings=JSON.parse(setarrTxt);
-	closeSettings2(0);
+	wait(function(){
+		active++;
+		document.getElementsByClassName('settingsdiv')[0].createPreloader();
+	$.post('<?php echo $GLOBALS['PHP_SELF_INSTANCE'];?>&act=save_settings&ajax=true',{newSettings:setarrTxt,CSRF:(typeof MY_CSRF !='undefined')?MY_CSRF:''},function(result){
+		active--;
+		document.getElementsByClassName('settingsdiv')[0].removePreloader();
+		var ree=JSON.parse(result);
+		if (ree['stat']=='con_err') gen_error(ree['con_err']);
+		if (ree['stat']=='fail') gen_error(ree['error']);
+		if (ree['stat']=='success'){
+		settings=JSON.parse(setarrTxt);
+		closeSettings2(0);
+		}
+	});
+
+	});
+
+	
 }
 
 //*SETTINGS
@@ -3981,28 +4325,28 @@ function createAddChangeColumn(arg1,arg2){
 	cr.setAttribute('class','addChangeColumn');
 	var inner='<div style="position:absolute;top:0px;left:0px;width:100%;height:100%;background-color:#000000;opacity:0.5;">&nbsp;</div>\
 	<div id="addChangeColumnInter" style="opacity:1;position:absolute;top:50%;left:50%;width:500px;height:400px;padding:20px;margin-left:-270px;margin-top:-220px;background-color:#FFF2A0;border-radius:5px;">\
-	<a href="javascript:closeAddChangeColumn()" class="closing" style="font-size:24px;position:absolute;right:20px;top:10px;" title="Close">x</a>';
+	<a href="javascript:closeAddChangeColumn()" class="closing" style="font-size:24px;position:absolute;right:20px;top:10px;" title="<?php echo $GLOBALS["TR"]["Close"][$GLOBALS["LANG"]]?>">x</a>';
 var txt;
-if (arg1==0) txt='Create column';
+if (arg1==0) txt='<?php echo $GLOBALS["TR"]["Create_col"][$GLOBALS["LANG"]]?>';
 else txt='Edit column '+htmlspecialchars(tot['columns'][arg2]);
 	inner=inner+'<div><h3 style="text-align:center;">'+txt+'</h3></div>\
 	<br id="crbr">\
-	<br><div style="padding-left:50px">Insert column name:<br><br>\
+	<br><div style="padding-left:50px"><?php echo $GLOBALS["TR"]["Insert_col_name"][$GLOBALS["LANG"]]?><br><br>\
 	<div style="margin-left:10px;background-color:#FFFFFF;border-radius:5px;width:250px;padding-left:5px;height:25px;"><input type="text" id="newcolname" style="margin-top:2px;height:19px;border:none;width:245px;"></input></div></div>\
-	<br><div style="padding-left:50px">Choose column data type:<br><br>\
+	<br><div style="padding-left:50px"><?php echo $GLOBALS["TR"]["Choose_col_data_type"][$GLOBALS["LANG"]]?><br><br>\
 	<select onchange="newdatashow(this)" style="border-radius:5px;color:#FFFFFF;background-color:#CC8D00;font-size:14px;" id="newdatatye"><option value="int unique key auto_increment">Autoincrement</option>\
 	<option value="int">int</option>\
 	<option value="float">float</option>\
 	<option value="text">text</option>\
 	<option value="date">date</option>\
-	<option value="0">Other</option>\
+	<option value="0"><?php echo $GLOBALS["TR"]["Other"][$GLOBALS["LANG"]]?></option>\
 	</select></div>\
-	<br><div style="padding-left:50px;display:none;" id="newdatadiv">Insert data type:<br><br>\
+	<br><div style="padding-left:50px;display:none;" id="newdatadiv"><?php echo $GLOBALS["TR"]["Insert_data_type"][$GLOBALS["LANG"]]?><br><br>\
 	<div style="margin-left:10px;background-color:#FFFFFF;border-radius:5px;width:250px;padding-left:5px;height:25px;"><input type="text" id="newdatatype2" style="margin-top:2px;height:19px;border:none;width:245px;"></input></div>\
 	</div>\
 ';
 
-inner=inner+'<div style="height:50px;position:absolute;bottom:0px;right:10px;width:350px;">Click OK to save:<button type="button" style="cursor:pointer;position:relative;top:-5px;float:right;margin-right:25px;color:#FFFFFF;background-color:#CC8D00;width:75px;font-size:18px;" onclick="sendAddChangeColumn('+arg1+','+arg2+')">OK</button></div>\
+inner=inner+'<div style="height:50px;position:absolute;bottom:0px;right:10px;width:350px;"><?php echo $GLOBALS["TR"]["OK_to_save"][$GLOBALS["LANG"]]?><button type="button" style="cursor:pointer;position:relative;top:-5px;float:right;margin-right:25px;color:#FFFFFF;background-color:#CC8D00;width:75px;font-size:18px;" onclick="sendAddChangeColumn('+arg1+','+arg2+')"><?php echo $GLOBALS["TR"]["OK"][$GLOBALS["LANG"]]?></button></div>\
 </div>';
 cr.innerHTML=inner;
 if (document.getElementsByClassName('create').length==0)
@@ -4041,17 +4385,17 @@ function sendAddChangeColumn(arg1,arg2){
 	$('#act_search_buttons').css('display','none');
 	pendingSearch=null;
 	if (arg1==0){
-		$.post('access_mysqli.php?act=addCol&ajax=true',{name:coln,type:dt,CSRF:(typeof MY_CSRF !='undefined')?MY_CSRF:''},function(result){
+		$.post('<?php echo $GLOBALS['PHP_SELF_INSTANCE'];?>&act=addCol&ajax=true',{name:coln,type:dt,CSRF:(typeof MY_CSRF !='undefined')?MY_CSRF:''},function(result){
 			active--;
 			document.getElementById('addChangeColumnInter').removePreloader();
 			var ree=JSON.parse(result);
 			if (ree['stat']=='con_err') gen_error(ree['con_err']);
 			if (ree['stat']=='fail') gen_error(ree['error']);
-			if (ree['stat']=='success') gen_info('Column '+htmlspecialchars(coln)+' has been created.',0);
+			if (ree['stat']=='success') gen_info('<?php echo $GLOBALS["TR"]["Column"][$GLOBALS["LANG"]]?> '+htmlspecialchars(coln)+' <?php echo $GLOBALS["TR"]["Chas_been_created"][$GLOBALS["LANG"]]?>.',0);
 		});
 	}
 	if (arg1==1){
-		$.post('access_mysqli.php?act=editCol&ajax=true',{oldName:tot['columns'][arg2],newName:coln,newDataType:dt,CSRF:(typeof MY_CSRF !='undefined')?MY_CSRF:''},
+		$.post('<?php echo $GLOBALS['PHP_SELF_INSTANCE'];?>&act=editCol&ajax=true',{oldName:tot['columns'][arg2],newName:coln,newDataType:dt,CSRF:(typeof MY_CSRF !='undefined')?MY_CSRF:''},
 		function(result){
 			active--;
 			document.getElementById('addChangeColumnInter').removePreloader();
@@ -4060,14 +4404,14 @@ function sendAddChangeColumn(arg1,arg2){
 			if (ree['stat']=='fail') gen_error(ree['error']);
 			if (ree['stat']=='success'){
 				closeAddChangeColumn();
-				gen_info('Edit done.',0);
+				gen_info('<?php echo $GLOBALS["TR"]["Edit_done"][$GLOBALS["LANG"]]?>',0);
 			}
 		});
 	}
 	});
 }
 function deleteColumn(arg){
-	gen_prompt('deleteColumn2('+arg+')','Do you really want to delete column '+htmlspecialchars(tot['columns'][arg])+'?');
+	gen_prompt('deleteColumn2('+arg+')','<?php echo $GLOBALS["TR"]["Really_del_col"][$GLOBALS["LANG"]]?> '+htmlspecialchars(tot['columns'][arg])+'?');
 }
 function deleteColumn2(arg){
 	wait(function(){
@@ -4076,14 +4420,14 @@ function deleteColumn2(arg){
 		$('#act_search_buttons').css('display','none');
 		pendingSearch=null;
 		active++;
-			$.post('access_mysqli.php?act=drop_column&ajax=true',{column:tot['columns'][arg],check:'DA',CSRF:(typeof MY_CSRF !='undefined')?MY_CSRF:''},function(result){
+			$.post('<?php echo $GLOBALS['PHP_SELF_INSTANCE'];?>&act=drop_column&ajax=true',{column:tot['columns'][arg],check:'DA',CSRF:(typeof MY_CSRF !='undefined')?MY_CSRF:''},function(result){
 				active--;
 				document.getElementsByClassName('promptdivcont')[0].removePreloader();
 				close_prompt();
 				var ree=JSON.parse(result);
 				if (ree['stat']=='con_err') gen_error(ree['con_err']);
 				if (ree['stat']=='fail') gen_error(ree['error']);
-				if (ree['stat']=='success'){ gen_info('Column '+htmlspecialchars(tot['columns'][arg])+' has been removed.',0);
+				if (ree['stat']=='success'){ gen_info('<?php echo $GLOBALS["TR"]["Column"][$GLOBALS["LANG"]]?> '+htmlspecialchars(tot['columns'][arg])+' <?php echo $GLOBALS["TR"]["Chas_been_removed"][$GLOBALS["LANG"]]?>.',0);
 				getContents();
 				}
 			});
@@ -4108,7 +4452,7 @@ function delRow2(row){
 	wait(function(){
 	document.getElementsByClassName('promptdivcont')[0].createPreloader();
 		active++;
-	$.post('access_mysqli.php?act=delete_row&ajax=true',{check:'DA',packet:packedPacket,CSRF:(typeof MY_CSRF !='undefined')?MY_CSRF:''},function(result){
+	$.post('<?php echo $GLOBALS['PHP_SELF_INSTANCE'];?>&act=delete_row&ajax=true',{check:'DA',packet:packedPacket,CSRF:(typeof MY_CSRF !='undefined')?MY_CSRF:''},function(result){
 		active--;
 		document.getElementsByClassName('promptdivcont')[0].removePreloader();
 		close_del_prompt(row);
@@ -4140,10 +4484,10 @@ function gen_del_prompt(row){
 		<svg style="width:30px;height:30px;" viewBox="0 0 110 110">\
 		<circle cx="55" cy="55" r="45" fill="#FFB800"/>\
 		<text x="30" y="90" fill="#FFFFFF" style="font-size:100px;">?</text>\
-		</svg>&nbsp;&nbsp;&nbsp;<span style="color:#FFB800;font-weight:bold;position:relative;top:-10px">CONFIRM</span>\
+		</svg>&nbsp;&nbsp;&nbsp;<span style="color:#FFB800;font-weight:bold;position:relative;top:-10px"><?php echo $GLOBALS["TR"]["CONFIRM"][$GLOBALS["LANG"]]?></span>\
 		</div><br>\
-		<div style="overflow:auto;height:130px">Do you really want to delete the selected row?</div>\
-		<div style="height:50px;"><button type="button" style="cursor:pointer;position:relative;top:-5px;left:40px;color:#FFFFFF;background-color:#CC8D00;width:75px;font-size:18px;" onclick="delRow2('+row+')">YES</button><button type="button" style="cursor:pointer;position:relative;top:-5px;left:103px;color:#FFFFFF;background-color:#CC8D00;width:75px;font-size:18px;" onclick="close_del_prompt('+row+')">NO</button></div>\
+		<div style="overflow:auto;height:130px"><?php echo $GLOBALS["TR"]["Really_del_row"][$GLOBALS["LANG"]]?></div>\
+		<div style="height:50px;"><button type="button" style="cursor:pointer;position:relative;top:-5px;left:40px;color:#FFFFFF;background-color:#CC8D00;width:75px;font-size:18px;" onclick="delRow2('+row+')"><?php echo $GLOBALS["TR"]["YES"][$GLOBALS["LANG"]]?></button><button type="button" style="cursor:pointer;position:relative;top:-5px;left:103px;color:#FFFFFF;background-color:#CC8D00;width:75px;font-size:18px;" onclick="close_del_prompt('+row+')"><?php echo $GLOBALS["TR"]["NO"][$GLOBALS["LANG"]]?></button></div>\
 		</div>';
 		if (document.getElementsByTagName('body')[0].getElementsByClassName('promptdiv').length==0){
 			document.getElementsByTagName('body')[0].appendChild(conerdiv);
@@ -4161,7 +4505,7 @@ function newRow(){
 	document.getElementsByTagName('body')[0].createPreloader();
 	wait(function(){
 		active++;
-	$.post('access_mysqli.php?act=new_row&ajax=true',{columns: JSON.stringify(tot['columns']),CSRF:(typeof MY_CSRF !='undefined')?MY_CSRF:''},function(result){
+	$.post('<?php echo $GLOBALS['PHP_SELF_INSTANCE'];?>&act=new_row&ajax=true',{columns: JSON.stringify(tot['columns']),CSRF:(typeof MY_CSRF !='undefined')?MY_CSRF:''},function(result){
 		active--;
 		document.getElementsByTagName('body')[0].removePreloader();
 		var ree=JSON.parse(result);
@@ -4189,7 +4533,7 @@ function doubleRow(row){
 			primary:(typeof tot['primary']=='undefined')?null:tot['primary'],
 			rowContent: tot['rows'][row][0]
 		}
-		$.post('access_mysqli.php?act=double_row&ajax=true',{packet: JSON.stringify(packet),CSRF:(typeof MY_CSRF !='undefined')?MY_CSRF:''},function(result){
+		$.post('<?php echo $GLOBALS['PHP_SELF_INSTANCE'];?>&act=double_row&ajax=true',{packet: JSON.stringify(packet),CSRF:(typeof MY_CSRF !='undefined')?MY_CSRF:''},function(result){
 		active--;
 		document.getElementsByTagName('body')[0].removePreloader();
 		var ree=JSON.parse(result);
@@ -4236,17 +4580,26 @@ div=div.substring(0,div.length-1);
 return div;
 }
 function textToHtml(txt){
-txt=txt.replace(/\n/ig,'<br>');
+txt=txt.replace(/(\r)?\n/ig,'<br>');
 txt=txt.replace(/\040\040/ig,function(match){
 	return ' &nbsp';
 });
-txt=txt+'<br type="_moz">';
+txt=txt.replace(/\040\<br\>/ig,function(match){
+	return '&nbsp<br>';
+});
+txt=txt.replace(/\040$/ig,function(match){
+	return '&nbsp';
+});
+txt=txt+'<br>';
 return txt;
 }
-function pastePaste(div){
-setTimeout(function(){
-div.innerHTML=textToHtml(htmlToText(div.innerHTML));
-},1);
+function pastePaste(div,event){
+    event.preventDefault();
+  text=event.clipboardData.getData('Text');
+  text=text.replace(/\040\040/ig,function(match){
+	return ' \u00A0';
+});
+   document.execCommand('insertText',false,text); 
 }
 function prepareToShow(val){
 	if (typeof val!= 'string') return val;
@@ -4336,7 +4689,7 @@ function blurdiv(which,event){
 		dataType:tot['data-types'][col]
 		}
 	var packedPacket=JSON.stringify(packet);
-	$.post('access_mysqli.php?act=updateCell&ajax=true',{packet:packedPacket,CSRF:(typeof MY_CSRF !='undefined')?MY_CSRF:''},function(result){
+	$.post('<?php echo $GLOBALS['PHP_SELF_INSTANCE'];?>&act=updateCell&ajax=true',{packet:packedPacket,CSRF:(typeof MY_CSRF !='undefined')?MY_CSRF:''},function(result){
 		var ree=JSON.parse(result);
 		if (ree['stat']=='success'){
 			if (ree['fol_action']=='putContents'){
@@ -4369,7 +4722,7 @@ function blurdiv(which,event){
 //*EDIT
 //PREVENT PAGE CLOSE
 window.onbeforeunload = function() {
-  if (currentFocusedCell!=null||active!=0) return 'Some changes are not saved. Do you really want to leave?';
+  if (currentFocusedCell!=null||active!=0) return '<?php echo $GLOBALS["TR"]["Leave_page"][$GLOBALS["LANG"]]?>';
 }
 //*PREVENT PAGE CLOSE
 //SEARCH
@@ -4396,7 +4749,7 @@ $('#eye_bar').css('display','none');
 	}
 	else {
 		$('#eye_button').attr('onclick','showResults(1)');
-$('#eye_button_span').attr('title',"Show only rows containing results");
+$('#eye_button_span').attr('title',"<?php echo $GLOBALS["TR"]["Only_rows_containing"][$GLOBALS["LANG"]]?>");
 $('#eye_bar').css('display','');
 	}
 	if (obj['columns']){
@@ -4419,7 +4772,7 @@ $('#eye_bar').css('display','');
 		else $('#row'+i).attr('my_row_searched','NU');
 		}
 	}}
-	$('#rows_counter').html('<span title="'+countRes+' results on '+countRow+' rows"><span class="row_cnt">'+countRes+'</span> results on <span class="row_cnt">'+countRow+'</span> rows</span>');
+	$('#rows_counter').html('<span title="'+countRes+' <?php echo $GLOBALS["TR"]["results_on"][$GLOBALS["LANG"]]?> '+countRow+' <?php echo $GLOBALS["TR"]["rows"][$GLOBALS["LANG"]]?>"><span class="row_cnt">'+countRes+'</span> <?php echo $GLOBALS["TR"]["results_on"][$GLOBALS["LANG"]]?> <span class="row_cnt">'+countRow+'</span> <?php echo $GLOBALS["TR"]["rows"][$GLOBALS["LANG"]]?></span>');
 	$('#act_tabel_buttons').css('display','none');
 	$('#act_search_buttons').css('display','');
 	});
@@ -4431,7 +4784,7 @@ function closeSearch(){
 	$('div[my_searched=DA]').css("background-color","").removeAttr('my_searched');
 	$('#act_tabel_buttons').css('display','');
 	$('#act_search_buttons').css('display','none');
-	$('#rows_counter').html('<span title="Rows count: '+tot['rows'].length+'">Rows count: <span class="row_cnt">'+tot['rows'].length+'</span></span>');
+	$('#rows_counter').html('<span title="<?php echo $GLOBALS["TR"]["Rows_count"][$GLOBALS["LANG"]]?>: '+tot['rows'].length+'"><?php echo $GLOBALS["TR"]["Rows_count"][$GLOBALS["LANG"]]?>: <span class="row_cnt">'+tot['rows'].length+'</span></span>');
 	pendingSearch=null;
 	});
 }
@@ -4439,14 +4792,14 @@ function showResults(arg){
 	shaddowRun(document.getElementsByTagName('body')[0],function(){
 if (arg){ $('tr[my_row_searched=NU]').css('display','none');
 $('#eye_button').attr('onclick','showResults(0)');
-$('#eye_button_span').attr('title',"Show all rows");
+$('#eye_button_span').attr('title',"<?php echo $GLOBALS["TR"]["Show_all_rows"][$GLOBALS["LANG"]]?>");
 $('#eye_bar').css('display','none');
 pendingSearch.rowsOnly=true;
 }
 else {
 $('tr[my_row_searched=NU]').css('display','');
 $('#eye_button').attr('onclick','showResults(1)');
-$('#eye_button_span').attr('title',"Show only rows containing results");
+$('#eye_button_span').attr('title',"<?php echo $GLOBALS["TR"]["Only_rows_containing"][$GLOBALS["LANG"]]?>");
 $('#eye_bar').css('display','');
 pendingSearch.rowsOnly=false;
 }
@@ -4478,12 +4831,12 @@ function create_rename_table(){
 	cr.setAttribute('class','renameTable');
 	var inner='<div style="position:absolute;top:0px;left:0px;width:100%;height:100%;background-color:#000000;opacity:0.5;">&nbsp;</div>\
 	<div id="renameTableInter" style="opacity:1;position:absolute;top:50%;left:50%;width:500px;height:400px;padding:20px;margin-left:-270px;margin-top:-220px;background-color:#FFF2A0;border-radius:5px;">\
-	<a href="javascript:closeRenameTable()" class="closing" style="font-size:24px;position:absolute;right:20px;top:10px;" title="Close">x</a>\
-	<div><h3 style="text-align:center;">Rename table '+htmlspecialchars($('#tabel_select').val())+'</h3></div>\
+	<a href="javascript:closeRenameTable()" class="closing" style="font-size:24px;position:absolute;right:20px;top:10px;" title="<?php echo $GLOBALS["TR"]["Close"][$GLOBALS["LANG"]]?>">x</a>\
+	<div><h3 style="text-align:center;"><?php echo $GLOBALS["TR"]["Rename_tbl"][$GLOBALS["LANG"]]?> '+htmlspecialchars($('#tabel_select').val())+'</h3></div>\
 	<br id="crbr">\
-	<br><div style="padding-left:50px">Insert new name:<br><br>\
+	<br><div style="padding-left:50px"><?php echo $GLOBALS["TR"]["Insert_new_name"][$GLOBALS["LANG"]]?><br><br>\
 	<div style="margin-left:10px;background-color:#FFFFFF;border-radius:5px;width:250px;padding-left:5px;height:25px;"><input type="text" id="renameTableNewName" style="margin-top:2px;height:19px;border:none;width:245px;"></input></div></div>\
-	<div style="height:50px;position:absolute;bottom:0px;right:10px;width:350px;">Click OK to save:<button type="button" style="cursor:pointer;position:relative;top:-5px;float:right;margin-right:25px;color:#FFFFFF;background-color:#CC8D00;width:75px;font-size:18px;" onclick="sendRenameTable()">OK</button></div>\
+	<div style="height:50px;position:absolute;bottom:0px;right:10px;width:350px;"><?php echo $GLOBALS["TR"]["OK_to_save"][$GLOBALS["LANG"]]?><button type="button" style="cursor:pointer;position:relative;top:-5px;float:right;margin-right:25px;color:#FFFFFF;background-color:#CC8D00;width:75px;font-size:18px;" onclick="sendRenameTable()"><?php echo $GLOBALS["TR"]["OK"][$GLOBALS["LANG"]]?></button></div>\
 </div>';
 cr.innerHTML=inner;
 if (document.getElementsByClassName('create').length==0)
@@ -4498,14 +4851,14 @@ function sendRenameTable(){
 	active++;
 	var newName=$('#renameTableNewName').val();
 	$('#renameTableInter').get(0).createPreloader();
-	$.post('access_mysqli.php?act=rename_table&ajax=true',{newName: newName,CSRF:(typeof MY_CSRF !='undefined')?MY_CSRF:''},function(result){
+	$.post('<?php echo $GLOBALS['PHP_SELF_INSTANCE'];?>&act=rename_table&ajax=true',{newName: newName,CSRF:(typeof MY_CSRF !='undefined')?MY_CSRF:''},function(result){
 		active--;
 		$('#renameTableInter').get(0).removePreloader();
 		var ree=JSON.parse(result);
 		if (ree['stat']=='con_err') gen_error(ree['con_err']);
 		if (ree['stat']=='fail') gen_error(ree['error']);
 		if (ree['stat']=='success'){
-			gen_info('Rename done!',1);
+			gen_info('<?php echo $GLOBALS["TR"]["Rename_done"][$GLOBALS["LANG"]]?>',1);
 		}
 	});
 	});
@@ -4518,16 +4871,16 @@ function create_copy_table(){
 	cr.setAttribute('class','copyTable');
 	var inner='<div style="position:absolute;top:0px;left:0px;width:100%;height:100%;background-color:#000000;opacity:0.5;">&nbsp;</div>\
 	<div id="copyTableInter" style="opacity:1;position:absolute;top:50%;left:50%;width:500px;height:400px;padding:20px;margin-left:-270px;margin-top:-220px;background-color:#FFF2A0;border-radius:5px;">\
-	<a href="javascript:closeCopyTable()" class="closing" style="font-size:24px;position:absolute;right:20px;top:10px;" title="Close">x</a>\
-	<div><h3 style="text-align:center;">Copy table '+htmlspecialchars($('#tabel_select').val())+'</h3></div>\
+	<a href="javascript:closeCopyTable()" class="closing" style="font-size:24px;position:absolute;right:20px;top:10px;" title="<?php echo $GLOBALS["TR"]["Close"][$GLOBALS["LANG"]]?>">x</a>\
+	<div><h3 style="text-align:center;"><?php echo $GLOBALS["TR"]["Copy_tbl"][$GLOBALS["LANG"]]?> '+htmlspecialchars($('#tabel_select').val())+'</h3></div>\
 	<br id="crbr">\
-	<br><div style="padding-left:50px">Insert new name:<br><br>\
+	<br><div style="padding-left:50px"><?php echo $GLOBALS["TR"]["Insert_new_name"][$GLOBALS["LANG"]]?><br><br>\
 	<div style="margin-left:10px;background-color:#FFFFFF;border-radius:5px;width:250px;padding-left:5px;height:25px;"><input type="text" id="copyTableNewName" style="margin-top:2px;height:19px;border:none;width:245px;"></input></div></div>\
-	<br><div style="padding-left:50px"><input type="radio" style="cursor:pointer;" name="copyWhatDb" value="0" id="copyWhatDb0" checked="true" onchange="copyTableGetDbs()">In this database</input><br><br>\
-	<input type="radio" style="cursor:pointer;" name="copyWhatDb" id="copyWhatDb1" value="1" onchange="copyTableGetDbs()">In other database</input><br><br>\
+	<br><div style="padding-left:50px"><input type="radio" style="cursor:pointer;" name="copyWhatDb" value="0" id="copyWhatDb0" checked="true" onchange="copyTableGetDbs()"><?php echo $GLOBALS["TR"]["In_this_db"][$GLOBALS["LANG"]]?></input><br><br>\
+	<input type="radio" style="cursor:pointer;" name="copyWhatDb" id="copyWhatDb1" value="1" onchange="copyTableGetDbs()"><?php echo $GLOBALS["TR"]["In_other_db"][$GLOBALS["LANG"]]?></input><br><br>\
 	<select id="copyWhatDbExact" style="border-radius:5px;color:#FFFFFF;background-color:#CC8D00;font-size:14px;display:none"></select>\
 	</div>\
-	<div style="height:50px;position:absolute;bottom:0px;right:10px;width:350px;">Click OK to save:<button type="button" style="cursor:pointer;position:relative;top:-5px;float:right;margin-right:25px;color:#FFFFFF;background-color:#CC8D00;width:75px;font-size:18px;" onclick="sendCopyTable()">OK</button></div>\
+	<div style="height:50px;position:absolute;bottom:0px;right:10px;width:350px;"><?php echo $GLOBALS["TR"]["OK_to_save"][$GLOBALS["LANG"]]?><button type="button" style="cursor:pointer;position:relative;top:-5px;float:right;margin-right:25px;color:#FFFFFF;background-color:#CC8D00;width:75px;font-size:18px;" onclick="sendCopyTable()"><?php echo $GLOBALS["TR"]["OK"][$GLOBALS["LANG"]]?></button></div>\
 </div>';
 cr.innerHTML=inner;
 if (document.getElementsByClassName('create').length==0)
@@ -4537,7 +4890,7 @@ function copyTableGetDbs(){
 	if ($('#copyWhatDb1').get(0).checked){
 		$('#copyTableInter').get(0).createPreloader();
 		active++;
-		$.post('access_mysqli.php?act=db_option_list&ajax=true',{CSRF:(typeof MY_CSRF !='undefined')?MY_CSRF:''},function(result){
+		$.post('<?php echo $GLOBALS['PHP_SELF_INSTANCE'];?>&act=db_option_list&ajax=true',{CSRF:(typeof MY_CSRF !='undefined')?MY_CSRF:''},function(result){
 			active--;
 			$('#copyTableInter').get(0).removePreloader();
 			var ree=JSON.parse(result);
@@ -4573,14 +4926,14 @@ function sendCopyTable(){
 		}
 		var newName=$('#copyTableNewName').val();
 		$('#copyTableInter').get(0).createPreloader();
-		$.post('access_mysqli.php?act=copy_table&ajax=true',{newName: newName,thisDb: isThisDb,dbName: dbName,CSRF:(typeof MY_CSRF !='undefined')?MY_CSRF:''},function(result){
+		$.post('<?php echo $GLOBALS['PHP_SELF_INSTANCE'];?>&act=copy_table&ajax=true',{newName: newName,thisDb: isThisDb,dbName: dbName,CSRF:(typeof MY_CSRF !='undefined')?MY_CSRF:''},function(result){
 			active--;
 			$('#copyTableInter').get(0).removePreloader();
 			var ree=JSON.parse(result);
 			if (ree['stat']=='con_err') gen_error(ree['con_err']);
 			if (ree['stat']=='fail') gen_error(ree['error']);
 			if (ree['stat']=='success'){
-			gen_info('Copy done!',0);
+			gen_info('<?php echo $GLOBALS["TR"]["Copy_done"][$GLOBALS["LANG"]]?>',0);
 		}
 		});
 	});
