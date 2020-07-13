@@ -44,8 +44,8 @@ $DEFAULTSET['editTime']=0;//0 or 1
 //*DEFAULT SETTINGS
 //PREDEFINED DATABASES
 /*
-$DEFAULTDBS=array('databases'=>array('bazaDeDate1','bazaDeDate2'),
-'tables'=>array('nume1'=>array('tabel11','tabel12','tabel13'),'nume2'=>NULL)
+$DEFAULTDBS=array('databases'=>array('<database1>','<database2>'),
+'tables'=>array('<database1>'=>array('<table1>','<table2>','<table3>'),'<database2>'=>NULL)
 );
 */
 //*PREDEFINED DATABASES
