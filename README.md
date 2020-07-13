@@ -21,9 +21,6 @@ Just load the file to your server and that's it.
 
 The application is available in two languages: English and Romanian
 
-## NOTE
-Don not change file name `access_mysqli.php`!
-
 This application works with PHP version 7+.
 
 ## Screenshots
