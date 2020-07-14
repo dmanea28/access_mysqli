@@ -31,7 +31,7 @@ $encodings=array('big5','dec8','cp850','hp8','koi8r','latin1','latin2','swe7','a
 $defaultCharset='utf8';
 //*CHARSET
 //LANGUAGE
-$defaultLanguage='RO';
+$defaultLanguage='EN';
 //*LANGUAGE
 //DEFAULT SETTINGS
 $DEFAULTSET=array();
