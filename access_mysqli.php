@@ -66,7 +66,7 @@ $TR=array(
 "User"=>array("EN"=>"User","RO"=>"Utilizator"),
 "Password"=>array("EN"=>"Password","RO"=>"Parola"),
 "Log_in"=>array("EN"=>"Log in","RO"=>"Log in"),
-"Encoding_used"=>array("EN"=>"Encoding used to comunicate with MySql:","RO"=>"Codarea foloită în comunicarea cu MySql:"),
+"Encoding_used"=>array("EN"=>"Encoding used to comunicate with MySQL:","RO"=>"Codarea foloită în comunicarea cu MySQL:"),
 "Change_encoding_language"=>array("EN"=>"Change interface language and encoding of characters","RO"=>"Schmbare limbă intrefață și codarea caracterelor"),
 "Choose_db"=>array("EN"=>"Choose database:","RO"=>"Alege baza de date:"),
 "Choose"=>array("EN"=>"Choose","RO"=>"Alege"),
@@ -206,9 +206,9 @@ $TR=array(
 "HTML_edit"=>array("EN"=>"HTML edit","RO"=>"Editare HTML"),
 "HTML_edit_expl"=>array("EN"=>"Enables text formating tool, only for &amp;quot;text&amp;quot; columns.","RO"=>"Permite utilizarea instrumentelor de formatare a textului, dar doar pe coloanele de tip &amp;quot;text&amp;quot;."),
 "Advanced_edit"=>array("EN"=>"Advanced edit","RO"=>"Editare avansată"),
-"Advanced_edit_expl"=>array("EN"=>"For advanced users: you can insert MySql functions; the edited text must be placed between simple quotes &amp;#40;&amp;#39;&amp;#41;.","RO"=>"Pentru avansați: permite folosirea funcțiilor MySql, conținutul editat trebuie pus între ghilimele simple &amp;#40;&amp;#39;&amp;#41;."),
+"Advanced_edit_expl"=>array("EN"=>"For advanced users: you can insert MySQL functions; the edited text must be placed between simple quotes &amp;#40;&amp;#39;&amp;#41;.","RO"=>"Pentru avansați: permite folosirea funcțiilor MySQL, conținutul editat trebuie pus între ghilimele simple &amp;#40;&amp;#39;&amp;#41;."),
 "Truncated_view"=>array("EN"=>"Show truncated cell content, except for the current edited cell","RO"=>"Afișare trunchiată pentru celulele unde nu se editează"),
-"Truncated_view_expl"=>array("EN"=>"The table cells are small when not selected (not clicked inside) for simpler navigation. Some of the text in cells may not be shown.","RO"=>"Pentru avansați: permite folosirea funcțiilor MySql, conținutul editat trebuie pus între ghilimele simple &amp;#40;&amp;#39;&amp;#41;."),
+"Truncated_view_expl"=>array("EN"=>"The table cells are small when not selected (not clicked inside) for simpler navigation. Some of the text in cells may not be shown.","RO"=>"Pentru avansați: permite folosirea funcțiilor MySQL, conținutul editat trebuie pus între ghilimele simple &amp;#40;&amp;#39;&amp;#41;."),
 "Quot_for_date"=>array("EN"=>"Use &quot;&#36;&quot symbol for current date","RO"=>"Simbolul &quot;&#36;&quot pentru data curentă"),
 "Quot_for_time"=>array("EN"=>"Use &quot;&#36;&quot symbol for current time","RO"=>"Simbolul &quot;&#36;&quot pentru timpul curent"),
 "Quot_for_date_time"=>array("EN"=>"Use &quot;&#36;&quot symbol for current date and time","RO"=>"Simbolul &quot;&#36;&quot pentru data și timpul curente"),
@@ -864,7 +864,7 @@ if (!$connver) $connver=mysqli_connect('127.0.0.1',$_POST['usr'],$_POST['pwd']);
 	enc_build();
 	echo '<body>
 	<div id="banner">
-	Access MySqli <br>
+	Access MySQLi <br>
 	'.$GLOBALS["TR"]["Version"][$GLOBALS["LANG"]].' '.$VERSION.'
 	</div>
 	<div id="logindiv">';
@@ -1004,13 +1004,12 @@ function set_instance_key($key,$value){
 }
 
 function meta_build(){
-	echo '
-<!DOCTYPE html>
+	echo '<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
 <meta name="viewport" content="width=1550,height=872">
-<title>Access MySqli v'.$GLOBALS['VERSION'].'</title>
+<title>Access MySQLi v'.$GLOBALS['VERSION'].'</title>
 <script>';
 echo_jquery();
 echo '</script>';
@@ -2023,7 +2022,7 @@ function select_database($conn){
 function create_pquery_button($style='width:50px;height:25px;'){
 	$res='<button type="button" onclick="gen_pquery()" style="border-radius:5px;background-color:#FFFFFF;border:solid 1px #0F00CC;cursor:pointer;" title="'.$GLOBALS["TR"]["Create_pquery"][$GLOBALS["LANG"]].'">
 	<svg viewBox="0 0 1000 500" style="'.$style.'">
-	<text x="0" y="400" fill="black" style="font-size:400px;" class="brush_mt">Sql</text>
+	<text x="0" y="400" fill="black" style="font-size:320px;" class="brush_mt">SQL</text>
 	<path d="M 677.78,351.26 L 827.78,45.47 L 914.59,88.05 L 764.59,393.84 Z" fill="#FFD753"/>
 	<path d="M 677.78,351.26 L 764.59,393.84 L 709.09,440.48 L 674.86,423.68 Z" fill="#FFEDB8"/>
 	<path d="M 709.09,440.48 L 674.86,423.68 L 672.96,470.84 Z" fill="#000000"/>
@@ -2073,7 +2072,7 @@ function create_logout_button($db,$style,$function){
 	<path d="M 96.28,63.57 L 73.72,63.57 L 85,45 Z" fill="#FF4F00" stroke="#FFFFFF" stroke-width="2" />
 	<path d="M 89.95,36.44 A 42.19,42.19 0 0 0 9.65,37.68 L 18.13,37.68 A 34.17,34.17 0 0 1 81.36,36.44 Z" fill="#FF4F00" stroke="#FFFFFF" stroke-width="2"/>
 	<path d="M 3.72, 36.43 L 26.28,36.43 L 15,55 Z" fill="#FF4F00" stroke="#FFFFFF" stroke-width="2"/>
-	<text x="26" y="63" fill="#FF4F00" style="font-size:34px;font-weight:bold;" stroke="#FFFFFF" stroke-width="1">DB</text>
+	<text x="23" y="63" fill="#FF4F00" style="font-size:34px;font-weight:bold;" stroke="#FFFFFF" stroke-width="1">DB</text>
 	';
 	}
 	return $res;
@@ -2511,7 +2510,7 @@ function create_error_page($error){
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
 EOT;
-$res.='<title>Access MySqli v'.$GLOBALS['VERSION'].'</title>';
+$res.='<title>Access MySQLi v'.$GLOBALS['VERSION'].'</title>';
 $res.=<<<EOT
 <style type="text/css">
 body{
@@ -2553,7 +2552,7 @@ function create_info_page($text){
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
 EOT;
-$res.='<title>Access MySqli v'.$GLOBALS['VERSION'].'</title>';
+$res.='<title>Access MySQLi v'.$GLOBALS['VERSION'].'</title>';
 $res.=<<<EOT
 <style type="text/css">
 body{
@@ -3412,7 +3411,7 @@ margin:0px;
 <table style="width:100%;height:100%">
 <tr style="width:100%">
 <td id="banner">
-Access MySqli <br>
+Access MySQLi <br>
 <?php echo $GLOBALS["TR"]["Version"][$GLOBALS["LANG"]].' '.$VERSION;?>
 </td>
 <td style="width:28%;padding-left:10px;padding-right:10px;padding-top:10px;;vertical-align:text-top;" id="search_db_td">
