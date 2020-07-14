@@ -17,7 +17,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-Last edited: 2020-07-09
+Last edited: 2020-07-14
 */
 error_reporting(0);
 ini_set('memory_limit', '4095M');
@@ -4586,6 +4586,12 @@ txt=txt.replace(/\040\040/ig,function(match){
 });
 txt=txt.replace(/\040\<br\>/ig,function(match){
 	return '&nbsp<br>';
+});
+txt=txt.replace(/\<br\>\040/ig,function(match){
+	return '<br>&nbsp';
+});
+txt=txt.replace(/^\040/ig,function(match){
+	return '&nbsp';
 });
 txt=txt.replace(/\040$/ig,function(match){
 	return '&nbsp';
