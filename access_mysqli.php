@@ -3807,7 +3807,7 @@ var htmlEditor={
 		if (lnk.adr!=false){
 		var targetBlank='';
 		if ($('#htmlLinkBlank').prop('checked')) targetBlank='target="_blank"';
-		var linkHtml='<a href="'+lnk.adr+'" '+targetBlank+' >'+lnk.txt+'</a> ';
+		var linkHtml='<a href="'+lnk.adr+'" '+targetBlank+' >'+lnk.txt+'</a>';
 		htmlEditor.restoreSelection();
 		document.execCommand('insertHTML',false,linkHtml);
 		htmlEditor.link();
@@ -3903,7 +3903,7 @@ function putContents(){
 				cnt+='<td class="tableCell '+tabCellType+'"><div class="cell" onpaste="pastePaste(this,event)" '+additionalStyle+contentEditable+' id="cell'+i+';'+j+'"></div></td>';
 			}
 			else{ if (settings['editHTML']=="1"&&(tot['data-types'][j].toUpperCase()=='TEXT'||tot['data-types'][j].toUpperCase()=='TINYTEXT'||tot['data-types'][j].toUpperCase()=='MEDIUMTEXT'||tot['data-types'][j].toUpperCase()=='LONGTEXT')){
-			cnt+='<td class="tableCell '+tabCellType+'"><div class="cell" onpaste="pastePaste(this,event)" my_html="yes" '+additionalStyle+contentEditable+' id="cell'+i+';'+j+'">'+tot['rows'][i][0][tot['columns'][j]]+'</div></td>';}
+			cnt+='<td class="tableCell '+tabCellType+'"><div class="cell" onpaste="pastePaste(this,event)" my_html="yes" '+additionalStyle+contentEditable+' id="cell'+i+';'+j+'">'+prepareHtml(tot['rows'][i][0][tot['columns'][j]])+'</div></td>';}
 			else
 			cnt+='<td class="tableCell '+tabCellType+'"><div class="cell" onpaste="pastePaste(this,event)" '+additionalStyle+contentEditable+' id="cell'+i+';'+j+'">'+prepareToShow(tot['rows'][i][0][tot['columns'][j]])+'</div></td>';}
 		}
@@ -4598,6 +4598,15 @@ txt=txt.replace(/\040$/ig,function(match){
 txt=txt+'<br>';
 return txt;
 }
+function prepareHtml(div){
+	div=div+'<br>';	
+	return div;
+}
+function htmlToHtml(div){
+	if (div.slice(-4)=='<br>')
+	div=div.substring(0,div.length-4);
+	return div;
+}
 function pastePaste(div,event){
     event.preventDefault();
   text=event.clipboardData.getData('Text');
@@ -4679,6 +4688,7 @@ function blurdiv(which,event){
 	var col=getColumnFromCell(which);
 	var newContent=$(which).html();
 	if (isHtml!='yes') newContent=htmlToText(newContent);
+	else newContent=htmlToHtml(newContent);
 	wait(function(){
 		active++;
 		document.getElementsByTagName('body')[0].createPreloader();
