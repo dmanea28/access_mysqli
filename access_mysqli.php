@@ -117,7 +117,7 @@ $TR=array(
 "YES"=>array("EN"=>"YES","RO"=>"DA"),
 "NO"=>array("EN"=>"NO","RO"=>"NU"),
 "CONFIRM"=>array("EN"=>"CONFIRM","RO"=>"CONFIRMARE"),
-"Dhas_been-deleted"=>array("EN"=>"has been deleted","RO"=>"a fost ștearsă"),
+"Dhas_been_deleted"=>array("EN"=>"has been deleted","RO"=>"a fost ștearsă"),
 "Tbl_is"=>array("EN"=>"Current table:","RO"=>"Tabelul curent:"),
 "Really_delete_tbl"=>array("EN"=>"Do you really want to delete table","RO"=>"Sigur ștergi tabelul"),
 "Thas_been_deleted"=>array("EN"=>"has ben deleted","RO"=>"a fost șters"),
@@ -760,10 +760,10 @@ if (!$connver) $connver=mysqli_connect('127.0.0.1',$_POST['usr'],$_POST['pwd']);
 		echo encodeJsonSafe($res);
 		die();
 	}
+	
 	meta_build();
-	echo '
-	<style type="text/css">
-	body{
+	echo '<style type="text/css">
+body{
 	background-color:#FDFDFD;
 }
 #logindiv{
@@ -897,6 +897,7 @@ if (!$connver) $connver=mysqli_connect('127.0.0.1',$_POST['usr'],$_POST['pwd']);
 		else pas=$("#Password").val();
 		document.getElementById("logindiv").createPreloader();
 		$.post("{$_SERVER['PHP_SELF']}?act=checkuser&ajax=true",{usr:us,pwd:pas},function(result){
+			console.log(result);
 			var res=JSON.parse(result);
 			if (res["stat"]=="fail"){
 				document.getElementById("logindiv").removePreloader();
@@ -944,20 +945,21 @@ function create_connection(){
 	if (!isset($_SESSION['userdb'])) return FALSE;
 	$conn=mysqli_connect('localhost',$_SESSION['userdb'],$_SESSION['pwddb']);
 if (!$conn)	$conn=mysqli_connect('127.0.0.1',$_SESSION['userdb'],$_SESSION['pwddb']);
-	if (!$conn) {
-		return FALSE;
-	}
+	if ($conn!==NULL) {
 	if (mysqli_query($conn,"SET NAMES ".$GLOBALS['CHARSET'])){
 		return $conn;
 	}
-	else return FALSE;
+	logout();
+	return FALSE;
+}
+	
 
 }
 function enc_build(){
 if (isset($_SESSION['instancedb'][$_GET['instance']]['myencstate'])&&$_SESSION['instancedb'][$_GET['instance']]['myencstate']=="close")
-echo '<div id="up_encoding" style="position:fixed;z-index:12;left:50%;width:800px;height:60px;margin-left:-400px;top:-40px;" my_state="close">';
+echo '<div id="up_encoding" style="position:fixed;z-index:12;left:50%;width:800px;margin-left:-400px;top:-40px;" my_state="close">';
 else
-echo '<div id="up_encoding" style="position:fixed;z-index:12;left:50%;width:800px;height:60px;margin-left:-400px;top:-10px;" my_state="open">';
+echo '<div id="up_encoding" style="position:fixed;z-index:12;left:50%;width:800px;margin-left:-400px;top:-10px;" my_state="open">';
 if (isset($_SESSION['instancedb'][$_GET['instance']]))  echo '<div title="'.$GLOBALS["TR"]["Change_encoding_language"][$GLOBALS["LANG"]].'" style="background-color:#4F4FFF;width:40px;height:30px;margin-left:auto;margin-right:auto;border-radius:4px;position:absolute;top:25px;left:50%;margin-left:-20px;z-index:-1;cursor:pointer;" onclick="switchEncDiv()">
 	<div style="height:15px">&nbsp;</div>
 	<svg viewBox="0 0 100 50" style="width:30px;height:15px;margin-left:5px">
@@ -1303,7 +1305,7 @@ function gen_error(arg){
 	switch(arg){
 		case 'login':
 		text='{$GLOBALS["TR"]["conn_err"][$GLOBALS["LANG"]]}';
-		cls=0;
+		cls=2;
 		break;
 		case 'dbmiss':
 		text='{$GLOBALS["TR"]["dbmiss"][$GLOBALS["LANG"]]}';
@@ -1319,10 +1321,6 @@ function gen_error(arg){
 		break;
 		case 'json_error':
 		text='{$GLOBALS["TR"]["json_error"][$GLOBALS["LANG"]]}';
-		cls=1;
-		break;
-		case 'bad_link':
-		text='{$GLOBALS["TR"]["bad_link"][$GLOBALS["LANG"]]}';
 		cls=1;
 		break;
 		default:
@@ -1357,13 +1355,16 @@ function gen_error(arg){
 		}
 }
 function close_error(arg){
-	if (arg!='0') {
+	if (arg=='0'||arg==0){
+		window.location.href="{$GLOBALS['PHP_SELF_INSTANCE']}";
+	}
+	else if (arg=='1'||arg==1) {
 		arr=document.getElementsByTagName('body')[0].getElementsByClassName('conerdiv');
 		if (arr.length!=0){
 			document.getElementsByTagName('body')[0].removeChild(arr[0]);
 	}}
 	else {
-		window.location.href="{$GLOBALS['PHP_SELF_INSTANCE']}";
+		window.location.href="{$_SERVER['PHP_SELF']}";
 		}
 	}
 EOT;
@@ -2081,7 +2082,7 @@ function prepare($arg){
 		return addslashes($arg);
 }
 function logout(){
-	unset($_SESSION['userdb'],$_SESSION['pwddb'],$SESSION['instancedb'][$_GET['instance']],$_SESSION['CSRFdb']);
+	unset($_SESSION['userdb'],$_SESSION['pwddb'],$_SESSION['instancedb'][$_GET['instance']],$_SESSION['CSRFdb']);
 }
 function logout_db(){
 	unset($_SESSION['instancedb'][$_GET['instance']]['actdb'],$_SESSION['instancedb'][$_GET['instance']]['acttab'],$_SESSION['instancedb'][$_GET['instance']]['myorder']);
@@ -3800,7 +3801,7 @@ var htmlEditor={
 	followLink:function(){
 		var lnk=htmlEditor.buildLink();
 		if (lnk.adr!=false) window.open(lnk.adr);
-		else alert('<?php echo $GLOBALS["TR"]["Insert_valid"][$GLOBALS["LANG"]]?>');
+		else alert('<?php echo $GLOBALS["TR"]["bad_link"][$GLOBALS["LANG"]]?>');
 	},
 	linkSave:function(){
 		var lnk=htmlEditor.buildLink();
@@ -3812,7 +3813,7 @@ var htmlEditor={
 		document.execCommand('insertHTML',false,linkHtml);
 		htmlEditor.link();
 		}
-		else alert('<?php echo $GLOBALS["TR"]["Insert_valid"][$GLOBALS["LANG"]]?>');
+		else alert('<?php echo $GLOBALS["TR"]["bad_link"][$GLOBALS["LANG"]]?>');
 	},
 	focusedDiv:function(event){
 		isHtmlClicked=true;
