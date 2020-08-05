@@ -16,7 +16,7 @@ Just load the file to your server and that's it.
 - Auto-sync with the server when you leave the edited cell.
 - Import/export database and tables in `.sql` format
 - Advanced search features, such as match word, begin/end with, regex, search on particular columns, show only rows containing results
-- Advanced edit feature for entering MySql functions
+- Advanced edit feature for entering MySQL functions
 - Send own SQL query
 
 The application is available in two languages: English and Romanian
