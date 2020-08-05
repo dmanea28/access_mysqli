@@ -1,5 +1,5 @@
 # access_mysqli
-Simple single-file MySql database access application, written in PHP.
+Simple single-file MySQL database access application, written in PHP.
 
 Just load the file to your server and that's it.
 
