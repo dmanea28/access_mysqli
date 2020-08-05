@@ -897,7 +897,6 @@ body{
 		else pas=$("#Password").val();
 		document.getElementById("logindiv").createPreloader();
 		$.post("{$_SERVER['PHP_SELF']}?act=checkuser&ajax=true",{usr:us,pwd:pas},function(result){
-			console.log(result);
 			var res=JSON.parse(result);
 			if (res["stat"]=="fail"){
 				document.getElementById("logindiv").removePreloader();
