@@ -17,7 +17,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-Last edited: 2020-07-14
+Last edited: 2020-10-03
 */
 error_reporting(0);
 ini_set('memory_limit', '4095M');
@@ -2531,7 +2531,7 @@ body{
 	<div style="overflow:auto;height:130px">
 EOT;
 $res.=$error;
-$res.=<<<'EOT'
+$res.=<<<EOT
 	</div>
 	<div style="height:50px;">Click OK to close:<button type="button" style="cursor:pointer;position:relative;top:-5px;float:right;margin-right:25px;color:#FFFFFF;background-color:#CC8D00;width:75px;font-size:18px;" onclick="close_error('0')">OK</button></div>
 	</div></div>
