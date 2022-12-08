@@ -3576,7 +3576,7 @@ echo '<span title="'.$GLOBALS["TR"]["Order"][$GLOBALS["LANG"]].'">'.create_order
 <button class="htmlToggle" id="htmlItalic" onclick="htmlEditor.italic(this)" style="font-style:italic;font-weight:bold;" title="<?php echo $GLOBALS["TR"]["Italic"][$GLOBALS["LANG"]]?>">I</button>
 <button class="htmlToggle" id="htmlUnder" onclick="htmlEditor.under(this)" style="text-decoration:underline;font-weight:bold;" title="<?php echo $GLOBALS["TR"]["Underline"][$GLOBALS["LANG"]]?>">U</button>
 <div style="display:inline;position:relative;"><button class="htmlToggle" onclick="htmlEditor.link()" style="text-decoration:underline;font-weight:bold;" title="<?php echo $GLOBALS["TR"]["Add_link"][$GLOBALS["LANG"]]?>"><?php echo $GLOBALS["TR"]["Link"][$GLOBALS["LANG"]]?></button>
-<div id="linkPanel" class="htmlEditPanel" style="height:160px;padding-top:0px;left:-125px;width:300px;"><br>
+<div id="linkPanel" class="htmlEditPanel" style="height:unset;padding-top:0px;left:-125px;width:300px;"><br>
 <div class="input_container"><input type="text" id="htmlLink" myval="<?php echo $GLOBALS["TR"]["Link_addr"][$GLOBALS["LANG"]]?>" value="<?php echo $GLOBALS["TR"]["Link_addr"][$GLOBALS["LANG"]]?>" class="input_element"></input></div>
 <a href="javascript:htmlEditor.followLink()" style="float:left;margin-left:50px;position:"><?php echo $GLOBALS["TR"]["Follow_link"][$GLOBALS["LANG"]]?></a><br>
 <div class="input_container" style="position:relative;top:5px;"><input type="text" id="htmlLinkText" myval="<?php echo $GLOBALS["TR"]["Link_txt"][$GLOBALS["LANG"]]?>" value="<?php echo $GLOBALS["TR"]["Link_txt"][$GLOBALS["LANG"]]?>" class="input_element"></input></div><br>
@@ -3788,7 +3788,6 @@ var htmlEditor={
 		}
 		else{
 			var addr=input1.value;
-		if (!((/^\w+:\/\//).test(addr))) addr='http://'+addr;
 		var input2=document.getElementById('htmlLinkText');
 		var text;
 		if (input2.style.color!="#000000"&&input2.style.color!="rgb(0, 0, 0)"&&input2.style.color!="rgb(0,0,0)"&&input2.style.color!="RGB(0,0,0)"&&input2.style.color!="RGB(0, 0, 0)"&&input2.style.color!="black"&&input2.style.color!="BLACK"){
