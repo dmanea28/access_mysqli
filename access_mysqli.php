@@ -1,6 +1,6 @@
 <?php
 /*
-Copyright (C) 2022 Dragoș Manea
+Copyright (C) 2023 Dragoș Manea
 access_mysqli.php
 Database access program
 
@@ -17,9 +17,10 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-Last edited: 2022-12-09
+Last edited: 2022-11-13
 */
 error_reporting(0);
+mysqli_report(MYSQLI_REPORT_OFF);
 ini_set('memory_limit', '4095M');
 set_time_limit(0);
 $languages=array('EN','RO');
