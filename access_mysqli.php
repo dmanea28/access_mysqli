@@ -480,7 +480,7 @@ if ($_GET['act']=='pquery'&&$_POST['CSRF']==$_SESSION['CSRFdb']){
 	if ($ok){
 		$res['stat']='success';
 		if ($result=mysqli_query($conn,$_POST['query'])){
-			if (mysqli_num_fields($result)==0) $res['result']=$GLOBALS["TR"]["Query_void"][$GLOBALS["LANG"]].'<br>'.$GLOBALS["TR"]["Affected_rows"][$GLOBALS["LANG"]].' '.mysqli_affected_rows($conn);
+			if ($result===true or mysqli_num_fields($result)==0) $res['result']=$GLOBALS["TR"]["Query_void"][$GLOBALS["LANG"]].'<br>'.$GLOBALS["TR"]["Affected_rows"][$GLOBALS["LANG"]].' '.mysqli_affected_rows($conn);
 			else {
 				$res['result']='<table border="3" style="margin-left:auto;margin-right:auto;"><tr>';
 				while($fieldinfo=mysqli_fetch_field($result)){
